@@ -43,11 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SaveFile.cs" />
+    <Compile Include="ObjectTypes\GameBaseObject.cs" />
+    <Compile Include="ObjectTypes\GameObject.cs" />
+    <Compile Include="SaveFileEntry.cs" />
+    <Compile Include="ObjectTypes\Types.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ObjectTypes\GameScript.cs" />
+    <Compile Include="PropertyString.cs" />
+    <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Compile Include="Position.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
