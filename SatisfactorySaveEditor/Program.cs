@@ -39,15 +39,14 @@ namespace SatisfactorySaveEditor
                     var H = new SaveFile(BR);
                     Console.Error.WriteLine(H.PlayTime);
                     Console.Error.WriteLine(H.LevelType);
-                    H.SessionName = "TEST";
-                    H.Properties["sessionName"] = "TEST";
+                    H.SessionName = "EDITED_GAME";
+                    H.Properties["sessionName"] = "EDITED_GAME";
                     H.StringList.Clear();
-                    var NewFile = Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "TEST.SAV");
+                    var NewFile = Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "EDITED_GAME.SAV");
                     using (var FSW = File.Create(NewFile))
                     {
                         H.Export(FSW);
                     }
-                    //*/
                 }
             }
 
