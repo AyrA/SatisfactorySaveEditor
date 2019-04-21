@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
 {
     class Program
     {
-        const string SAVEDIR = @"%LOCALAPPDATA%\FactoryGame\Saved\SaveGames";
+        public const string SAVEDIR = @"%LOCALAPPDATA%\FactoryGame\Saved\SaveGames";
 
         public struct RET
         {
@@ -14,13 +15,16 @@ namespace SatisfactorySaveEditor
             public const int ARG = 1;
         }
 
+        [STAThread]
         static int Main(string[] args)
         {
-#if DEBUG
-            args = new string[] {
-                @"C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\YAY.sav"
-            };
-#endif
+            //Set "NOFORM" to better experiment
+#if !NOFORM
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new frmMain());
+            return RET.SUCCESS;
+#else
             string FileName = args.FirstOrDefault();
             if (string.IsNullOrEmpty(FileName) || !File.Exists(FileName))
             {
@@ -46,17 +50,54 @@ namespace SatisfactorySaveEditor
                     //var Pod = H.Entries.First(m => m.ObjectData.Name == "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C");
                     //Console.Error.WriteLine(Tools.HexDump(Pod.Properties));
 
-                    //These seem to be inventories across all items
-                    var Inventory = H.Entries.Where(m => m.ObjectData.Name == "/Script/FactoryGame.FGInventoryComponent").Skip(20).First();
-                    Console.Error.WriteLine(Tools.HexDump(Inventory.Properties, 24));
+                    //Try some container black magic
 
-                    File.WriteAllBytes(@"C:\Users\AyrA\Desktop\Inventory.bin", Inventory.Properties);
+
+                    //These seem to be inventories across all items
+                    //var Inventory = H.Entries.Where(m => m.ObjectData.Name == "/Script/FactoryGame.FGInventoryComponent").Skip(20).First();
+                    //Console.Error.WriteLine(Tools.HexDump(Inventory.Properties, 24));
+                    //File.WriteAllBytes(@"C:\Users\AyrA\Desktop\Inventory.bin", Inventory.Properties);
 
                     //Example save file editing using SaveFileHelper
                     //Console.Error.WriteLine("Processed {0} Entries", SaveFileHelper.RestoreDropPods(H));
 
-                    /* This will list all types from the save file
+                    //* This will list all types from the save file
                     Console.Error.WriteLine("Count\tType");
+
+                    var Containers = H.Entries.Where(m => m.ObjectData.Name== "/Game/FactoryGame/Buildable/Factory/StorageContainerMk1/Build_StorageContainerMk1.Build_StorageContainerMk1_C").ToArray();
+
+                    var LastContainer = Containers[0];
+                    var SecondLastContainer = Containers[0];
+
+                    int LastId = int.Parse(LastContainer.ObjectData.InternalName.Split('_').Last());
+                    int SecondLastId= int.Parse(SecondLastContainer.ObjectData.InternalName.Split('_').Last());
+
+                    foreach(var Container in Containers)
+                    {
+                        var Id = int.Parse(Container.ObjectData.InternalName.Split('_').Last());
+                        if (Id > LastId)
+                        {
+                            SecondLastContainer = LastContainer;
+                            LastContainer = Container;
+
+                            SecondLastId = LastId;
+                            LastId = Id;
+                        }
+                        else if(Id>SecondLastId)
+                        {
+                            SecondLastContainer = Container;
+                            SecondLastId = Id;
+                        }
+                    }
+
+
+                    Console.Error.WriteLine(Tools.HexDump(LastContainer.Properties, 24));
+                    Console.Error.WriteLine(Tools.HexDump(SecondLastContainer.Properties, 24));
+
+                    //Mess everything up
+                    SecondLastContainer.Properties = LastContainer.Properties;
+
+                    /*
                     foreach (var E in H.Entries.OrderBy(m => m.ObjectData.Name).GroupBy(m => m.ObjectData.Name))
                     {
                         Console.Error.WriteLine("{1}\t{0}", E.Key, E.Count());
@@ -82,6 +123,7 @@ namespace SatisfactorySaveEditor
             }
 
             return Exit(RET.SUCCESS);
+#endif
         }
 
         private static int Exit(int ExitCode)
