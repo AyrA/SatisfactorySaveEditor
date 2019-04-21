@@ -37,15 +37,19 @@ namespace SatisfactorySaveEditor
                 using (var BR = new BinaryReader(FS))
                 {
                     var H = new SaveFile(BR);
+
+                    //Important, change the session name to not fuck up your current game
                     H.SessionName = "EDITED_GAME";
                     H.Properties["sessionName"] = "EDITED_GAME";
 
+                    //This is how you can read a specific entry and dump the hex contents:
                     //var Pod = H.Entries.First(m => m.ObjectData.Name == "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C");
                     //Console.Error.WriteLine(Tools.HexDump(Pod.Properties));
 
-                    Console.Error.WriteLine("Restored {0} Pickups", SaveFileHelper.RestoreDropPods(H));
+                    //Example save file editing using SaveFileHelper
+                    Console.Error.WriteLine("Processed {0} Entries", SaveFileHelper.RestoreDropPods(H));
 
-                    /*
+                    /* This will list all types from the save file
                     Console.Error.WriteLine("Count\tType");
                     foreach (var E in H.Entries.OrderBy(m => m.ObjectData.Name).GroupBy(m => m.ObjectData.Name))
                     {
@@ -53,14 +57,15 @@ namespace SatisfactorySaveEditor
                     }
                     //*/
 
-                    /*
+                    /* This lists all strings in the string list.
+                    //The string list likely contains all entities removed from the map.
                     foreach (var E in H.StringList.Select(m => m.Value).Distinct())
                     {
                         Console.Error.WriteLine(E);
                     }
                     //*/
 
-                    //*
+                    //* Writing back new save file
                     var NewFile = Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "EDITED_GAME.SAV");
                     using (var FSW = File.Create(NewFile))
                     {
