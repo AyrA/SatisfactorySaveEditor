@@ -45,8 +45,9 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public string SessionName { get; set; }
         /// <summary>
-        /// Property strings at the end of the map. Likely a list of removed entities
+        /// Property strings at the end of the map. Likely a list of removed entities.
         /// </summary>
+        /// <remarks>Clearing it restores slugs, artifacts and mushrooms but not berries for example</remarks>
         public List<PropertyString> StringList { get; set; }
         /// <summary>
         /// 9 Unknown bytes

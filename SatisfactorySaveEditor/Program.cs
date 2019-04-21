@@ -41,12 +41,30 @@ namespace SatisfactorySaveEditor
                     Console.Error.WriteLine(H.LevelType);
                     H.SessionName = "EDITED_GAME";
                     H.Properties["sessionName"] = "EDITED_GAME";
-                    H.StringList.Clear();
+
+                    Console.Error.WriteLine("Restored {0} Berries", SaveFileHelper.RestoreBerries(H));
+
+                    /*
+                    foreach (var E in H.Entries.Select(m => m.ObjectData.Name).Distinct())
+                    {
+                        Console.Error.WriteLine(E);
+                    }
+                    //*/
+
+                    /*
+                    foreach (var E in H.StringList.Select(m => m.Value).Distinct())
+                    {
+                        Console.Error.WriteLine(E);
+                    }
+                    //*/
+
+                    //*
                     var NewFile = Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "EDITED_GAME.SAV");
                     using (var FSW = File.Create(NewFile))
                     {
                         H.Export(FSW);
                     }
+                    //*/
                 }
             }
 
