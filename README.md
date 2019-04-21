@@ -20,7 +20,7 @@ Saves are in `%LOCALAPPDATA%\FactoryGame\Saved\SaveGames`
 
 ## Important and Missing Functions
 
-These important functions are not yet coded in:
+These important functions are not yet coded in (see TODO list at bottom for more stuff):
 
 - Reading player position and teleporting
 - Editing inventories
@@ -69,3 +69,14 @@ This restores all artifacts
 ### RemoveAnimalParts
 
 This removes any dead animal parts you might have forgotten to pick up
+
+# TODO
+
+- [ ] Reading player position and teleporting
+- [ ] Editing inventories
+- [ ] Unlocking technologies
+- [ ] Unlocking space elevator tiers
+- [ ] Spawning Lizard Doggos
+- [ ] Make sure edits are valid
+- [ ] UI
+- [ ] Multi player capability
