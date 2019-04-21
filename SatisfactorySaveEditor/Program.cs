@@ -46,8 +46,12 @@ namespace SatisfactorySaveEditor
                     //var Pod = H.Entries.First(m => m.ObjectData.Name == "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C");
                     //Console.Error.WriteLine(Tools.HexDump(Pod.Properties));
 
+                    //These seem to be inventories across all items
+                    var Container = H.Entries.Where(m => m.ObjectData.Name == "/Script/FactoryGame.FGInventoryComponent").First();
+                    Console.Error.WriteLine(Tools.HexDump(Container.Properties,24));
+
                     //Example save file editing using SaveFileHelper
-                    Console.Error.WriteLine("Processed {0} Entries", SaveFileHelper.RestoreDropPods(H));
+                    //Console.Error.WriteLine("Processed {0} Entries", SaveFileHelper.RestoreDropPods(H));
 
                     /* This will list all types from the save file
                     Console.Error.WriteLine("Count\tType");

@@ -53,7 +53,7 @@ namespace SatisfactorySaveEditor
             var SB = new StringBuilder();
             for (var i = 0; i < Data.Length; i += Width)
             {
-                var Segment = Data.Skip(i).Take(16).ToArray();
+                var Segment = Data.Skip(i).Take(Width).ToArray();
                 for (var j = 0; j < Width; j++)
                 {
                     if (j < Segment.Length)
