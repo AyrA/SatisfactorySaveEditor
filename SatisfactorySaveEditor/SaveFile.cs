@@ -11,7 +11,7 @@ namespace SatisfactorySaveEditor
     public class SaveFile
     {
         /// <summary>
-        /// Unknown values at the start of the header (maybe entry type)
+        /// Unknown values at the start of the header (maybe entry type, version, magic number, etc)
         /// </summary>
         public int[] HeaderValues
         { get; set; }

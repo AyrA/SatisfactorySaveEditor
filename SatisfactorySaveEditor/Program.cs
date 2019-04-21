@@ -47,8 +47,10 @@ namespace SatisfactorySaveEditor
                     //Console.Error.WriteLine(Tools.HexDump(Pod.Properties));
 
                     //These seem to be inventories across all items
-                    var Container = H.Entries.Where(m => m.ObjectData.Name == "/Script/FactoryGame.FGInventoryComponent").First();
-                    Console.Error.WriteLine(Tools.HexDump(Container.Properties, 24));
+                    var Inventory = H.Entries.Where(m => m.ObjectData.Name == "/Script/FactoryGame.FGInventoryComponent").Skip(20).First();
+                    Console.Error.WriteLine(Tools.HexDump(Inventory.Properties, 24));
+
+                    File.WriteAllBytes(@"C:\Users\AyrA\Desktop\Inventory.bin", Inventory.Properties);
 
                     //Example save file editing using SaveFileHelper
                     //Console.Error.WriteLine("Processed {0} Entries", SaveFileHelper.RestoreDropPods(H));
