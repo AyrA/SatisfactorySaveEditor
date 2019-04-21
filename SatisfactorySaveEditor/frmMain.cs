@@ -11,6 +11,8 @@ namespace SatisfactorySaveEditor
         bool HasChange = false;
         bool NameChanged = false;
 
+        bool ShowLimited = true;
+
 
         public frmMain()
         {
@@ -49,8 +51,12 @@ namespace SatisfactorySaveEditor
                         F = new SaveFile(BR);
                         HasChange = false;
                         NameChanged = false;
-                        MessageBox.Show(@"This is still in development and functionality is limited.
+                        if (ShowLimited)
+                        {
+                            ShowLimited = false;
+                            MessageBox.Show(@"This is still in development and functionality is limited.
 You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
             }
