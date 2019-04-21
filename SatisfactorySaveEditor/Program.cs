@@ -37,17 +37,19 @@ namespace SatisfactorySaveEditor
                 using (var BR = new BinaryReader(FS))
                 {
                     var H = new SaveFile(BR);
-                    Console.Error.WriteLine(H.PlayTime);
-                    Console.Error.WriteLine(H.LevelType);
                     H.SessionName = "EDITED_GAME";
                     H.Properties["sessionName"] = "EDITED_GAME";
 
-                    Console.Error.WriteLine("Restored {0} Berries", SaveFileHelper.RestoreBerries(H));
+                    var Rock = H.Entries.First(m => m.ObjectData.Name == "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleLargeRock.BP_DestructibleLargeRock_C");
+                    Console.Error.WriteLine(Tools.HexDump(Rock.Properties));
+
+                    Console.Error.WriteLine("Removed {0} Rocks", SaveFileHelper.RemoveRocks(H));
 
                     /*
-                    foreach (var E in H.Entries.Select(m => m.ObjectData.Name).Distinct())
+                    Console.Error.WriteLine("Count\tType");
+                    foreach (var E in H.Entries.GroupBy(m => m.ObjectData.Name))
                     {
-                        Console.Error.WriteLine(E);
+                        Console.Error.WriteLine("{1}\t{0}", E.Key, E.Count());
                     }
                     //*/
 

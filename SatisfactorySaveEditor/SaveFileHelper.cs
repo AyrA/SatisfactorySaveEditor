@@ -5,6 +5,43 @@ namespace SatisfactorySaveEditor
 {
     public static class SaveFileHelper
     {
+        public static int RemoveLizardDoggos(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Character/Creature/Wildlife/SpaceRabbit/Char_SpaceRabbit.Char_SpaceRabbit_C"
+            };
+            return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+        }
+
+        public static int RestoreRocks(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleLargeRock.BP_DestructibleLargeRock_C",
+                "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleSmallRock.BP_DestructibleSmallRock_C"
+            };
+            return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+        }
+
+        public static int RemoveRocks(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleLargeRock.BP_DestructibleLargeRock_C",
+                "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleSmallRock.BP_DestructibleSmallRock_C"
+            };
+            var Entries = F.Entries.Where(m => ItemList.Contains(m.ObjectData.Name)).ToArray();
+            
+            //Something probably has to be done to the array here but I am not sure what
+            //Default: 00 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 4E 6F 6E 65 00 00 00 00 00
+
+            //Try adding to string list
+            foreach (var E in Entries)
+            {
+                F.StringList.Add(new PropertyString(E.ObjectData.LevelType, E.ObjectData.Name));
+            }
+            //Remove from item list
+            return F.Entries.RemoveAll(m => Entries.Contains(m));
+        }
+
         public static int RestorePlants(SaveFile F)
         {
             var ItemList = new string[] {
@@ -52,7 +89,7 @@ namespace SatisfactorySaveEditor
             var ItemList = new string[] {
                 "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C"
             };
-            
+
 
             //String list?
 

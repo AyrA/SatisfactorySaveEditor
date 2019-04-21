@@ -28,6 +28,12 @@ namespace SatisfactorySaveEditor
             Value = BR.ReadIntString();
         }
 
+        public PropertyString(string Name,string Value)
+        {
+            this.Name = Name;
+            this.Value = Value;
+        }
+
         /// <summary>
         /// Writes this string to a stream
         /// </summary>

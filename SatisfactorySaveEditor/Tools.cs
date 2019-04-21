@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SatisfactorySaveEditor
@@ -46,5 +48,26 @@ namespace SatisfactorySaveEditor
             BW.Write(Data);
         }
 
+        public static string HexDump(byte[] Data, int Width = 16)
+        {
+            var SB = new StringBuilder();
+            for (var i = 0; i < Data.Length; i += Width)
+            {
+                var Segment = Data.Skip(i).Take(16).ToArray();
+                for (var j = 0; j < Width; j++)
+                {
+                    if (j < Segment.Length)
+                    {
+                        SB.Append(Segment[j].ToString("X2") + " ");
+                    }
+                    else
+                    {
+                        SB.Append("   ");
+                    }
+                }
+                SB.AppendLine("\t" + Encoding.ASCII.GetString(Segment.Select(m => m > 0x1F && m < 0x7F ? (byte)m : (byte)'.').ToArray()));
+            }
+            return SB.ToString();
+        }
     }
 }
