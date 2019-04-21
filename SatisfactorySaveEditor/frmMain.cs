@@ -91,7 +91,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
 
         private void removeLizardDoggosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (F != null)
+            if (F != null && MessageBox.Show("You're about to make a big mistake. Delete the space rabits?", "Abandon Doggos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 InfoChange(SaveFileHelper.RemoveLizardDoggos(F), "Doggos");
             }
