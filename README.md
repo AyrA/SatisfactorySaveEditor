@@ -15,68 +15,44 @@ The string list has to be last for example
 ## `GENERAL WARNING`
 
 Please make a backup of your save files.
-The editor will not allow you to overwrite the file being read but you should still do it.
+The editor will warn you before overwriting but you should still backup your saves.
 Saves are in `%LOCALAPPDATA%\FactoryGame\Saved\SaveGames`
+
+When overwriting, a .bak file is created **if none does exist already**
 
 ## Important and Missing Functions
 
 These important functions are not yet coded in (see TODO list at bottom for more stuff):
 
 - Reading player position and teleporting
-- Editing inventories
+- Editing and linking inventories; Demo of linked inventory: https://www.youtube.com/watch?v=TtXlkJa8l_k
 - Unlocking technologies
 - Unlocking space elevator tiers
 - Spawning Lizard Doggos
 
 ## Available Utility Functions
 
-Various utility functions are already programmed in. Note: They have no effect on your inventory, essentially allowing you to duplicate items.
+Various utility functions are already programmed in. Note: They have no effect on your inventory, essentially allowing you to duplicate items:
 
-### RemoveLizardDoggos
-
-This will remove your tamed lizard doggos you monster.
-By the way, the internal name for them is "SpaceRabbit".
-
-### RestoreRocks (untested)
-
-This restores removed rocks.
-This function can't be tested because I can't remove rocks, but if it works like the way plants do, it should restore them.
-
-### RemoveRocks (not yet working)
-
-This should remove rocks eventually. Because I can't yet legitimately remove them, this function is incomplete and doesn't works yet.
-
-### RestorePlants
-
-This restores all generic plants you removed.
-
-### RestorePickups
-
-This restores generic pickups, for example the debris around drop pods
-
-### RestoreBerries
-
-This restores berries, nuts and mushrooms
-
-### RestoreDropPods
-
-This resets all drop pods to the unexplored state. You can open them up again using the proper resources and then get another hard drive
-
-### RestoreArtifacts
-
-This restores all artifacts
-
-### RemoveAnimalParts
-
-This removes any dead animal parts you might have forgotten to pick up
+- Removing **tamed** Lizard Doggos (or space rabits as they are called internally)
+- Restore the big rocks that were removed by the player (untested)
+- Remove rocks (not yet working because the player can't remove them yet)
+- Restore **all** plants that the player removed by any means
+- Restore pickups around drop pods
+- Restore berries, nuts and mushrooms
+- Restore drop pods. This will not remove any harddrives you possess already
+- Restore artifacts
+- Remove parts from dead animals you forgot to pick up.
 
 # TODO
 
 - [ ] Reading player position and teleporting
+- [ ] Reading coordinates of objects
 - [ ] Editing inventories
+- [ ] Linking inventories
 - [ ] Unlocking technologies
 - [ ] Unlocking space elevator tiers
 - [ ] Spawning Lizard Doggos
 - [ ] Make sure edits are valid
 - [ ] UI
-- [ ] Multi player capability
+- [ ] Multi player capability (handling of multiple player entities)
