@@ -40,14 +40,14 @@ namespace SatisfactorySaveEditor
                     H.SessionName = "EDITED_GAME";
                     H.Properties["sessionName"] = "EDITED_GAME";
 
-                    var Rock = H.Entries.First(m => m.ObjectData.Name == "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleLargeRock.BP_DestructibleLargeRock_C");
-                    Console.Error.WriteLine(Tools.HexDump(Rock.Properties));
+                    //var Pod = H.Entries.First(m => m.ObjectData.Name == "/Game/FactoryGame/World/Benefit/DropPod/BP_DropPod.BP_DropPod_C");
+                    //Console.Error.WriteLine(Tools.HexDump(Pod.Properties));
 
-                    Console.Error.WriteLine("Removed {0} Rocks", SaveFileHelper.RemoveRocks(H));
+                    Console.Error.WriteLine("Restored {0} Pickups", SaveFileHelper.RestoreDropPods(H));
 
                     /*
                     Console.Error.WriteLine("Count\tType");
-                    foreach (var E in H.Entries.GroupBy(m => m.ObjectData.Name))
+                    foreach (var E in H.Entries.OrderBy(m => m.ObjectData.Name).GroupBy(m => m.ObjectData.Name))
                     {
                         Console.Error.WriteLine("{1}\t{0}", E.Key, E.Count());
                     }
