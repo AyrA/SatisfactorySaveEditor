@@ -60,6 +60,7 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vector4.cs" />
     <Compile Include="SaveFile.cs" />
     <Compile Include="ObjectTypes\GameBaseObject.cs" />
     <Compile Include="ObjectTypes\GameObject.cs" />
@@ -74,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Compile Include="Position.cs" />
+    <Compile Include="Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmHeaderEditor.resx">

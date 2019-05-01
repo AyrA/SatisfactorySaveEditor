@@ -14,11 +14,11 @@ namespace SatisfactorySaveEditor.ObjectTypes
         /// <summary>
         /// Object position
         /// </summary>
-        public Position ObjectPosition { get; set; }
+        public Vector3 ObjectPosition { get; set; }
         /// <summary>
         /// Object scale
         /// </summary>
-        public Position ObjectScale { get; set; }
+        public Vector3 ObjectScale { get; set; }
         /// <summary>
         /// Unknown integer at header end, always 1
         /// </summary>
@@ -38,8 +38,8 @@ namespace SatisfactorySaveEditor.ObjectTypes
             UnknownInt = BR.ReadInt32(); //Discard? always 1, maybe object type again
             
             ObjectRotation = new Vector4(BR);
-            ObjectPosition = new Position(BR);
-            ObjectScale = new Position(BR);
+            ObjectPosition = new Vector3(BR);
+            ObjectScale = new Vector3(BR);
             UnknownHeaderEnd = BR.ReadInt32();
 
             ObjectType = OBJECT_TYPE.OBJECT;

@@ -7,7 +7,7 @@ namespace SatisfactorySaveEditor
     /// Map coordinates
     /// </summary>
     /// <remarks>This entire class is purely a guess</remarks>
-    public struct Position
+    public struct Vector3
     {
         /// <summary>
         /// X position
@@ -29,7 +29,7 @@ namespace SatisfactorySaveEditor
         /// Reads positons
         /// </summary>
         /// <param name="BR">Open Reader</param>
-        public Position(BinaryReader BR)
+        public Vector3(BinaryReader BR)
         {
             X = BR.ReadSingle();
             Y = BR.ReadSingle();
