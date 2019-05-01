@@ -8,10 +8,9 @@ namespace SatisfactorySaveEditor.ObjectTypes
     public class GameObject : GameBaseObject
     {
         /// <summary>
-        /// Object position
+        /// Object scale
         /// </summary>
-        /// <remarks>Seems to always be X=1;Y=1;Z=1, maybe that property was relocated</remarks>
-        public Position ObjectPosition { get; set; }
+        public Position ObjectScale { get; set; }
         /// <summary>
         /// Unknown bytes with object specific information
         /// </summary>
@@ -36,8 +35,7 @@ namespace SatisfactorySaveEditor.ObjectTypes
             UnknownInt = BR.ReadInt32(); //Discard? always 1, maybe object type again
             UnknownBytes = BR.ReadBytes(28); //Unknown bytes, maybe object specific properties
             
-            //Just assumptions. Iirc, position is always 1;1;1
-            ObjectPosition = new Position(BR);
+            ObjectScale = new Position(BR);
             UnknownHeaderEnd = BR.ReadInt32();
 
             ObjectType = OBJECT_TYPE.OBJECT;
@@ -52,7 +50,7 @@ namespace SatisfactorySaveEditor.ObjectTypes
             base.Export(BW);
             BW.Write(UnknownInt);
             BW.Write(UnknownBytes);
-            ObjectPosition.Export(BW);
+            ObjectScale.Export(BW);
             BW.Write(UnknownHeaderEnd);
         }
     }
