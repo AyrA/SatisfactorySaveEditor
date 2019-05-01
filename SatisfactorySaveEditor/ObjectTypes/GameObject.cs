@@ -8,14 +8,17 @@ namespace SatisfactorySaveEditor.ObjectTypes
     public class GameObject : GameBaseObject
     {
         /// <summary>
+        /// Object rotation
+        /// </summary>
+        public Vector4 ObjectRotation { get; set; }
+        /// <summary>
+        /// Object position
+        /// </summary>
+        public Position ObjectPosition { get; set; }
+        /// <summary>
         /// Object scale
         /// </summary>
         public Position ObjectScale { get; set; }
-        /// <summary>
-        /// Unknown bytes with object specific information
-        /// </summary>
-        /// <remarks>Always 28 bytes, entry not length prefixed</remarks>
-        public byte[] UnknownBytes { get; set; }
         /// <summary>
         /// Unknown integer at header end, always 1
         /// </summary>
@@ -33,8 +36,9 @@ namespace SatisfactorySaveEditor.ObjectTypes
         {
             Fill(BR);
             UnknownInt = BR.ReadInt32(); //Discard? always 1, maybe object type again
-            UnknownBytes = BR.ReadBytes(28); //Unknown bytes, maybe object specific properties
             
+            ObjectRotation = new Vector4(BR);
+            ObjectPosition = new Position(BR);
             ObjectScale = new Position(BR);
             UnknownHeaderEnd = BR.ReadInt32();
 
@@ -49,7 +53,8 @@ namespace SatisfactorySaveEditor.ObjectTypes
         {
             base.Export(BW);
             BW.Write(UnknownInt);
-            BW.Write(UnknownBytes);
+            ObjectRotation.Export(BW);
+            ObjectPosition.Export(BW);
             ObjectScale.Export(BW);
             BW.Write(UnknownHeaderEnd);
         }
