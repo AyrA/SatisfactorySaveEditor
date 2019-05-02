@@ -7,7 +7,7 @@ namespace SatisfactorySaveEditor
     /// Map coordinates
     /// </summary>
     /// <remarks>This entire class is purely a guess</remarks>
-    public struct Position
+    public struct Vector4
     {
         /// <summary>
         /// X position
@@ -24,16 +24,22 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public float Z
         { get; set; }
+        /// <summary>
+        /// W position
+        /// </summary>
+        public float W
+        { get; set; }
 
         /// <summary>
         /// Reads positons
         /// </summary>
         /// <param name="BR">Open Reader</param>
-        public Position(BinaryReader BR)
+        public Vector4(BinaryReader BR)
         {
             X = BR.ReadSingle();
             Y = BR.ReadSingle();
             Z = BR.ReadSingle();
+            W = BR.ReadSingle();
         }
 
         /// <summary>
@@ -42,7 +48,7 @@ namespace SatisfactorySaveEditor
         /// <returns>Coordinates</returns>
         public override string ToString()
         {
-            return string.Format("X={0} Y={1} Z={2}", Math.Round(X, 3), Math.Round(Y, 3), Math.Round(Z, 3));
+            return string.Format("X={0} Y={1} Z={2} W={2}", Math.Round(X, 3), Math.Round(Y, 3), Math.Round(Z, 3), Math.Round(W, 3));
         }
 
         /// <summary>
@@ -54,6 +60,7 @@ namespace SatisfactorySaveEditor
             BW.Write(X);
             BW.Write(Y);
             BW.Write(Z);
+            BW.Write(W);
         }
     }
 }

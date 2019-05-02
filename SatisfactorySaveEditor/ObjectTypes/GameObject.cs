@@ -8,15 +8,17 @@ namespace SatisfactorySaveEditor.ObjectTypes
     public class GameObject : GameBaseObject
     {
         /// <summary>
+        /// Object rotation
+        /// </summary>
+        public Vector4 ObjectRotation { get; set; }
+        /// <summary>
         /// Object position
         /// </summary>
-        /// <remarks>Seems to always be X=1;Y=1;Z=1, maybe that property was relocated</remarks>
-        public Position ObjectPosition { get; set; }
+        public Vector3 ObjectPosition { get; set; }
         /// <summary>
-        /// Unknown bytes with object specific information
+        /// Object scale
         /// </summary>
-        /// <remarks>Always 28 bytes, entry not length prefixed</remarks>
-        public byte[] UnknownBytes { get; set; }
+        public Vector3 ObjectScale { get; set; }
         /// <summary>
         /// Unknown integer at header end, always 1
         /// </summary>
@@ -34,10 +36,10 @@ namespace SatisfactorySaveEditor.ObjectTypes
         {
             Fill(BR);
             UnknownInt = BR.ReadInt32(); //Discard? always 1, maybe object type again
-            UnknownBytes = BR.ReadBytes(28); //Unknown bytes, maybe object specific properties
             
-            //Just assumptions. Iirc, position is always 1;1;1
-            ObjectPosition = new Position(BR);
+            ObjectRotation = new Vector4(BR);
+            ObjectPosition = new Vector3(BR);
+            ObjectScale = new Vector3(BR);
             UnknownHeaderEnd = BR.ReadInt32();
 
             ObjectType = OBJECT_TYPE.OBJECT;
@@ -51,8 +53,9 @@ namespace SatisfactorySaveEditor.ObjectTypes
         {
             base.Export(BW);
             BW.Write(UnknownInt);
-            BW.Write(UnknownBytes);
+            ObjectRotation.Export(BW);
             ObjectPosition.Export(BW);
+            ObjectScale.Export(BW);
             BW.Write(UnknownHeaderEnd);
         }
     }
