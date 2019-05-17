@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
@@ -25,12 +23,17 @@ namespace SatisfactorySaveEditor
             Application.Run(new frmMain());
             return RET.SUCCESS;
 #else
-            using (var FS = File.OpenRead(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR),"Experimental.sav")))
+            using (var FS = File.OpenRead(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "Vanilla.sav")))
             {
                 using (var BR = new BinaryReader(FS))
                 {
                     var F = new SaveFile(BR);
                     Console.Error.WriteLine(string.Join("\r\n", F.Entries.Select(m => m.ObjectData.Name).Distinct()));
+                    //Do your tests on the file here
+                    using (var FSOut = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "Test.sav")))
+                    {
+                        F.Export(FSOut);
+                    }
                 }
             }
             return Exit(RET.SUCCESS);

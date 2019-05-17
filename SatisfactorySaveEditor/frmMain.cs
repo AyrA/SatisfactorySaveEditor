@@ -14,7 +14,6 @@ namespace SatisfactorySaveEditor
         bool ShowResizeHint = true;
         bool ShowLimited = true;
 
-
         public frmMain()
         {
             InitializeComponent();

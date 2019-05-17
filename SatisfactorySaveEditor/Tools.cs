@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SatisfactorySaveEditor
@@ -10,6 +10,9 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public static class Tools
     {
+        [DllImport("kernel32.dll")]
+        public static extern bool FreeConsole();
+
         /// <summary>
         /// Reads the weirdly encoded strings
         /// </summary>
