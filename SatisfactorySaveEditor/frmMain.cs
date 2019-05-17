@@ -172,6 +172,17 @@ Really continue?", "Surplus drives", MessageBoxButtons.YesNo, MessageBoxIcon.Exc
             }
         }
 
+        private void spawnerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                if (MessageBox.Show(@"Removes all spawner entries. This does not removed spawned animals", "Animal spawner", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    InfoChange(SaveFileHelper.RemoveCreatureSpawner(F), "spawner");
+                }
+            }
+        }
+
         private void modifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NA("I have not yet decoded the inventory entries.");
@@ -237,6 +248,40 @@ Once done, you will be able to link two containers together so they share their 
                     }
                 }
             }
+        }
+
+        private void niceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                if (MessageBox.Show(@"Removes animals that generally are friendly to the player (excluding doggos).", "Friendly Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    InfoChange(SaveFileHelper.RemoveNiceCreatures(F), "animals");
+                }
+            }
+        }
+
+        private void evilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                if (MessageBox.Show(@"Removes animals that are hostile to the player.", "Hostile Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    InfoChange(SaveFileHelper.RemoveEvilCreatures(F), "animals");
+                }
+            }
+        }
+
+        private void restoreSlugsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                if (MessageBox.Show(@"Restore all slugs?", "Restors Slugs", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    InfoChange(SaveFileHelper.RestoreSlugs(F), "slugs");
+                }
+            }
+
         }
     }
 }

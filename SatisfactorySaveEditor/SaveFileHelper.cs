@@ -99,13 +99,13 @@ namespace SatisfactorySaveEditor
         public static int RestoreArtifacts(SaveFile F)
         {
             var ItemList = new string[] {
-                "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal.BP_Crystal_C",
-                "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal_mk3.BP_Crystal_mk3_C",
-                "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal_mk2.BP_Crystal_mk2_C"
+                "/Game/FactoryGame/Prototype/WAT/BP_WAT1.BP_WAT1_C",
+                "/Game/FactoryGame/Prototype/WAT/BP_WAT2.BP_WAT2_C",
             };
 
             var StringList = new string[] {
-                ":PersistentLevel.BP_Crystal"
+                ":PersistentLevel.BP_WAT1",
+                ":PersistentLevel.BP_WAT2"
             };
 
             F.StringList.RemoveAll(m => StringList.Any(n => m.Value.Contains(n)));
@@ -121,6 +121,53 @@ namespace SatisfactorySaveEditor
             };
 
             //String list?
+
+            return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+        }
+
+        public static int RestoreSlugs(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal.BP_Crystal_C",
+                "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal_mk2.BP_Crystal_mk2_C",
+                "/Game/FactoryGame/Resource/Environment/Crystal/BP_Crystal_mk3.BP_Crystal_mk3_C"
+            };
+
+            var StringList = new string[] {
+                ":PersistentLevel.BP_Crystal"
+            };
+
+            F.StringList.RemoveAll(m => StringList.Any(n => m.Value.Contains(n)));
+            return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+        }
+
+        public static int RemoveNiceCreatures(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Character/Creature/Wildlife/SpaceGiraffe/Char_SpaceGiraffe.Char_SpaceGiraffe_C",
+                "/Game/FactoryGame/Character/Creature/Wildlife/NonFlyingBird/Char_NonFlyingBird.Char_NonFlyingBird_C"
+            };
+
+            return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+        }
+
+        public static int RemoveEvilCreatures(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C",
+                "/Game/FactoryGame/Character/Creature/Enemy/Stinger/SmallStinger/Char_CaveStinger_Child.Char_CaveStinger_Child_C",
+                "/Game/FactoryGame/Character/Creature/Enemy/Spitter/SmallSpitter/Char_Spitter_Small.Char_Spitter_Small_C",
+                "/Game/FactoryGame/Character/Creature/Enemy/Hog/Char_Hog.Char_Hog_C"
+            };
+
+            return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+        }
+
+        public static int RemoveCreatureSpawner(SaveFile F)
+        {
+            var ItemList = new string[] {
+                "/Game/FactoryGame/Character/Creature/BP_CreatureSpawner.BP_CreatureSpawner_C"
+            };
 
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
