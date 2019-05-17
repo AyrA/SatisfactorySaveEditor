@@ -7,7 +7,7 @@ namespace SatisfactorySaveEditor
     /// Map coordinates
     /// </summary>
     /// <remarks>This entire class is purely a guess</remarks>
-    public struct Vector4
+    public class Vector4
     {
         /// <summary>
         /// X position

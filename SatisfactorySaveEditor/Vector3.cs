@@ -7,7 +7,7 @@ namespace SatisfactorySaveEditor
     /// Map coordinates
     /// </summary>
     /// <remarks>This entire class is purely a guess</remarks>
-    public struct Vector3
+    public class Vector3
     {
         /// <summary>
         /// X position
@@ -22,6 +22,7 @@ namespace SatisfactorySaveEditor
         /// <summary>
         /// Z position
         /// </summary>
+        /// <remarks>This will be the height if this instance represents map coordinates</remarks>
         public float Z
         { get; set; }
 
