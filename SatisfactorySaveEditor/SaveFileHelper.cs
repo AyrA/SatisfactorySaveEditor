@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SatisfactorySaveEditor
@@ -29,7 +30,7 @@ namespace SatisfactorySaveEditor
                 "/Game/FactoryGame/Equipment/C4Dispenser/BP_DestructibleSmallRock.BP_DestructibleSmallRock_C"
             };
             var Entries = F.Entries.Where(m => ItemList.Contains(m.ObjectData.Name)).ToArray();
-            
+
             //Something probably has to be done to the array here but I am not sure what
             //Default: 00 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 4E 6F 6E 65 00 00 00 00 00
 
@@ -193,5 +194,32 @@ namespace SatisfactorySaveEditor
                 F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Resizes all given objects
+        /// </summary>
+        /// <param name="Entries">Enumeration of objects</param>
+        /// <param name="factor">
+        /// Factor to scale to.
+        /// The default factor of objects is 1.0
+        /// </param>
+        /// <param name="Offset">
+        /// Offset to apply to position.
+        /// Use 0 to not resize. Positive numbers move the object up.
+        /// Generally you want to do this when inflating by large factors (10 and more)
+        /// </param>
+        /// <returns>Number of items resized</returns>
+        public static int ItemResizer(IEnumerable<SaveFileEntry> Entries, float factor = 1.0f, int Offset = 0)
+        {
+            int Ret = 0;
+            foreach (var E in Entries.Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT))
+            {
+                var OD = (ObjectTypes.GameObject)E.ObjectData;
+                OD.ObjectScale.X = factor;
+                OD.ObjectScale.Y = factor;
+                OD.ObjectScale.Z = factor;
+                ++Ret;
+            }
+            return Ret;
+        }
     }
 }

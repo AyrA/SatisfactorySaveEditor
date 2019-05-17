@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
@@ -10,7 +11,7 @@ namespace SatisfactorySaveEditor
         SaveFile F = null;
         bool HasChange = false;
         bool NameChanged = false;
-
+        bool ShowResizeHint = true;
         bool ShowLimited = true;
 
 
@@ -38,6 +39,44 @@ namespace SatisfactorySaveEditor
         {
             MessageBox.Show($"This function is currently unavailable. Reason:\r\n{Reason}", "Function unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void SaveCurrent()
+        {
+            var Backup = Path.ChangeExtension(FileName, ".bak");
+            if (!File.Exists(Backup))
+            {
+                File.Copy(FileName, Backup);
+                MessageBox.Show($"Because this is your first time overwriting this file, a backup ({Path.GetFileName(Backup)}) has been created in the same directory.", "Backup created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            using (var FS = File.Create(FileName))
+            {
+                F.Export(FS);
+            }
+            HasChange = false;
+        }
+
+        private void ResizeDoggos(float Factor, int Offset)
+        {
+            var Doggos = F.Entries.Where(m => m.ObjectData.Name == "");
+            InfoChange(SaveFileHelper.ItemResizer(Doggos, Factor, Offset), "doggos");
+        }
+
+        private void ResizeHint()
+        {
+            if(ShowResizeHint)
+            {
+                ShowResizeHint = false;
+                MessageBox.Show(@"Resizing objects is dangerous.
+- Creatures that get stuck in the ground because of the resizing will cause massive lag.
+- Creatures are not aware of their changed size. Larger creatures don't get faster or stronger.
+
+Resizing will offset the position to avoid the 'getting stuck' problem.
+Repeatedly resizing will essentially teleport them into space.
+Be aware that all creatures have fall damage", "Resizing objects",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+            }
+        }
+
+        #region Menu Actions
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -199,41 +238,6 @@ Once done, you will be able to link two containers together so they share their 
             Close();
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (HasChange)
-            {
-                switch (MessageBox.Show($"You have unsaved changes. Overwrite {Path.GetFileName(FileName)} before exiting?", "Unsaved changes.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation))
-                {
-                    case DialogResult.Yes:
-                        SaveCurrent();
-                        break;
-                    case DialogResult.No:
-                        //Do nothing
-                        break;
-                    case DialogResult.Cancel:
-                        e.Cancel = true;
-                        break;
-                }
-            }
-
-        }
-
-        private void SaveCurrent()
-        {
-            var Backup = Path.ChangeExtension(FileName, ".bak");
-            if (!File.Exists(Backup))
-            {
-                File.Copy(FileName, Backup);
-                MessageBox.Show($"Because this is your first time overwriting this file, a backup ({Path.GetFileName(Backup)}) has been created in the same directory.", "Backup created", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            using (var FS = File.Create(FileName))
-            {
-                F.Export(FS);
-            }
-            HasChange = false;
-        }
-
         private void editHeaderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (F != null)
@@ -279,6 +283,77 @@ Once done, you will be able to link two containers together so they share their 
                 if (MessageBox.Show(@"Restore all slugs?", "Restors Slugs", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RestoreSlugs(F), "slugs");
+                }
+            }
+
+        }
+
+        private void tinyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                ResizeHint();
+                if (MessageBox.Show(@"Resize all doggos to a quarter of their regular size? It will not be easy to find them again.", "Resize doggos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    ResizeDoggos(0.25f, 0);
+                }
+            }
+        }
+
+        private void regularSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResizeHint();
+            if (F != null)
+            {
+                if (MessageBox.Show(@"Reset all doggo sizes to the default?", "Resize doggos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    //Move them up just a little in case they were smaller
+                    ResizeDoggos(1f, 20);
+                }
+            }
+        }
+
+        private void largeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResizeHint();
+            if (F != null)
+            {
+                if (MessageBox.Show(@"Resize doggos to 20 times their regular size? If their current position gets them stuck they will introduce heavy lags.", "Resize doggos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    ResizeDoggos(20f, 200);
+                }
+            }
+        }
+
+        private void wTFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                ResizeHint();
+                if (MessageBox.Show(@"Resize doggos to 100 times their regular size? They almost certainly get stuck and this will introduce massive lags.", "Resize doggos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    ResizeDoggos(100f, 3000);
+                }
+            }
+        }
+
+        #endregion
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (HasChange)
+            {
+                switch (MessageBox.Show($"You have unsaved changes. Overwrite {Path.GetFileName(FileName)} before exiting?", "Unsaved changes.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation))
+                {
+                    case DialogResult.Yes:
+                        SaveCurrent();
+                        break;
+                    case DialogResult.No:
+                        //Do nothing
+                        break;
+                    case DialogResult.Cancel:
+                        e.Cancel = true;
+                        break;
                 }
             }
 

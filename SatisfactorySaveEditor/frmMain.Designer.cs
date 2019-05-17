@@ -42,7 +42,13 @@
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorePlantsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreBerriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreSlugsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeAnimalPartsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAnimalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spawnerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.niceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lizardDoggosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dropPodsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorePickupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,12 +60,12 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
-            this.removeAnimalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.spawnerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.niceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.evilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lizardDoggosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restoreSlugsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.funToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resizeDoggosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tinyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.regularSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.largeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wTFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,7 +129,8 @@
             // 
             this.quickActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mapFeaturesToolStripMenuItem,
-            this.dropPodsToolStripMenuItem});
+            this.dropPodsToolStripMenuItem,
+            this.funToolStripMenuItem});
             this.quickActionsToolStripMenuItem.Name = "quickActionsToolStripMenuItem";
             this.quickActionsToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.quickActionsToolStripMenuItem.Text = "Quick Actions";
@@ -184,6 +191,13 @@
             this.restoreBerriesToolStripMenuItem.ToolTipText = "Restores berries, nuts and mushrooms";
             this.restoreBerriesToolStripMenuItem.Click += new System.EventHandler(this.restoreBerriesToolStripMenuItem_Click);
             // 
+            // restoreSlugsToolStripMenuItem
+            // 
+            this.restoreSlugsToolStripMenuItem.Name = "restoreSlugsToolStripMenuItem";
+            this.restoreSlugsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.restoreSlugsToolStripMenuItem.Text = "Restore Slugs";
+            this.restoreSlugsToolStripMenuItem.Click += new System.EventHandler(this.restoreSlugsToolStripMenuItem_Click);
+            // 
             // removeAnimalPartsToolStripMenuItem
             // 
             this.removeAnimalPartsToolStripMenuItem.Name = "removeAnimalPartsToolStripMenuItem";
@@ -192,13 +206,56 @@
             this.removeAnimalPartsToolStripMenuItem.ToolTipText = "Removes animal parts (like organs) that you might have left on the map";
             this.removeAnimalPartsToolStripMenuItem.Click += new System.EventHandler(this.removeAnimalPartsToolStripMenuItem_Click);
             // 
+            // removeAnimalsToolStripMenuItem
+            // 
+            this.removeAnimalsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.spawnerToolStripMenuItem,
+            this.niceToolStripMenuItem,
+            this.evilToolStripMenuItem,
+            this.lizardDoggosToolStripMenuItem});
+            this.removeAnimalsToolStripMenuItem.Name = "removeAnimalsToolStripMenuItem";
+            this.removeAnimalsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.removeAnimalsToolStripMenuItem.Text = "Remove Animals";
+            this.removeAnimalsToolStripMenuItem.ToolTipText = "Removes animals from the save file";
+            // 
+            // spawnerToolStripMenuItem
+            // 
+            this.spawnerToolStripMenuItem.Name = "spawnerToolStripMenuItem";
+            this.spawnerToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.spawnerToolStripMenuItem.Text = "Spawner";
+            this.spawnerToolStripMenuItem.Click += new System.EventHandler(this.spawnerToolStripMenuItem_Click);
+            // 
+            // niceToolStripMenuItem
+            // 
+            this.niceToolStripMenuItem.Name = "niceToolStripMenuItem";
+            this.niceToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.niceToolStripMenuItem.Text = "Neutral";
+            this.niceToolStripMenuItem.ToolTipText = "Removes neutral animals";
+            this.niceToolStripMenuItem.Click += new System.EventHandler(this.niceToolStripMenuItem_Click);
+            // 
+            // evilToolStripMenuItem
+            // 
+            this.evilToolStripMenuItem.Name = "evilToolStripMenuItem";
+            this.evilToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.evilToolStripMenuItem.Text = "Hostile";
+            this.evilToolStripMenuItem.ToolTipText = "Removes hostile animals";
+            this.evilToolStripMenuItem.Click += new System.EventHandler(this.evilToolStripMenuItem_Click);
+            // 
+            // lizardDoggosToolStripMenuItem
+            // 
+            this.lizardDoggosToolStripMenuItem.Name = "lizardDoggosToolStripMenuItem";
+            this.lizardDoggosToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.lizardDoggosToolStripMenuItem.Text = "Lizard Doggos";
+            this.lizardDoggosToolStripMenuItem.ToolTipText = "Removes all lizard doggos (including tamed)";
+            this.lizardDoggosToolStripMenuItem.Click += new System.EventHandler(this.removeLizardDoggosToolStripMenuItem_Click);
+            // 
             // dropPodsToolStripMenuItem
             // 
             this.dropPodsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resetToolStripMenuItem,
             this.restorePickupsToolStripMenuItem});
             this.dropPodsToolStripMenuItem.Name = "dropPodsToolStripMenuItem";
-            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dropPodsToolStripMenuItem.Text = "Drop Pods";
             // 
             // resetToolStripMenuItem
@@ -268,55 +325,52 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
-            // removeAnimalsToolStripMenuItem
+            // funToolStripMenuItem
             // 
-            this.removeAnimalsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.spawnerToolStripMenuItem,
-            this.niceToolStripMenuItem,
-            this.evilToolStripMenuItem,
-            this.lizardDoggosToolStripMenuItem});
-            this.removeAnimalsToolStripMenuItem.Name = "removeAnimalsToolStripMenuItem";
-            this.removeAnimalsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.removeAnimalsToolStripMenuItem.Text = "Remove Animals";
-            this.removeAnimalsToolStripMenuItem.ToolTipText = "Removes animals from the save file";
+            this.funToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resizeDoggosToolStripMenuItem});
+            this.funToolStripMenuItem.Name = "funToolStripMenuItem";
+            this.funToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.funToolStripMenuItem.Text = "Fun";
             // 
-            // spawnerToolStripMenuItem
+            // resizeDoggosToolStripMenuItem
             // 
-            this.spawnerToolStripMenuItem.Name = "spawnerToolStripMenuItem";
-            this.spawnerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.spawnerToolStripMenuItem.Text = "Spawner";
-            this.spawnerToolStripMenuItem.Click += new System.EventHandler(this.spawnerToolStripMenuItem_Click);
+            this.resizeDoggosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tinyToolStripMenuItem,
+            this.regularSizeToolStripMenuItem,
+            this.largeToolStripMenuItem,
+            this.wTFToolStripMenuItem});
+            this.resizeDoggosToolStripMenuItem.Name = "resizeDoggosToolStripMenuItem";
+            this.resizeDoggosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resizeDoggosToolStripMenuItem.Text = "Resize Doggos";
             // 
-            // niceToolStripMenuItem
+            // tinyToolStripMenuItem
             // 
-            this.niceToolStripMenuItem.Name = "niceToolStripMenuItem";
-            this.niceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.niceToolStripMenuItem.Text = "Neutral";
-            this.niceToolStripMenuItem.ToolTipText = "Removes neutral animals";
-            this.niceToolStripMenuItem.Click += new System.EventHandler(this.niceToolStripMenuItem_Click);
+            this.tinyToolStripMenuItem.Name = "tinyToolStripMenuItem";
+            this.tinyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tinyToolStripMenuItem.Text = "Tiny";
+            this.tinyToolStripMenuItem.Click += new System.EventHandler(this.tinyToolStripMenuItem_Click);
             // 
-            // evilToolStripMenuItem
+            // regularSizeToolStripMenuItem
             // 
-            this.evilToolStripMenuItem.Name = "evilToolStripMenuItem";
-            this.evilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.evilToolStripMenuItem.Text = "Hostile";
-            this.evilToolStripMenuItem.ToolTipText = "Removes hostile animals";
-            this.evilToolStripMenuItem.Click += new System.EventHandler(this.evilToolStripMenuItem_Click);
+            this.regularSizeToolStripMenuItem.Name = "regularSizeToolStripMenuItem";
+            this.regularSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.regularSizeToolStripMenuItem.Text = "Regular Size";
+            this.regularSizeToolStripMenuItem.Click += new System.EventHandler(this.regularSizeToolStripMenuItem_Click);
             // 
-            // lizardDoggosToolStripMenuItem
+            // largeToolStripMenuItem
             // 
-            this.lizardDoggosToolStripMenuItem.Name = "lizardDoggosToolStripMenuItem";
-            this.lizardDoggosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.lizardDoggosToolStripMenuItem.Text = "Lizard Doggos";
-            this.lizardDoggosToolStripMenuItem.ToolTipText = "Removes all lizard doggos (including tamed)";
-            this.lizardDoggosToolStripMenuItem.Click += new System.EventHandler(this.removeLizardDoggosToolStripMenuItem_Click);
+            this.largeToolStripMenuItem.Name = "largeToolStripMenuItem";
+            this.largeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.largeToolStripMenuItem.Text = "Large";
+            this.largeToolStripMenuItem.Click += new System.EventHandler(this.largeToolStripMenuItem_Click);
             // 
-            // restoreSlugsToolStripMenuItem
+            // wTFToolStripMenuItem
             // 
-            this.restoreSlugsToolStripMenuItem.Name = "restoreSlugsToolStripMenuItem";
-            this.restoreSlugsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.restoreSlugsToolStripMenuItem.Text = "Restore Slugs";
-            this.restoreSlugsToolStripMenuItem.Click += new System.EventHandler(this.restoreSlugsToolStripMenuItem_Click);
+            this.wTFToolStripMenuItem.Name = "wTFToolStripMenuItem";
+            this.wTFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wTFToolStripMenuItem.Text = "WTF";
+            this.wTFToolStripMenuItem.Click += new System.EventHandler(this.wTFToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -368,5 +422,11 @@
         private System.Windows.Forms.ToolStripMenuItem evilToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lizardDoggosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreSlugsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem funToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resizeDoggosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tinyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem regularSizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem largeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wTFToolStripMenuItem;
     }
 }
