@@ -25,7 +25,7 @@ namespace SatisfactorySaveEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain(args.FirstOrDefault()));
-            return Exit(RET.SUCCESS);
+            return RET.SUCCESS;
 #else
             //Allocate console or the Console.ReadKey() will crash
             Tools.AllocConsole();
