@@ -11,6 +11,9 @@ namespace SatisfactorySaveEditor
     public static class Tools
     {
         [DllImport("kernel32.dll")]
+        public static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll")]
         public static extern bool FreeConsole();
 
         /// <summary>

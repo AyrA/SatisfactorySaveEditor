@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
@@ -18,11 +20,15 @@ namespace SatisfactorySaveEditor
         {
             //Set "NOFORM" to better experiment
 #if !NOFORM
+            //Remove console handle to not block any scripts.
+            Tools.FreeConsole();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
-            return RET.SUCCESS;
+            Application.Run(new frmMain(args.FirstOrDefault()));
+            return Exit(RET.SUCCESS);
 #else
+            //Allocate console or the Console.ReadKey() will crash
+            Tools.AllocConsole();
             using (var FS = File.OpenRead(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "Vanilla.sav")))
             {
                 using (var BR = new BinaryReader(FS))
