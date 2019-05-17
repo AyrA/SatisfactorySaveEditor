@@ -14,10 +14,14 @@ namespace SatisfactorySaveEditor
         bool ShowResizeHint = true;
         bool ShowLimited = true;
 
-        public frmMain()
+        public frmMain(string InitialFile = null)
         {
             InitializeComponent();
             SFD.InitialDirectory = OFD.InitialDirectory = Environment.ExpandEnvironmentVariables(Program.SAVEDIR);
+            if(!string.IsNullOrEmpty(InitialFile))
+            {
+                OpenFile(InitialFile);
+            }
         }
 
         private void InfoChange(int Count, string ItemName)
@@ -75,28 +79,33 @@ Be aware that all creatures have fall damage", "Resizing objects",MessageBoxButt
             }
         }
 
+        private void OpenFile(string SaveFileName)
+        {
+            FileName = SaveFileName;
+            using (var FS = File.OpenRead(FileName))
+            {
+                using (var BR = new BinaryReader(FS))
+                {
+                    F = new SaveFile(BR);
+                    HasChange = false;
+                    NameChanged = false;
+                    if (ShowLimited)
+                    {
+                        ShowLimited = false;
+                        MessageBox.Show(@"This is still in development and functionality is limited.
+You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
         #region Menu Actions
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (OFD.ShowDialog() == DialogResult.OK)
             {
-                FileName = OFD.FileName;
-                using (var FS = OFD.OpenFile())
-                {
-                    using (var BR = new BinaryReader(FS))
-                    {
-                        F = new SaveFile(BR);
-                        HasChange = false;
-                        NameChanged = false;
-                        if (ShowLimited)
-                        {
-                            ShowLimited = false;
-                            MessageBox.Show(@"This is still in development and functionality is limited.
-You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
+                OpenFile(OFD.FileName);
             }
         }
 
