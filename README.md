@@ -24,7 +24,7 @@ When overwriting, a .bak file is created **if none does exist already**
 
 These important functions are not yet coded in (see TODO list at bottom for more stuff):
 
-- Reading player position and teleporting
+- Player teleporting
 - Editing and linking inventories; Demo of linked inventory: https://www.youtube.com/watch?v=TtXlkJa8l_k
 - Unlocking technologies
 - Unlocking space elevator tiers
@@ -43,16 +43,21 @@ Various utility functions are already programmed in. Note: They have no effect o
 - Restore drop pods. This will not remove any harddrives you possess already
 - Restore artifacts
 - Remove parts from dead animals you forgot to pick up.
+- Remove neutral animals
+- Remove hostile animals
+- Resize doggos
+- Restore power slugs
 
 # TODO
 
-- [ ] Reading player position and teleporting
-- [ ] Reading coordinates of objects
+- [X] Reading player position
+- [ ] Teleporting objects
+- [X] Reading coordinates of objects
 - [ ] Editing inventories
 - [ ] Linking inventories
 - [ ] Unlocking technologies
 - [ ] Unlocking space elevator tiers
 - [ ] Spawning Lizard Doggos
 - [ ] Make sure edits are valid
-- [ ] UI
+- [X] UI
 - [ ] Multi player capability (handling of multiple player entities)
