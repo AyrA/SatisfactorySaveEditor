@@ -18,7 +18,7 @@ namespace SatisfactorySaveEditor
         {
             InitializeComponent();
             SFD.InitialDirectory = OFD.InitialDirectory = Environment.ExpandEnvironmentVariables(Program.SAVEDIR);
-            if(!string.IsNullOrEmpty(InitialFile))
+            if (!string.IsNullOrEmpty(InitialFile))
             {
                 OpenFile(InitialFile);
             }
@@ -66,7 +66,7 @@ namespace SatisfactorySaveEditor
 
         private void ResizeHint()
         {
-            if(ShowResizeHint)
+            if (ShowResizeHint)
             {
                 ShowResizeHint = false;
                 MessageBox.Show(@"Resizing objects is dangerous.
@@ -75,7 +75,7 @@ namespace SatisfactorySaveEditor
 
 Resizing will offset the position to avoid the 'getting stuck' problem.
 Repeatedly resizing will essentially teleport them into space.
-Be aware that all creatures have fall damage", "Resizing objects",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+Be aware that all creatures have fall damage", "Resizing objects", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -345,6 +345,20 @@ Once done, you will be able to link two containers together so they share their 
             }
         }
 
+        private void duplicatorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                using (var Cloner = new frmDuplicator(F))
+                {
+                    if (Cloner.ShowDialog() == DialogResult.OK)
+                    {
+                        HasChange = true;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -364,7 +378,6 @@ Once done, you will be able to link two containers together so they share their 
                         break;
                 }
             }
-
         }
     }
 }

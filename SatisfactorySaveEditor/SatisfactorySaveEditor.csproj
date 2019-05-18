@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmDuplicator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDuplicator.Designer.cs">
+      <DependentUpon>frmDuplicator.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmHeaderEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     <Compile Include="Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmDuplicator.resx">
+      <DependentUpon>frmDuplicator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmHeaderEditor.resx">
       <DependentUpon>frmHeaderEditor.cs</DependentUpon>
     </EmbeddedResource>
