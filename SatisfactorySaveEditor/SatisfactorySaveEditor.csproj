@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmDeleter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeleter.Designer.cs">
+      <DependentUpon>frmDeleter.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDuplicator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     <Compile Include="Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmDeleter.resx">
+      <DependentUpon>frmDeleter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDuplicator.resx">
       <DependentUpon>frmDuplicator.cs</DependentUpon>
     </EmbeddedResource>

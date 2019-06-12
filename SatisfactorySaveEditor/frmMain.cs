@@ -7,13 +7,14 @@ namespace SatisfactorySaveEditor
 {
     public partial class frmMain : Form
     {
-        string FileName = null;
-        SaveFile F = null;
-        bool HasChange = false;
-        bool NameChanged = false;
-        bool ShowResizeHint = true;
-        bool ShowLimited = true;
-        bool ShowDuplicationHint = true;
+        private string FileName = null;
+        private SaveFile F = null;
+        private bool HasChange = false;
+        private bool NameChanged = false;
+        private bool ShowResizeHint = true;
+        private bool ShowLimited = true;
+        private bool ShowDuplicationHint = true;
+        private bool ShowDeletionHint = true;
 
         public frmMain(string InitialFile = null)
         {
@@ -381,7 +382,23 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
 
         private void deleterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NA("Unimplemented");
+            if (F != null)
+            {
+                if (ShowDeletionHint)
+                {
+                    MessageBox.Show(@"Deletion is dangerous.
+- The object deleter will not validate your choices (you can delete the HUB)
+- The object deleter will not handle dependencies. Example: Deleting containers leaves stray inventory entries behind in the save file.", "Deleter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ShowDuplicationHint = false;
+                }
+                using (var Deleter = new frmDeleter(F))
+                {
+                    if (Deleter.ShowDialog() == DialogResult.OK)
+                    {
+                        HasChange = true;
+                    }
+                }
+            }
         }
 
         #endregion
