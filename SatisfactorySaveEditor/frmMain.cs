@@ -13,6 +13,7 @@ namespace SatisfactorySaveEditor
         bool NameChanged = false;
         bool ShowResizeHint = true;
         bool ShowLimited = true;
+        bool ShowDuplicationHint = true;
 
         public frmMain(string InitialFile = null)
         {
@@ -22,6 +23,13 @@ namespace SatisfactorySaveEditor
             {
                 OpenFile(InitialFile);
             }
+#if DEBUG
+            //Enable not fully implemented items
+            duplicatorToolStripMenuItem.Visible = true;
+            saveFileManagerToolStripMenuItem.Visible = true;
+            deleterToolStripMenuItem.Visible = true;
+            inventoriesToolStripMenuItem.Visible = true;
+#endif
         }
 
         private void InfoChange(int Count, string ItemName)
@@ -349,6 +357,13 @@ Once done, you will be able to link two containers together so they share their 
         {
             if (F != null)
             {
+                if(ShowDuplicationHint)
+                {
+                    MessageBox.Show(@"Duplication is dangerous. The duplicator will not check if duplication makes sense at all.
+Some objects will show weird behaviour once duplicated.
+Container duplicates for example will share the inventory.", "Duplicator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ShowDuplicationHint = false;
+                }
                 using (var Cloner = new frmDuplicator(F))
                 {
                     if (Cloner.ShowDialog() == DialogResult.OK)
@@ -357,6 +372,16 @@ Once done, you will be able to link two containers together so they share their 
                     }
                 }
             }
+        }
+
+        private void saveFileManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NA("Unimplemented");
+        }
+
+        private void deleterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NA("Unimplemented");
         }
 
         #endregion

@@ -63,10 +63,12 @@
             this.linkTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generalActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
-            this.duplicatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,7 +91,8 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem,
+            this.saveFileManagerToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -97,7 +100,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.ToolTipText = "Opens a save file for editing";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
@@ -105,7 +108,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.ToolTipText = "Owerwrites the currently open file";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
@@ -113,7 +116,7 @@
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.saveAsToolStripMenuItem.Text = "&Save As...";
             this.saveAsToolStripMenuItem.ToolTipText = "Saves the file under a new name";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
@@ -121,7 +124,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.ToolTipText = "Exits the application";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -134,7 +137,7 @@
             this.funToolStripMenuItem});
             this.quickActionsToolStripMenuItem.Name = "quickActionsToolStripMenuItem";
             this.quickActionsToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.quickActionsToolStripMenuItem.Text = "Quick Actions";
+            this.quickActionsToolStripMenuItem.Text = "&Quick Actions";
             // 
             // mapFeaturesToolStripMenuItem
             // 
@@ -147,7 +150,7 @@
             this.removeAnimalsToolStripMenuItem});
             this.mapFeaturesToolStripMenuItem.Name = "mapFeaturesToolStripMenuItem";
             this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.mapFeaturesToolStripMenuItem.Text = "Map Features";
+            this.mapFeaturesToolStripMenuItem.Text = "&Map Features";
             this.mapFeaturesToolStripMenuItem.ToolTipText = "Map/Environment specifics";
             // 
             // rocksToolStripMenuItem
@@ -157,14 +160,14 @@
             this.removeToolStripMenuItem});
             this.rocksToolStripMenuItem.Name = "rocksToolStripMenuItem";
             this.rocksToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.rocksToolStripMenuItem.Text = "Rocks";
+            this.rocksToolStripMenuItem.Text = "&Rocks";
             this.rocksToolStripMenuItem.ToolTipText = "Rocks that block items";
             // 
             // restoreToolStripMenuItem
             // 
             this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
             this.restoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.restoreToolStripMenuItem.Text = "Restore";
+            this.restoreToolStripMenuItem.Text = "R&estore";
             this.restoreToolStripMenuItem.ToolTipText = "Restores all rocks";
             this.restoreToolStripMenuItem.Click += new System.EventHandler(this.restoreToolStripMenuItem_Click);
             // 
@@ -172,7 +175,7 @@
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Text = "&Remove";
             this.removeToolStripMenuItem.ToolTipText = "Removes all rocks";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
@@ -180,7 +183,7 @@
             // 
             this.restorePlantsToolStripMenuItem.Name = "restorePlantsToolStripMenuItem";
             this.restorePlantsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.restorePlantsToolStripMenuItem.Text = "Restore Plants";
+            this.restorePlantsToolStripMenuItem.Text = "Restore &Plants";
             this.restorePlantsToolStripMenuItem.ToolTipText = "Restores all plants that have been cut";
             this.restorePlantsToolStripMenuItem.Click += new System.EventHandler(this.restorePlantsToolStripMenuItem_Click);
             // 
@@ -188,7 +191,7 @@
             // 
             this.restoreBerriesToolStripMenuItem.Name = "restoreBerriesToolStripMenuItem";
             this.restoreBerriesToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.restoreBerriesToolStripMenuItem.Text = "Restore Berries";
+            this.restoreBerriesToolStripMenuItem.Text = "Restore &Berries";
             this.restoreBerriesToolStripMenuItem.ToolTipText = "Restores berries, nuts and mushrooms";
             this.restoreBerriesToolStripMenuItem.Click += new System.EventHandler(this.restoreBerriesToolStripMenuItem_Click);
             // 
@@ -196,7 +199,7 @@
             // 
             this.restoreSlugsToolStripMenuItem.Name = "restoreSlugsToolStripMenuItem";
             this.restoreSlugsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.restoreSlugsToolStripMenuItem.Text = "Restore Slugs";
+            this.restoreSlugsToolStripMenuItem.Text = "Restore &Slugs";
             this.restoreSlugsToolStripMenuItem.ToolTipText = "Restore all collected power slugs";
             this.restoreSlugsToolStripMenuItem.Click += new System.EventHandler(this.restoreSlugsToolStripMenuItem_Click);
             // 
@@ -204,7 +207,7 @@
             // 
             this.removeAnimalPartsToolStripMenuItem.Name = "removeAnimalPartsToolStripMenuItem";
             this.removeAnimalPartsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.removeAnimalPartsToolStripMenuItem.Text = "Remove Animal Parts";
+            this.removeAnimalPartsToolStripMenuItem.Text = "Remove &Animal Parts";
             this.removeAnimalPartsToolStripMenuItem.ToolTipText = "Removes animal parts (like organs) that you might have left on the map";
             this.removeAnimalPartsToolStripMenuItem.Click += new System.EventHandler(this.removeAnimalPartsToolStripMenuItem_Click);
             // 
@@ -217,14 +220,14 @@
             this.lizardDoggosToolStripMenuItem});
             this.removeAnimalsToolStripMenuItem.Name = "removeAnimalsToolStripMenuItem";
             this.removeAnimalsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.removeAnimalsToolStripMenuItem.Text = "Remove Animals";
+            this.removeAnimalsToolStripMenuItem.Text = "Remove A&nimals";
             this.removeAnimalsToolStripMenuItem.ToolTipText = "Removes animals from the save file";
             // 
             // spawnerToolStripMenuItem
             // 
             this.spawnerToolStripMenuItem.Name = "spawnerToolStripMenuItem";
             this.spawnerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.spawnerToolStripMenuItem.Text = "Spawner";
+            this.spawnerToolStripMenuItem.Text = "&Spawner";
             this.spawnerToolStripMenuItem.ToolTipText = "Removes animal spawners";
             this.spawnerToolStripMenuItem.Click += new System.EventHandler(this.spawnerToolStripMenuItem_Click);
             // 
@@ -232,7 +235,7 @@
             // 
             this.niceToolStripMenuItem.Name = "niceToolStripMenuItem";
             this.niceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.niceToolStripMenuItem.Text = "Neutral";
+            this.niceToolStripMenuItem.Text = "&Neutral";
             this.niceToolStripMenuItem.ToolTipText = "Removes neutral animals";
             this.niceToolStripMenuItem.Click += new System.EventHandler(this.niceToolStripMenuItem_Click);
             // 
@@ -240,7 +243,7 @@
             // 
             this.evilToolStripMenuItem.Name = "evilToolStripMenuItem";
             this.evilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.evilToolStripMenuItem.Text = "Hostile";
+            this.evilToolStripMenuItem.Text = "&Hostile";
             this.evilToolStripMenuItem.ToolTipText = "Removes hostile animals";
             this.evilToolStripMenuItem.Click += new System.EventHandler(this.evilToolStripMenuItem_Click);
             // 
@@ -248,7 +251,7 @@
             // 
             this.lizardDoggosToolStripMenuItem.Name = "lizardDoggosToolStripMenuItem";
             this.lizardDoggosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.lizardDoggosToolStripMenuItem.Text = "Lizard Doggos";
+            this.lizardDoggosToolStripMenuItem.Text = "&Lizard Doggos";
             this.lizardDoggosToolStripMenuItem.ToolTipText = "Removes all lizard doggos (including tamed)";
             this.lizardDoggosToolStripMenuItem.Click += new System.EventHandler(this.removeLizardDoggosToolStripMenuItem_Click);
             // 
@@ -259,14 +262,14 @@
             this.restorePickupsToolStripMenuItem});
             this.dropPodsToolStripMenuItem.Name = "dropPodsToolStripMenuItem";
             this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.dropPodsToolStripMenuItem.Text = "Drop Pods";
+            this.dropPodsToolStripMenuItem.Text = "&Drop Pods";
             this.dropPodsToolStripMenuItem.ToolTipText = "Actions for Drop Pods";
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
             this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Text = "&Reset";
             this.resetToolStripMenuItem.ToolTipText = "Resets all Drop Pods to the \"unopened\" State";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
@@ -274,7 +277,7 @@
             // 
             this.restorePickupsToolStripMenuItem.Name = "restorePickupsToolStripMenuItem";
             this.restorePickupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.restorePickupsToolStripMenuItem.Text = "Restore Pickups";
+            this.restorePickupsToolStripMenuItem.Text = "Restore &Pickups";
             this.restorePickupsToolStripMenuItem.ToolTipText = "Restores all items around drop pods";
             this.restorePickupsToolStripMenuItem.Click += new System.EventHandler(this.restorePickupsToolStripMenuItem_Click);
             // 
@@ -284,7 +287,7 @@
             this.resizeDoggosToolStripMenuItem});
             this.funToolStripMenuItem.Name = "funToolStripMenuItem";
             this.funToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.funToolStripMenuItem.Text = "Fun";
+            this.funToolStripMenuItem.Text = "&Fun";
             this.funToolStripMenuItem.ToolTipText = "Funny changes that don\'t have a benefit to them";
             // 
             // resizeDoggosToolStripMenuItem
@@ -296,14 +299,14 @@
             this.wTFToolStripMenuItem});
             this.resizeDoggosToolStripMenuItem.Name = "resizeDoggosToolStripMenuItem";
             this.resizeDoggosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.resizeDoggosToolStripMenuItem.Text = "Resize Doggos";
+            this.resizeDoggosToolStripMenuItem.Text = "&Resize Doggos";
             this.resizeDoggosToolStripMenuItem.ToolTipText = "Resizes lizard doggos";
             // 
             // tinyToolStripMenuItem
             // 
             this.tinyToolStripMenuItem.Name = "tinyToolStripMenuItem";
             this.tinyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.tinyToolStripMenuItem.Text = "Tiny";
+            this.tinyToolStripMenuItem.Text = "&Tiny";
             this.tinyToolStripMenuItem.ToolTipText = "Factor: 0.25";
             this.tinyToolStripMenuItem.Click += new System.EventHandler(this.tinyToolStripMenuItem_Click);
             // 
@@ -311,7 +314,7 @@
             // 
             this.regularSizeToolStripMenuItem.Name = "regularSizeToolStripMenuItem";
             this.regularSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.regularSizeToolStripMenuItem.Text = "Regular Size";
+            this.regularSizeToolStripMenuItem.Text = "&Regular Size";
             this.regularSizeToolStripMenuItem.ToolTipText = "Factor: 1.0";
             this.regularSizeToolStripMenuItem.Click += new System.EventHandler(this.regularSizeToolStripMenuItem_Click);
             // 
@@ -319,7 +322,7 @@
             // 
             this.largeToolStripMenuItem.Name = "largeToolStripMenuItem";
             this.largeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.largeToolStripMenuItem.Text = "Large";
+            this.largeToolStripMenuItem.Text = "&Large";
             this.largeToolStripMenuItem.ToolTipText = "Factor: 20";
             this.largeToolStripMenuItem.Click += new System.EventHandler(this.largeToolStripMenuItem_Click);
             // 
@@ -327,7 +330,7 @@
             // 
             this.wTFToolStripMenuItem.Name = "wTFToolStripMenuItem";
             this.wTFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.wTFToolStripMenuItem.Text = "WTF";
+            this.wTFToolStripMenuItem.Text = "&WTF";
             this.wTFToolStripMenuItem.ToolTipText = "Factor: 100";
             this.wTFToolStripMenuItem.Click += new System.EventHandler(this.wTFToolStripMenuItem_Click);
             // 
@@ -338,21 +341,22 @@
             this.linkTogetherToolStripMenuItem});
             this.inventoriesToolStripMenuItem.Name = "inventoriesToolStripMenuItem";
             this.inventoriesToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
-            this.inventoriesToolStripMenuItem.Text = "Inventories";
+            this.inventoriesToolStripMenuItem.Text = "&Inventories";
+            this.inventoriesToolStripMenuItem.Visible = false;
             // 
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.modifyToolStripMenuItem.Text = "Modify";
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modifyToolStripMenuItem.Text = "&Modify";
             this.modifyToolStripMenuItem.ToolTipText = "Modifies an inventory";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
             // 
             // linkTogetherToolStripMenuItem
             // 
             this.linkTogetherToolStripMenuItem.Name = "linkTogetherToolStripMenuItem";
-            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.linkTogetherToolStripMenuItem.Text = "Link together";
+            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.linkTogetherToolStripMenuItem.Text = "&Link together";
             this.linkTogetherToolStripMenuItem.ToolTipText = "Links two inventories together";
             this.linkTogetherToolStripMenuItem.Click += new System.EventHandler(this.linkTogetherToolStripMenuItem_Click);
             // 
@@ -360,18 +364,28 @@
             // 
             this.generalActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editHeaderToolStripMenuItem,
-            this.duplicatorToolStripMenuItem});
+            this.duplicatorToolStripMenuItem,
+            this.deleterToolStripMenuItem});
             this.generalActionsToolStripMenuItem.Name = "generalActionsToolStripMenuItem";
             this.generalActionsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.generalActionsToolStripMenuItem.Text = "General Actions";
+            this.generalActionsToolStripMenuItem.Text = "&General Actions";
             // 
             // editHeaderToolStripMenuItem
             // 
             this.editHeaderToolStripMenuItem.Name = "editHeaderToolStripMenuItem";
-            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.editHeaderToolStripMenuItem.Text = "Edit Header";
+            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editHeaderToolStripMenuItem.Text = "&Edit Header";
             this.editHeaderToolStripMenuItem.ToolTipText = "Edits the save file header";
             this.editHeaderToolStripMenuItem.Click += new System.EventHandler(this.editHeaderToolStripMenuItem_Click);
+            // 
+            // duplicatorToolStripMenuItem
+            // 
+            this.duplicatorToolStripMenuItem.Name = "duplicatorToolStripMenuItem";
+            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.duplicatorToolStripMenuItem.Text = "D&uplicator";
+            this.duplicatorToolStripMenuItem.ToolTipText = "Duplicates Game entries";
+            this.duplicatorToolStripMenuItem.Visible = false;
+            this.duplicatorToolStripMenuItem.Click += new System.EventHandler(this.duplicatorToolStripMenuItem_Click);
             // 
             // OFD
             // 
@@ -385,14 +399,22 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
-            // duplicatorToolStripMenuItem
+            // saveFileManagerToolStripMenuItem
             // 
-            this.duplicatorToolStripMenuItem.Name = "duplicatorToolStripMenuItem";
-            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.duplicatorToolStripMenuItem.Text = "Duplicator";
-            this.duplicatorToolStripMenuItem.ToolTipText = "Duplicates Game entries";
-            this.duplicatorToolStripMenuItem.Visible = false;
-            this.duplicatorToolStripMenuItem.Click += new System.EventHandler(this.duplicatorToolStripMenuItem_Click);
+            this.saveFileManagerToolStripMenuItem.Name = "saveFileManagerToolStripMenuItem";
+            this.saveFileManagerToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveFileManagerToolStripMenuItem.Text = "Save File &Manager";
+            this.saveFileManagerToolStripMenuItem.ToolTipText = "Manage your save files";
+            this.saveFileManagerToolStripMenuItem.Visible = false;
+            this.saveFileManagerToolStripMenuItem.Click += new System.EventHandler(this.saveFileManagerToolStripMenuItem_Click);
+            // 
+            // deleterToolStripMenuItem
+            // 
+            this.deleterToolStripMenuItem.Name = "deleterToolStripMenuItem";
+            this.deleterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleterToolStripMenuItem.Text = "&Deleter";
+            this.deleterToolStripMenuItem.Visible = false;
+            this.deleterToolStripMenuItem.Click += new System.EventHandler(this.deleterToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -451,5 +473,7 @@
         private System.Windows.Forms.ToolStripMenuItem largeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wTFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem duplicatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveFileManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
     }
 }
