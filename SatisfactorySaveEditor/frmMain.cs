@@ -26,9 +26,7 @@ namespace SatisfactorySaveEditor
             }
 #if DEBUG
             //Enable not fully implemented items
-            duplicatorToolStripMenuItem.Visible = true;
             saveFileManagerToolStripMenuItem.Visible = true;
-            deleterToolStripMenuItem.Visible = true;
             inventoriesToolStripMenuItem.Visible = true;
 #endif
         }
