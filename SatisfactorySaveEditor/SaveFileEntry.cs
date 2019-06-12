@@ -7,7 +7,7 @@ namespace SatisfactorySaveEditor
     /// <summary>
     /// Generic entry in the save file
     /// </summary>
-    public class SaveFileEntry
+    public class SaveFileEntry : ICloneable
     {
         /// <summary>
         /// Entry specific data
@@ -58,6 +58,15 @@ namespace SatisfactorySaveEditor
         {
             BW.Write(EntryType);
             ObjectData.Export(BW);
+        }
+
+        public object Clone()
+        {
+            var Copy = (SaveFileEntry)MemberwiseClone();
+            //Make sure the properties are only a copy and not a reference
+            Copy.Properties = (byte[])Copy.Properties.Clone();
+            Copy.ObjectData = (GameBaseObject)Copy.ObjectData.Clone();
+            return Copy;
         }
     }
 }

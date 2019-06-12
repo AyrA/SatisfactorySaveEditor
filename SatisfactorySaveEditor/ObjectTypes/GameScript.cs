@@ -33,5 +33,10 @@ namespace SatisfactorySaveEditor.ObjectTypes
             base.Export(BW);
             BW.WriteIntString(ScriptName);
         }
+
+        public override object Clone()
+        {
+            return (GameScript)MemberwiseClone();
+        }
     }
 }

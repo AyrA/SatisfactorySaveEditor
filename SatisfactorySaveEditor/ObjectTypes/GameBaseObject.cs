@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace SatisfactorySaveEditor.ObjectTypes
 {
     /// <summary>
     /// Serves as the base for object entries
     /// </summary>
-    public class GameBaseObject
+    public class GameBaseObject : ICloneable
     {
         /// <summary>
         /// Reads the base values present in every object
@@ -46,6 +47,11 @@ namespace SatisfactorySaveEditor.ObjectTypes
             BW.WriteIntString(Name);
             BW.WriteIntString(LevelType);
             BW.WriteIntString(InternalName);
+        }
+
+        public virtual object Clone()
+        {
+            throw new NotImplementedException("BaseObject can't be cloned");
         }
     }
 }

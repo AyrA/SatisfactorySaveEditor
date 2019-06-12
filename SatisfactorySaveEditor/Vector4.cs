@@ -7,7 +7,7 @@ namespace SatisfactorySaveEditor
     /// Map coordinates
     /// </summary>
     /// <remarks>This entire class is purely a guess</remarks>
-    public class Vector4
+    public class Vector4 : ICloneable
     {
         /// <summary>
         /// X position
@@ -42,6 +42,15 @@ namespace SatisfactorySaveEditor
             W = BR.ReadSingle();
         }
 
+        public Vector4(float x,float y,float z,float w)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+        }
+
+
         /// <summary>
         /// Show nice coordinates
         /// </summary>
@@ -61,6 +70,11 @@ namespace SatisfactorySaveEditor
             BW.Write(Y);
             BW.Write(Z);
             BW.Write(W);
+        }
+
+        public object Clone()
+        {
+            return new Vector4(X, Y, Z, W);
         }
     }
 }

@@ -58,5 +58,14 @@ namespace SatisfactorySaveEditor.ObjectTypes
             ObjectScale.Export(BW);
             BW.Write(UnknownHeaderEnd);
         }
+
+        public override object Clone()
+        {
+            var Copy = (GameObject)MemberwiseClone();
+            Copy.ObjectPosition = (Vector3)Copy.ObjectPosition.Clone();
+            Copy.ObjectRotation = (Vector4)Copy.ObjectRotation.Clone();
+            Copy.ObjectScale = (Vector3)Copy.ObjectScale.Clone();
+            return Copy;
+        }
     }
 }
