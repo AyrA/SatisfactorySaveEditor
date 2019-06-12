@@ -31,12 +31,22 @@ namespace SatisfactorySaveEditor
                 nudOffset.Value = 1;
                 nudOffset.Maximum = Count;
                 nudCount.Value = 1;
+                var Example = F.Entries.First(m => m.ObjectData.Name == ItemName);
+                if (Example.ObjectData.ObjectType == ObjectTypes.OBJECT_TYPE.OBJECT)
+                {
+                    cbApplyOffset.Enabled = true;
+                }
+                else
+                {
+                    cbApplyOffset.Checked = false;
+                    cbApplyOffset.Enabled = false;
+                }
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            if(HasChange)
+            if (HasChange)
             {
                 DialogResult = DialogResult.OK;
             }
@@ -51,30 +61,52 @@ namespace SatisfactorySaveEditor
         {
             if (MessageBox.Show($"Really copy the entry {nudCount.Value} times?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                var Names = F.Entries
+                    .Select(m => m.ObjectData)
+                    .OfType<ObjectTypes.GameObject>()
+                    .Select(m => m.InternalName)
+                    .ToArray();
                 var Entry = F.Entries.Where(m => m.ObjectData.Name == cbObject.SelectedItem.ToString()).Skip((int)nudOffset.Value - 1).FirstOrDefault();
+                var BaseName = (Entry.ObjectData.ObjectType == ObjectTypes.OBJECT_TYPE.OBJECT) ? ((ObjectTypes.GameObject)Entry.ObjectData).InternalName : null;
+                int NameCounter = 0;
+                //Remove the number at the end
+                if (!string.IsNullOrEmpty(BaseName))
+                {
+                    BaseName = BaseName.Substring(0, BaseName.LastIndexOf('_')) + "_";
+                }
                 if (Entry != null)
                 {
-                    using (var MS = new MemoryStream())
+                    for (var i = 0; i < nudCount.Value; i++)
                     {
-                        using (var BW = new BinaryWriter(MS))
+                        var Copy = (SaveFileEntry)Entry.Clone();
+                        //Replace the InternalName property of copied instances
+                        if (Copy.ObjectData.ObjectType == ObjectTypes.OBJECT_TYPE.OBJECT)
                         {
-                            Entry.Export(BW);
-                            BW.Flush();
-                            var Props = Entry.Properties;
-                            using (var BR = new BinaryReader(MS))
+                            var o = (ObjectTypes.GameObject)Copy.ObjectData;
+                            var NewName = BaseName;
+                            do
                             {
-                                for (var i = 0; i < nudCount.Value; i++)
-                                {
-                                    MS.Seek(0, SeekOrigin.Begin);
-                                    F.Entries.Add(new SaveFileEntry(BR) { Properties = (byte[])Props.Clone() });
-                                }
+                                NewName = string.Format("{0}_{1}", BaseName, NameCounter++);
+                            } while (Names.Contains(NewName));
+                            o.InternalName = NewName;
+                            if (cbApplyOffset.Checked)
+                            {
+                                o.ObjectPosition.X += (int)(i * nudOffsetX.Value);
+                                o.ObjectPosition.Y += (int)(i * nudOffsetY.Value);
+                                o.ObjectPosition.Y += (int)(i * nudOffsetZ.Value);
                             }
                         }
+                        F.Entries.Add(Copy);
                     }
                     MessageBox.Show($"Done", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     HasChange = true;
                 }
             }
+        }
+
+        private void cbApplyOffset_CheckedChanged(object sender, EventArgs e)
+        {
+            nudOffsetX.Enabled = nudOffsetY.Enabled = nudOffsetZ.Enabled = cbApplyOffset.Checked;
         }
     }
 }
