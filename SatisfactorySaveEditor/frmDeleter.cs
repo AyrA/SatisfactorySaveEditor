@@ -86,6 +86,7 @@ namespace SatisfactorySaveEditor
                 nudStart.Value = 0;
                 nudStart.Maximum = Count - 1;
                 nudCount.Value = 1;
+                nudCount.Maximum = Count;
             }
         }
 
