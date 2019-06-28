@@ -28,7 +28,13 @@ namespace SatisfactorySaveEditor
         {
             var LastItem = cbItem.Items.Count > 0 ? cbItem.SelectedIndex : 0;
             cbItem.Items.Clear();
-            cbItem.Items.AddRange(F.Entries.Select(m => m.ObjectData.Name).Distinct().OrderBy(m => m).Cast<object>().ToArray());
+            cbItem.Items.AddRange(F.Entries
+                .Select(m => m.ObjectData.Name)
+                .Distinct()
+                .Select(m => new ShortName(m))
+                .OrderBy(m => m)
+                .Cast<object>()
+                .ToArray());
             cbItem.SelectedIndex = LastItem;
         }
 
@@ -81,12 +87,15 @@ namespace SatisfactorySaveEditor
         {
             if (cbItem.SelectedIndex >= 0)
             {
-                var ItemName = cbItem.SelectedItem.ToString();
+                var ItemName = ((ShortName)cbItem.SelectedItem).Long;
                 var Count = F.Entries.Count(m => m.ObjectData.Name == ItemName);
                 nudStart.Value = 0;
                 nudStart.Maximum = Count - 1;
                 nudCount.Value = 1;
                 nudCount.Maximum = Count;
+                var Pos = rbAllItems.Location;
+                rbAllItems.Text = $"All items (total: {Count})";
+                rbAllItems.Location = Pos;
             }
         }
 

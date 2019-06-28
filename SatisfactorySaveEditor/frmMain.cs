@@ -387,7 +387,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                     MessageBox.Show(@"Deletion is dangerous.
 - The object deleter will not validate your choices (you can delete the HUB)
 - The object deleter will not handle dependencies. Example: Deleting containers leaves stray inventory entries behind in the save file.", "Deleter", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ShowDuplicationHint = false;
+                    ShowDeletionHint = false;
                 }
                 using (var Deleter = new frmDeleter(F))
                 {

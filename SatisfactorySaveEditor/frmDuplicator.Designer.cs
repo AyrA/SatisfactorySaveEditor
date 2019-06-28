@@ -43,10 +43,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.cbApplyOffset = new System.Windows.Forms.CheckBox();
             this.nudOffsetX = new System.Windows.Forms.NumericUpDown();
             this.nudOffsetY = new System.Windows.Forms.NumericUpDown();
             this.nudOffsetZ = new System.Windows.Forms.NumericUpDown();
-            this.cbApplyOffset = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).BeginInit();
@@ -208,8 +208,22 @@
             this.label8.Text = "Z";
             this.ttInfo.SetToolTip(this.label8, "Z is the Up-Down direction. Bigger means more towards the Sky");
             // 
+            // cbApplyOffset
+            // 
+            this.cbApplyOffset.AutoSize = true;
+            this.cbApplyOffset.Location = new System.Drawing.Point(15, 63);
+            this.cbApplyOffset.Name = "cbApplyOffset";
+            this.cbApplyOffset.Size = new System.Drawing.Size(78, 17);
+            this.cbApplyOffset.TabIndex = 6;
+            this.cbApplyOffset.Text = "Map Offset";
+            this.ttInfo.SetToolTip(this.cbApplyOffset, "If enabled, each copy will be offset by the give number from the previous. 100 is" +
+        " 1 meter, so a foundation is 800");
+            this.cbApplyOffset.UseVisualStyleBackColor = true;
+            this.cbApplyOffset.CheckedChanged += new System.EventHandler(this.cbApplyOffset_CheckedChanged);
+            // 
             // nudOffsetX
             // 
+            this.nudOffsetX.Enabled = false;
             this.nudOffsetX.Location = new System.Drawing.Point(119, 61);
             this.nudOffsetX.Maximum = new decimal(new int[] {
             10000,
@@ -228,6 +242,7 @@
             // 
             // nudOffsetY
             // 
+            this.nudOffsetY.Enabled = false;
             this.nudOffsetY.Location = new System.Drawing.Point(230, 61);
             this.nudOffsetY.Maximum = new decimal(new int[] {
             10000,
@@ -246,6 +261,7 @@
             // 
             // nudOffsetZ
             // 
+            this.nudOffsetZ.Enabled = false;
             this.nudOffsetZ.Location = new System.Drawing.Point(349, 61);
             this.nudOffsetZ.Maximum = new decimal(new int[] {
             10000,
@@ -261,19 +277,6 @@
             this.nudOffsetZ.Size = new System.Drawing.Size(75, 20);
             this.nudOffsetZ.TabIndex = 12;
             this.nudOffsetZ.ThousandsSeparator = true;
-            // 
-            // cbApplyOffset
-            // 
-            this.cbApplyOffset.AutoSize = true;
-            this.cbApplyOffset.Location = new System.Drawing.Point(15, 63);
-            this.cbApplyOffset.Name = "cbApplyOffset";
-            this.cbApplyOffset.Size = new System.Drawing.Size(78, 17);
-            this.cbApplyOffset.TabIndex = 6;
-            this.cbApplyOffset.Text = "Map Offset";
-            this.ttInfo.SetToolTip(this.cbApplyOffset, "If enabled, each copy will be offset by the give number from the previous. 100 is" +
-        " 1 meter, so a foundation is 800");
-            this.cbApplyOffset.UseVisualStyleBackColor = true;
-            this.cbApplyOffset.CheckedChanged += new System.EventHandler(this.cbApplyOffset_CheckedChanged);
             // 
             // frmDuplicator
             // 

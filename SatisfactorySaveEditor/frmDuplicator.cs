@@ -18,7 +18,13 @@ namespace SatisfactorySaveEditor
             //Make width infinitely resizable only
             MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
             F = SaveGame;
-            cbObject.Items.AddRange(F.Entries.Select(m => m.ObjectData.Name).Distinct().OrderBy(m => m).Cast<object>().ToArray());
+            cbObject.Items.AddRange(F.Entries
+                .Select(m => m.ObjectData.Name)
+                .Distinct()
+                .Select(m => new ShortName(m))
+                .OrderBy(m => m)
+                .Cast<object>()
+                .ToArray());
             cbObject.SelectedIndex = 0;
         }
 
@@ -26,7 +32,7 @@ namespace SatisfactorySaveEditor
         {
             if (cbObject.SelectedIndex >= 0)
             {
-                var ItemName = cbObject.SelectedItem.ToString();
+                var ItemName = ((ShortName)cbObject.SelectedItem).Long;
                 var Count = F.Entries.Count(m => m.ObjectData.Name == ItemName);
                 nudOffset.Value = 1;
                 nudOffset.Maximum = Count;
@@ -66,7 +72,7 @@ namespace SatisfactorySaveEditor
                     .OfType<ObjectTypes.GameObject>()
                     .Select(m => m.InternalName)
                     .ToArray();
-                var Entry = F.Entries.Where(m => m.ObjectData.Name == cbObject.SelectedItem.ToString()).Skip((int)nudOffset.Value - 1).FirstOrDefault();
+                var Entry = F.Entries.Where(m => m.ObjectData.Name == ((ShortName)cbObject.SelectedItem).Long).Skip((int)nudOffset.Value - 1).FirstOrDefault();
                 var BaseName = (Entry.ObjectData.ObjectType == ObjectTypes.OBJECT_TYPE.OBJECT) ? ((ObjectTypes.GameObject)Entry.ObjectData).InternalName : null;
                 int NameCounter = 0;
                 //Remove the number at the end
