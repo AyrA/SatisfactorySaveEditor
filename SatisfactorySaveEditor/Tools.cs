@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -10,6 +11,8 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public static class Tools
     {
+        private static byte[] MapData = null;
+
         [DllImport("kernel32.dll")]
         public static extern bool AllocConsole();
 
@@ -52,6 +55,22 @@ namespace SatisfactorySaveEditor
             byte[] Data = Encoding.UTF8.GetBytes(S);
             BW.Write(Data.Length);
             BW.Write(Data);
+        }
+
+        public static byte[] GetMap()
+        {
+            if (MapData == null)
+            {
+                using (var S = Assembly.GetExecutingAssembly().GetManifestResourceStream(""))
+                {
+                    using (var MS = new MemoryStream())
+                    {
+                        S.CopyTo(MS);
+                        MapData = MS.ToArray();
+                    }
+                }
+            }
+            return (byte[])MapData.Clone();
         }
 
         public static string HexDump(byte[] Data, int Width = 16)

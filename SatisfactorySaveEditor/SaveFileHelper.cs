@@ -220,5 +220,19 @@ namespace SatisfactorySaveEditor
             }
             return Ret;
         }
+
+        /// <summary>
+        /// Gets the shortest possible data entry for an item, the "None" entry
+        /// </summary>
+        /// <returns>"None" entry</returns>
+        public static byte[] GetNullData()
+        {
+            return new byte[] {
+                0x05, 0x00, 0x00, 0x00,
+                0x4E, 0x6F, 0x6E, 0x65,
+                0x00, 0x00, 0x00, 0x00,
+                0x00
+            };
+        }
     }
 }
