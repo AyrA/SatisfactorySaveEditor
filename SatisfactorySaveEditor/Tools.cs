@@ -63,6 +63,7 @@ namespace SatisfactorySaveEditor
         /// <summary>
         /// Get the map data from the embedded resource stream
         /// </summary>
+        /// <remarks>https://redd.it/bk6lnk</remarks>
         /// <returns>Map data</returns>
         public static byte[] GetMap()
         {
