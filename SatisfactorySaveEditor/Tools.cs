@@ -11,6 +11,9 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public static class Tools
     {
+        /// <summary>
+        /// Map data cache
+        /// </summary>
         private static byte[] MapData = null;
 
         [DllImport("kernel32.dll")]
@@ -57,6 +60,10 @@ namespace SatisfactorySaveEditor
             BW.Write(Data);
         }
 
+        /// <summary>
+        /// Get the map data from the embedded resource stream
+        /// </summary>
+        /// <returns>Map data</returns>
         public static byte[] GetMap()
         {
             if (MapData == null)
@@ -73,7 +80,14 @@ namespace SatisfactorySaveEditor
             return (byte[])MapData.Clone();
         }
 
-        public static string HexDump(byte[] Data, int Width = 16)
+        /// <summary>
+        /// Generate a Hex dump from binary data
+        /// </summary>
+        /// <param name="Data">Binary data</param>
+        /// <param name="Width">Hex Width in bytes</param>
+        /// <param name="ASCII">Show textual representation too</param>
+        /// <returns>Hex dump</returns>
+        public static string HexDump(byte[] Data, int Width = 16, bool ASCII = true)
         {
             var SB = new StringBuilder();
             for (var i = 0; i < Data.Length; i += Width)
@@ -90,7 +104,14 @@ namespace SatisfactorySaveEditor
                         SB.Append("   ");
                     }
                 }
-                SB.AppendLine("\t" + Encoding.ASCII.GetString(Segment.Select(m => m > 0x1F && m < 0x7F ? (byte)m : (byte)'.').ToArray()));
+                if (ASCII)
+                {
+                    SB.AppendLine("\t" + Encoding.ASCII.GetString(Segment.Select(m => m > 0x1F && m < 0x7F ? m : (byte)'.').ToArray()));
+                }
+                else
+                {
+                    SB.AppendLine();
+                }
             }
             return SB.ToString();
         }
