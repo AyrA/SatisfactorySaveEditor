@@ -40,7 +40,7 @@ namespace SatisfactorySaveEditor
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            var Entries = F.Entries.Where(m => m.ObjectData.Name == cbItem.SelectedItem.ToString());
+            var Entries = F.Entries.Where(m => m.ObjectData.Name == ((ShortName)cbItem.SelectedItem).Long);
 
             if (rbRange.Checked)
             {
@@ -56,7 +56,7 @@ namespace SatisfactorySaveEditor
                 MessageBox.Show($"Done", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 HasChange = true;
                 //Reload list if last item taken, otherwise just update the total
-                var Leftover = F.Entries.Count(m => m.ObjectData.Name == cbItem.SelectedItem.ToString());
+                var Leftover = F.Entries.Count(m => m.ObjectData.Name == ((ShortName)cbItem.SelectedItem).Long);
                 if (Leftover == 0)
                 {
                     initItemList();
