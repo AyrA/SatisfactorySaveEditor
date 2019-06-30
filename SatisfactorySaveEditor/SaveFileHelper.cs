@@ -175,7 +175,7 @@ namespace SatisfactorySaveEditor
         public static int RestoreMap(SaveFile F, bool ReplantPlants)
         {
             var ItemList = new string[] {
-                //Unknown items
+                //Artifacts
                 "/Game/FactoryGame/Prototype/WAT/BP_WAT1.BP_WAT1_C",
                 "/Game/FactoryGame/Prototype/WAT/BP_WAT2.BP_WAT2_C"
             };
@@ -203,9 +203,14 @@ namespace SatisfactorySaveEditor
         /// </param>
         /// <param name="Offset">
         /// Offset to apply to position.
-        /// Use 0 to not resize. Positive numbers move the object up.
+        /// Use 0 to not move. Positive numbers move the object up.
         /// Generally you want to do this when inflating by large factors (10 and more)
         /// </param>
+        /// <remarks>
+        /// This function filters script types.
+        /// The factor is always from base size.
+        /// Not all entities are resizable.
+        /// </remarks>
         /// <returns>Number of items resized</returns>
         public static int ItemResizer(IEnumerable<SaveFileEntry> Entries, float factor = 1.0f, int Offset = 0)
         {
@@ -216,6 +221,10 @@ namespace SatisfactorySaveEditor
                 OD.ObjectScale.X = factor;
                 OD.ObjectScale.Y = factor;
                 OD.ObjectScale.Z = factor;
+                if (Offset != 0)
+                {
+                    OD.ObjectPosition.Z += Offset;
+                }
                 ++Ret;
             }
             return Ret;
