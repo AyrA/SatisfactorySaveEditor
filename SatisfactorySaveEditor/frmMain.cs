@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,14 +12,42 @@ namespace SatisfactorySaveEditor
         private SaveFile F = null;
         private bool HasChange = false;
         private bool NameChanged = false;
-        private bool ShowResizeHint = true;
-        private bool ShowLimited = true;
-        private bool ShowDuplicationHint = true;
-        private bool ShowDeletionHint = true;
+        private Settings S;
+        private string SettingsFile = null;
+        private Image MapImage;
 
         public frmMain(string InitialFile = null)
         {
+            SettingsFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings.xml");
+            if (File.Exists(SettingsFile))
+            {
+                try
+                {
+                    S = Settings.Load(File.ReadAllText(SettingsFile));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to load your settings. Defaults will be applied. Reason:\r\n\r\n" + ex.Message, "Settings Loader", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    S = new Settings();
+                }
+            }
+            else
+            {
+                S = new Settings();
+            }
+
             InitializeComponent();
+
+            using (var MS = new MemoryStream(Tools.GetMap(), false))
+            {
+                using (var SRC = Image.FromStream(MS))
+                {
+                    MapImage = Tools.ResizeImage(SRC, 1024, 1024);
+                }
+                BackgroundImageLayout = ImageLayout.Zoom;
+                BackgroundImage = (Image)MapImage.Clone();
+            }
+
             SFD.InitialDirectory = OFD.InitialDirectory = Environment.ExpandEnvironmentVariables(Program.SAVEDIR);
             if (!string.IsNullOrEmpty(InitialFile))
             {
@@ -73,9 +102,9 @@ namespace SatisfactorySaveEditor
 
         private void ResizeHint()
         {
-            if (ShowResizeHint)
+            if (S.ShowResizeHint)
             {
-                ShowResizeHint = false;
+                S.ShowResizeHint = false;
                 MessageBox.Show(@"Resizing objects is dangerous.
 - Creatures that get stuck in the ground because of the resizing will cause massive lag.
 - Creatures are not aware of their changed size. Larger creatures don't get faster or stronger.
@@ -96,13 +125,67 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
                     F = new SaveFile(BR);
                     HasChange = false;
                     NameChanged = false;
-                    if (ShowLimited)
+                    if (S.ShowLimited)
                     {
-                        ShowLimited = false;
+                        S.ShowLimited = false;
                         MessageBox.Show(@"This is still in development and functionality is limited.
 You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    RedrawMap();
                 }
+            }
+        }
+
+        private void RedrawMap()
+        {
+            BackgroundImage.Dispose();
+            if (F != null)
+            {
+                using (var BMP = new Bitmap(MapImage))
+                {
+                    using (var G = Graphics.FromImage(BMP))
+                    {
+                        var Info = string.Format("{0}: {1} {2}", Path.GetFileName(FileName), DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
+                        G.DrawString(Info, Font, Brushes.Red, 800, 900);
+                        //Show objects (nodes, man made and natural)
+                        foreach (var P in F.Entries.Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT))
+                        {
+                            Brush B = Brushes.Green;
+                            if (P.ObjectData.Name.Contains("Build"))
+                            {
+                                B = Brushes.Yellow;
+                            }
+                            if (P.ObjectData.Name.Contains("Node"))
+                            {
+                                B = Brushes.Fuchsia;
+                            }
+                            var O = (ObjectTypes.GameObject)P.ObjectData;
+                            var Pt = Tools.TranslateFromMap(O.ObjectPosition);
+                            G.FillRectangle(B, new Rectangle(
+                                (int)(Pt.X * BMP.Width) - 1,
+                                (int)(Pt.Y * BMP.Height) - 1,
+                                2,
+                                2));
+                        }
+                        //Show players
+                        foreach (var P in F.Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
+                        {
+                            var O = (ObjectTypes.GameObject)P.ObjectData;
+                            var Pt = Tools.TranslateFromMap(O.ObjectPosition);
+                            G.FillRectangle(Brushes.Red, new Rectangle(
+                                (int)(Pt.X * BMP.Width) - 5,
+                                (int)(Pt.Y * BMP.Height) - 5,
+                                10,
+                                10));
+                        }
+                    }
+                    BackgroundImage = (Image)BMP.Clone();
+                    BMP.Save(Path.ChangeExtension(FileName, "png"));
+                }
+            }
+            else
+            {
+                BackgroundImage = (Image)MapImage.Clone();
             }
         }
 
@@ -356,12 +439,12 @@ Once done, you will be able to link two containers together so they share their 
         {
             if (F != null)
             {
-                if(ShowDuplicationHint)
+                if (S.ShowDuplicationHint)
                 {
                     MessageBox.Show(@"Duplication is dangerous. The duplicator will not check if duplication makes sense at all.
 Some objects will show weird behaviour once duplicated.
 Container duplicates for example will share the inventory.", "Duplicator", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ShowDuplicationHint = false;
+                    S.ShowDuplicationHint = false;
                 }
                 using (var Cloner = new frmDuplicator(F))
                 {
@@ -382,12 +465,12 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
         {
             if (F != null)
             {
-                if (ShowDeletionHint)
+                if (S.ShowDeletionHint)
                 {
                     MessageBox.Show(@"Deletion is dangerous.
 - The object deleter will not validate your choices (you can delete the HUB)
 - The object deleter will not handle dependencies. Example: Deleting containers leaves stray inventory entries behind in the save file.", "Deleter", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ShowDeletionHint = false;
+                    S.ShowDeletionHint = false;
                 }
                 using (var Deleter = new frmDeleter(F))
                 {
@@ -418,6 +501,23 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                         break;
                 }
             }
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                File.WriteAllText(SettingsFile, S.Save());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to save your settings. Reason:\r\n\r\n" + ex.Message, "Settings Loader", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void redrawMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RedrawMap();
         }
     }
 }

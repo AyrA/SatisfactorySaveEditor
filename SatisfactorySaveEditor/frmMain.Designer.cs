@@ -69,6 +69,7 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.redrawMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,6 +92,7 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
+            this.redrawMapToolStripMenuItem,
             this.exitToolStripMenuItem,
             this.saveFileManagerToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -100,7 +102,8 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.ToolTipText = "Opens a save file for editing";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
@@ -108,7 +111,8 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.ToolTipText = "Owerwrites the currently open file";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
@@ -116,7 +120,9 @@
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.saveAsToolStripMenuItem.Text = "&Save As...";
             this.saveAsToolStripMenuItem.ToolTipText = "Saves the file under a new name";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
@@ -124,7 +130,8 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.ToolTipText = "Exits the application";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -132,7 +139,7 @@
             // saveFileManagerToolStripMenuItem
             // 
             this.saveFileManagerToolStripMenuItem.Name = "saveFileManagerToolStripMenuItem";
-            this.saveFileManagerToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveFileManagerToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.saveFileManagerToolStripMenuItem.Text = "Save File &Manager";
             this.saveFileManagerToolStripMenuItem.ToolTipText = "Manage your save files";
             this.saveFileManagerToolStripMenuItem.Visible = false;
@@ -158,7 +165,7 @@
             this.removeAnimalPartsToolStripMenuItem,
             this.removeAnimalsToolStripMenuItem});
             this.mapFeaturesToolStripMenuItem.Name = "mapFeaturesToolStripMenuItem";
-            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mapFeaturesToolStripMenuItem.Text = "&Map Features";
             this.mapFeaturesToolStripMenuItem.ToolTipText = "Map/Environment specifics";
             // 
@@ -270,7 +277,7 @@
             this.resetToolStripMenuItem,
             this.restorePickupsToolStripMenuItem});
             this.dropPodsToolStripMenuItem.Name = "dropPodsToolStripMenuItem";
-            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dropPodsToolStripMenuItem.Text = "&Drop Pods";
             this.dropPodsToolStripMenuItem.ToolTipText = "Actions for Drop Pods";
             // 
@@ -295,7 +302,7 @@
             this.funToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resizeDoggosToolStripMenuItem});
             this.funToolStripMenuItem.Name = "funToolStripMenuItem";
-            this.funToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.funToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.funToolStripMenuItem.Text = "&Fun";
             this.funToolStripMenuItem.ToolTipText = "Funny changes that don\'t have a benefit to them";
             // 
@@ -356,7 +363,7 @@
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.modifyToolStripMenuItem.Text = "&Modify";
             this.modifyToolStripMenuItem.ToolTipText = "Modifies an inventory";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
@@ -364,7 +371,7 @@
             // linkTogetherToolStripMenuItem
             // 
             this.linkTogetherToolStripMenuItem.Name = "linkTogetherToolStripMenuItem";
-            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.linkTogetherToolStripMenuItem.Text = "&Link together";
             this.linkTogetherToolStripMenuItem.ToolTipText = "Links two inventories together";
             this.linkTogetherToolStripMenuItem.Click += new System.EventHandler(this.linkTogetherToolStripMenuItem_Click);
@@ -415,6 +422,14 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
+            // redrawMapToolStripMenuItem
+            // 
+            this.redrawMapToolStripMenuItem.Name = "redrawMapToolStripMenuItem";
+            this.redrawMapToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.redrawMapToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.redrawMapToolStripMenuItem.Text = "&Redraw Map";
+            this.redrawMapToolStripMenuItem.Click += new System.EventHandler(this.redrawMapToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -425,6 +440,7 @@
             this.Name = "frmMain";
             this.Text = "Satisfactory Save Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
             this.ResumeLayout(false);
@@ -474,5 +490,6 @@
         private System.Windows.Forms.ToolStripMenuItem duplicatorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveFileManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redrawMapToolStripMenuItem;
     }
 }
