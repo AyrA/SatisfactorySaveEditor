@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -60,6 +62,22 @@ namespace SatisfactorySaveEditor
             BW.Write(Data);
         }
 
+        public static PointF TranslateFromMap(Vector3 V)
+        {
+            const int MIN_X = -330000;
+            const int MAX_X = 428000;
+            const int MIN_Y = -370000;
+            const int MAX_Y = 370000;
+            const int SIZE_X = MAX_X - MIN_X;
+            const int SIZE_Y = MAX_Y - MIN_Y;
+            //Map dimensions
+            //Rectangle R = new Rectangle(-406400, -406400, 508000 + 406400, 508000 + 406400);
+            Rectangle R = new Rectangle(MIN_X, MIN_Y, SIZE_X, SIZE_Y);
+            var X = Math.Min(1f, Math.Max(0f, (V.X - R.X) / R.Width));
+            var Y = Math.Min(1f, Math.Max(0f, (V.Y - R.Y) / R.Height));
+            return new PointF(X, Y);
+        }
+
         /// <summary>
         /// Get the map data from the embedded resource stream
         /// </summary>
@@ -69,7 +87,7 @@ namespace SatisfactorySaveEditor
         {
             if (MapData == null)
             {
-                using (var S = Assembly.GetExecutingAssembly().GetManifestResourceStream(""))
+                using (var S = Assembly.GetExecutingAssembly().GetManifestResourceStream("SatisfactorySaveEditor.Images.Map.png"))
                 {
                     using (var MS = new MemoryStream())
                     {
@@ -79,6 +97,14 @@ namespace SatisfactorySaveEditor
                 }
             }
             return (byte[])MapData.Clone();
+        }
+
+        public static Image ResizeImage(Image I, int MaxWidth, int MaxHeight)
+        {
+            var S = new SizeF(I.Size);
+            var Factor = Math.Min(MaxWidth / S.Width, MaxHeight / S.Height);
+            var NewSize = new Size((int)(S.Width * Factor), (int)(S.Height * Factor));
+            return new Bitmap(I, NewSize);
         }
 
         /// <summary>
