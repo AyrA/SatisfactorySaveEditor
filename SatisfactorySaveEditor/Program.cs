@@ -30,6 +30,7 @@ namespace SatisfactorySaveEditor
 #else
             //Allocate console or the Console.ReadKey() will crash
             Tools.AllocConsole();
+            Test();
             return Exit(RET.SUCCESS);
 #endif
         }
