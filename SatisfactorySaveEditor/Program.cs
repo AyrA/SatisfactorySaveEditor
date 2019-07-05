@@ -43,8 +43,13 @@ namespace SatisfactorySaveEditor
                 using (var BR = new BinaryReader(FS))
                 {
                     var F = new SaveFile(BR);
+
                     //Show all entries
                     Console.Error.WriteLine(string.Join("\r\n", F.Entries.OrderBy(m => m.Properties.Length).Select(m => m.ObjectData.Name).Distinct()));
+
+                    var E = F.Entries.FirstOrDefault(m => m.ObjectData.Name == "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C");
+                    Console.Error.WriteLine(Tools.HexDump(E.Properties));
+
                     /* Test code to "align" things
                     var o = (ObjectTypes.GameObject)e.ObjectData;
                     o.ObjectPosition.X = (int)o.ObjectPosition.X;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -141,51 +142,54 @@ You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limite
             BackgroundImage.Dispose();
             if (F != null)
             {
-                using (var BMP = new Bitmap(MapImage))
+                var Objects = new List<DrawObject>();
+
+                foreach (var P in F.Entries.Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT))
                 {
+                    var O = new DrawObject(P, Color.Green, 2);
+                    //Change color according to object type
+                    if (P.ObjectData.Name.Contains("Build"))
+                    {
+                        O.ObjectColor = Color.Yellow;
+                    }
+                    if (P.ObjectData.Name.Contains("Node"))
+                    {
+                        O.ObjectColor = Color.Fuchsia;
+                    }
+                    Objects.Add(O);
+                }
+                //Enumerate players seperately because we want them bigger
+                foreach (var P in F.Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
+                {
+                    Objects.Add(new DrawObject(P, Color.Red, 10));
+                }
+
+                using (var BMP = MapRender.Render(Objects))
+                {
+                    //Add file info string
                     using (var G = Graphics.FromImage(BMP))
                     {
-                        var Info = string.Format("{0}: {1} {2}", Path.GetFileName(FileName), DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
-                        G.DrawString(Info, Font, Brushes.Red, 800, 900);
-                        //Show objects (nodes, man made and natural)
-                        foreach (var P in F.Entries.Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT))
+                        var Info = string.Format("{0}: {1} {2}",
+                            Path.GetFileName(FileName),
+                            DateTime.Now.ToShortDateString(),
+                            DateTime.Now.ToShortTimeString());
+                        using (var F = new Font("Arial", 16))
                         {
-                            Brush B = Brushes.Green;
-                            if (P.ObjectData.Name.Contains("Build"))
-                            {
-                                B = Brushes.Yellow;
-                            }
-                            if (P.ObjectData.Name.Contains("Node"))
-                            {
-                                B = Brushes.Fuchsia;
-                            }
-                            var O = (ObjectTypes.GameObject)P.ObjectData;
-                            var Pt = Tools.TranslateFromMap(O.ObjectPosition);
-                            G.FillRectangle(B, new Rectangle(
-                                (int)(Pt.X * BMP.Width) - 1,
-                                (int)(Pt.Y * BMP.Height) - 1,
-                                2,
-                                2));
-                        }
-                        //Show players
-                        foreach (var P in F.Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
-                        {
-                            var O = (ObjectTypes.GameObject)P.ObjectData;
-                            var Pt = Tools.TranslateFromMap(O.ObjectPosition);
-                            G.FillRectangle(Brushes.Red, new Rectangle(
-                                (int)(Pt.X * BMP.Width) - 5,
-                                (int)(Pt.Y * BMP.Height) - 5,
-                                10,
-                                10));
+                            var Pos = G.MeasureString(Info, F);
+                            G.DrawString(
+                                Info, F,
+                                Brushes.Red,
+                                (int)(BMP.Width - Pos.Width),
+                                (int)(BMP.Height - Pos.Height));
                         }
                     }
-                    BackgroundImage = (Image)BMP.Clone();
+                    BackgroundImage = new Bitmap(BMP);
                     BMP.Save(Path.ChangeExtension(FileName, "png"));
                 }
             }
             else
             {
-                BackgroundImage = (Image)MapImage.Clone();
+                BackgroundImage = MapRender.GetMap();
             }
         }
 
