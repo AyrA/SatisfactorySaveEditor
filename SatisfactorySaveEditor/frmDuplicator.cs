@@ -125,7 +125,7 @@ namespace SatisfactorySaveEditor
             if (Item.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT)
             {
                 MapRender.MapForm.BackgroundImage.Dispose();
-                MapRender.MapForm.BackgroundImage = MapRender.Render(new DrawObject(Item, Color.Fuchsia, 10));
+                MapRender.MapForm.BackgroundImage = MapRender.Render(new DrawObject(Item, Color.Yellow, 10));
             }
             else
             {
