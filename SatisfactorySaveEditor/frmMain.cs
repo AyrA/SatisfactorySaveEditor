@@ -39,6 +39,8 @@ namespace SatisfactorySaveEditor
 
             InitializeComponent();
 
+            MapRender.MapForm = this;
+
             using (var MS = new MemoryStream(Tools.GetMap(), false))
             {
                 using (var SRC = Image.FromStream(MS))

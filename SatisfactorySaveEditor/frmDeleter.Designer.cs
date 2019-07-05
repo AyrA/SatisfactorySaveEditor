@@ -41,6 +41,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.btnMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             this.SuspendLayout();
@@ -53,8 +54,8 @@
             this.cbItem.FormattingEnabled = true;
             this.cbItem.Location = new System.Drawing.Point(12, 31);
             this.cbItem.Name = "cbItem";
-            this.cbItem.Size = new System.Drawing.Size(376, 21);
-            this.cbItem.TabIndex = 0;
+            this.cbItem.Size = new System.Drawing.Size(369, 21);
+            this.cbItem.TabIndex = 1;
             this.cbItem.SelectedIndexChanged += new System.EventHandler(this.cbItem_SelectedIndexChanged);
             // 
             // nudStart
@@ -63,7 +64,7 @@
             this.nudStart.Location = new System.Drawing.Point(437, 31);
             this.nudStart.Name = "nudStart";
             this.nudStart.Size = new System.Drawing.Size(71, 20);
-            this.nudStart.TabIndex = 1;
+            this.nudStart.TabIndex = 6;
             // 
             // nudCount
             // 
@@ -71,7 +72,7 @@
             this.nudCount.Location = new System.Drawing.Point(514, 31);
             this.nudCount.Name = "nudCount";
             this.nudCount.Size = new System.Drawing.Size(71, 20);
-            this.nudCount.TabIndex = 2;
+            this.nudCount.TabIndex = 8;
             // 
             // btnOK
             // 
@@ -79,7 +80,7 @@
             this.btnOK.Location = new System.Drawing.Point(437, 78);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(71, 23);
-            this.btnOK.TabIndex = 3;
+            this.btnOK.TabIndex = 10;
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -90,7 +91,7 @@
             this.btnClose.Location = new System.Drawing.Point(514, 78);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(71, 23);
-            this.btnClose.TabIndex = 4;
+            this.btnClose.TabIndex = 11;
             this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -103,7 +104,7 @@
             this.rbRange.Location = new System.Drawing.Point(416, 35);
             this.rbRange.Name = "rbRange";
             this.rbRange.Size = new System.Drawing.Size(14, 13);
-            this.rbRange.TabIndex = 5;
+            this.rbRange.TabIndex = 3;
             this.rbRange.TabStop = true;
             this.ttInfo.SetToolTip(this.rbRange, "Delete the given range");
             this.rbRange.UseVisualStyleBackColor = true;
@@ -116,7 +117,7 @@
             this.rbAllItems.Location = new System.Drawing.Point(416, 57);
             this.rbAllItems.Name = "rbAllItems";
             this.rbAllItems.Size = new System.Drawing.Size(63, 17);
-            this.rbAllItems.TabIndex = 6;
+            this.rbAllItems.TabIndex = 4;
             this.rbAllItems.Text = "All items";
             this.ttInfo.SetToolTip(this.rbAllItems, "Delete all items");
             this.rbAllItems.UseVisualStyleBackColor = true;
@@ -128,7 +129,7 @@
             this.label3.Location = new System.Drawing.Point(434, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 8;
+            this.label3.TabIndex = 5;
             this.label3.Text = "Offset";
             this.ttInfo.SetToolTip(this.label3, "Start of range (starts at 0)");
             // 
@@ -139,7 +140,7 @@
             this.label2.Location = new System.Drawing.Point(511, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 9;
+            this.label2.TabIndex = 7;
             this.label2.Text = "Count";
             this.ttInfo.SetToolTip(this.label2, "Number of items");
             // 
@@ -149,7 +150,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 7;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Object";
             this.ttInfo.SetToolTip(this.label1, "The object to delete");
             // 
@@ -161,7 +162,7 @@
             this.label4.Location = new System.Drawing.Point(12, 83);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(411, 18);
-            this.label4.TabIndex = 14;
+            this.label4.TabIndex = 9;
             this.label4.Text = "Hover over a text label to see the description";
             // 
             // ttInfo
@@ -169,11 +170,24 @@
             this.ttInfo.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.ttInfo.ToolTipTitle = "Object Duplicator Info";
             // 
+            // btnMap
+            // 
+            this.btnMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMap.Location = new System.Drawing.Point(387, 30);
+            this.btnMap.Name = "btnMap";
+            this.btnMap.Size = new System.Drawing.Size(23, 23);
+            this.btnMap.TabIndex = 2;
+            this.btnMap.Text = "M";
+            this.ttInfo.SetToolTip(this.btnMap, "Renders the currently selected objects into the main window map");
+            this.btnMap.UseVisualStyleBackColor = true;
+            this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
+            // 
             // frmDeleter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 113);
+            this.Controls.Add(this.btnMap);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -214,5 +228,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolTip ttInfo;
+        private System.Windows.Forms.Button btnMap;
     }
 }

@@ -67,12 +67,15 @@ namespace SatisfactorySaveEditor
         {
             if (MessageBox.Show($"Really copy the entry {nudCount.Value} times?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                //Names of all existing objects
                 var Names = F.Entries
                     .Select(m => m.ObjectData)
                     .OfType<ObjectTypes.GameObject>()
                     .Select(m => m.InternalName)
                     .ToArray();
-                var Entry = F.Entries.Where(m => m.ObjectData.Name == ((ShortName)cbObject.SelectedItem).Long).Skip((int)nudOffset.Value - 1).FirstOrDefault();
+                //User selected entry
+                var Entry = F.Entries.Where(m => m.ObjectData.Name == ((ShortName)cbObject.SelectedItem).Long).Skip((int)nudOffset.Value - 1).First();
+                //Entry base name (only if object)
                 var BaseName = (Entry.ObjectData.ObjectType == ObjectTypes.OBJECT_TYPE.OBJECT) ? ((ObjectTypes.GameObject)Entry.ObjectData).InternalName : null;
                 int NameCounter = 0;
                 //Remove the number at the end
@@ -113,6 +116,21 @@ namespace SatisfactorySaveEditor
         private void cbApplyOffset_CheckedChanged(object sender, EventArgs e)
         {
             nudOffsetX.Enabled = nudOffsetY.Enabled = nudOffsetZ.Enabled = cbApplyOffset.Checked;
+        }
+
+        private void btnMap_Click(object sender, EventArgs e)
+        {
+            var ItemName = ((ShortName)cbObject.SelectedItem).Long;
+            var Item = F.Entries.Where(m => m.ObjectData.Name == ItemName).Skip((int)nudOffset.Value-1).First();
+            if (Item.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT)
+            {
+                MapRender.MapForm.BackgroundImage.Dispose();
+                MapRender.MapForm.BackgroundImage = MapRender.Render(new DrawObject(Item, Color.Fuchsia, 10));
+            }
+            else
+            {
+                MessageBox.Show("This type of entry has no map coordinates", "Invalid entry type", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

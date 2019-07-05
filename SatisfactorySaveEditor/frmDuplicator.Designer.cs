@@ -47,6 +47,7 @@
             this.nudOffsetX = new System.Windows.Forms.NumericUpDown();
             this.nudOffsetY = new System.Windows.Forms.NumericUpDown();
             this.nudOffsetZ = new System.Windows.Forms.NumericUpDown();
+            this.btnMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).BeginInit();
@@ -57,10 +58,10 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(624, 89);
+            this.btnOK.Location = new System.Drawing.Point(424, 89);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 14;
+            this.btnOK.TabIndex = 15;
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -68,10 +69,10 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(705, 89);
+            this.btnCancel.Location = new System.Drawing.Point(505, 89);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 15;
+            this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "&Close";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -90,10 +91,10 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(702, 9);
+            this.label2.Location = new System.Drawing.Point(502, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 5;
             this.label2.Text = "Copies";
             this.ttInfo.SetToolTip(this.label2, "Defines the number of copies");
             // 
@@ -105,14 +106,14 @@
             this.cbObject.FormattingEnabled = true;
             this.cbObject.Location = new System.Drawing.Point(15, 29);
             this.cbObject.Name = "cbObject";
-            this.cbObject.Size = new System.Drawing.Size(603, 21);
+            this.cbObject.Size = new System.Drawing.Size(374, 21);
             this.cbObject.TabIndex = 1;
             this.cbObject.SelectedIndexChanged += new System.EventHandler(this.cbObject_SelectedIndexChanged);
             // 
             // nudCount
             // 
             this.nudCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudCount.Location = new System.Drawing.Point(705, 29);
+            this.nudCount.Location = new System.Drawing.Point(505, 29);
             this.nudCount.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -125,7 +126,7 @@
             0});
             this.nudCount.Name = "nudCount";
             this.nudCount.Size = new System.Drawing.Size(75, 20);
-            this.nudCount.TabIndex = 5;
+            this.nudCount.TabIndex = 6;
             this.nudCount.Value = new decimal(new int[] {
             1,
             0,
@@ -136,10 +137,10 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(621, 9);
+            this.label3.Location = new System.Drawing.Point(421, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 3;
             this.label3.Text = "Offset";
             this.ttInfo.SetToolTip(this.label3, "You can use this box to select which entry to copy when there are multiple entrie" +
         "s of the same type.\r\n1 is the first entry.");
@@ -151,14 +152,14 @@
             this.label4.AutoEllipsis = true;
             this.label4.Location = new System.Drawing.Point(15, 94);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(603, 18);
-            this.label4.TabIndex = 13;
+            this.label4.Size = new System.Drawing.Size(403, 18);
+            this.label4.TabIndex = 14;
             this.label4.Text = "Hover over a text label to see the description";
             // 
             // nudOffset
             // 
             this.nudOffset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudOffset.Location = new System.Drawing.Point(624, 29);
+            this.nudOffset.Location = new System.Drawing.Point(424, 29);
             this.nudOffset.Minimum = new decimal(new int[] {
             1,
             0,
@@ -166,7 +167,7 @@
             0});
             this.nudOffset.Name = "nudOffset";
             this.nudOffset.Size = new System.Drawing.Size(75, 20);
-            this.nudOffset.TabIndex = 3;
+            this.nudOffset.TabIndex = 4;
             this.nudOffset.Value = new decimal(new int[] {
             1,
             0,
@@ -184,7 +185,7 @@
             this.label6.Location = new System.Drawing.Point(99, 65);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(14, 13);
-            this.label6.TabIndex = 7;
+            this.label6.TabIndex = 8;
             this.label6.Text = "X";
             this.ttInfo.SetToolTip(this.label6, "X is the East-West direction. Bigger means more towards East");
             // 
@@ -194,17 +195,17 @@
             this.label7.Location = new System.Drawing.Point(210, 65);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(14, 13);
-            this.label7.TabIndex = 9;
+            this.label7.TabIndex = 10;
             this.label7.Text = "Y";
             this.ttInfo.SetToolTip(this.label7, "Y is the North-South direction. Bigger means more towards South");
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(329, 65);
+            this.label8.Location = new System.Drawing.Point(324, 65);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(14, 13);
-            this.label8.TabIndex = 11;
+            this.label8.TabIndex = 12;
             this.label8.Text = "Z";
             this.ttInfo.SetToolTip(this.label8, "Z is the Up-Down direction. Bigger means more towards the Sky");
             // 
@@ -214,7 +215,7 @@
             this.cbApplyOffset.Location = new System.Drawing.Point(15, 63);
             this.cbApplyOffset.Name = "cbApplyOffset";
             this.cbApplyOffset.Size = new System.Drawing.Size(78, 17);
-            this.cbApplyOffset.TabIndex = 6;
+            this.cbApplyOffset.TabIndex = 7;
             this.cbApplyOffset.Text = "Map Offset";
             this.ttInfo.SetToolTip(this.cbApplyOffset, "If enabled, each copy will be offset by the give number from the previous. 100 is" +
         " 1 meter, so a foundation is 800");
@@ -237,7 +238,7 @@
             -2147483648});
             this.nudOffsetX.Name = "nudOffsetX";
             this.nudOffsetX.Size = new System.Drawing.Size(75, 20);
-            this.nudOffsetX.TabIndex = 8;
+            this.nudOffsetX.TabIndex = 9;
             this.nudOffsetX.ThousandsSeparator = true;
             // 
             // nudOffsetY
@@ -256,13 +257,13 @@
             -2147483648});
             this.nudOffsetY.Name = "nudOffsetY";
             this.nudOffsetY.Size = new System.Drawing.Size(75, 20);
-            this.nudOffsetY.TabIndex = 10;
+            this.nudOffsetY.TabIndex = 11;
             this.nudOffsetY.ThousandsSeparator = true;
             // 
             // nudOffsetZ
             // 
             this.nudOffsetZ.Enabled = false;
-            this.nudOffsetZ.Location = new System.Drawing.Point(349, 61);
+            this.nudOffsetZ.Location = new System.Drawing.Point(344, 61);
             this.nudOffsetZ.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -275,14 +276,27 @@
             -2147483648});
             this.nudOffsetZ.Name = "nudOffsetZ";
             this.nudOffsetZ.Size = new System.Drawing.Size(75, 20);
-            this.nudOffsetZ.TabIndex = 12;
+            this.nudOffsetZ.TabIndex = 13;
             this.nudOffsetZ.ThousandsSeparator = true;
+            // 
+            // btnMap
+            // 
+            this.btnMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMap.Location = new System.Drawing.Point(395, 28);
+            this.btnMap.Name = "btnMap";
+            this.btnMap.Size = new System.Drawing.Size(23, 23);
+            this.btnMap.TabIndex = 2;
+            this.btnMap.Text = "M";
+            this.ttInfo.SetToolTip(this.btnMap, "Renders the currently selected objects into the main window map");
+            this.btnMap.UseVisualStyleBackColor = true;
+            this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
             // 
             // frmDuplicator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 123);
+            this.ClientSize = new System.Drawing.Size(592, 123);
+            this.Controls.Add(this.btnMap);
             this.Controls.Add(this.cbApplyOffset);
             this.Controls.Add(this.nudOffsetZ);
             this.Controls.Add(this.nudOffsetY);
@@ -336,5 +350,6 @@
         private System.Windows.Forms.NumericUpDown nudOffsetY;
         private System.Windows.Forms.NumericUpDown nudOffsetZ;
         private System.Windows.Forms.CheckBox cbApplyOffset;
+        private System.Windows.Forms.Button btnMap;
     }
 }

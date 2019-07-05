@@ -39,6 +39,8 @@ namespace SatisfactorySaveEditor
         private static Image BaseImage;
         private static Image ScaledImage;
 
+        public static System.Windows.Forms.Form MapForm;
+
         static MapRender()
         {
             using (var MS = new MemoryStream(Tools.GetMap()))
@@ -74,6 +76,11 @@ namespace SatisfactorySaveEditor
             }
 
             return BMP;
+        }
+
+        public static Image Render(DrawObject Object)
+        {
+            return Render(new DrawObject[] { Object });
         }
     }
 }

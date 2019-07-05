@@ -103,5 +103,32 @@ namespace SatisfactorySaveEditor
         {
             nudStart.Enabled = nudCount.Enabled = rbRange.Checked;
         }
+
+        private void btnMap_Click(object sender, EventArgs e)
+        {
+            var ItemName = ((ShortName)cbItem.SelectedItem).Long;
+            var Items = F.Entries.Where(m => m.ObjectData.Name == ItemName);
+            //Filter if needed
+            if (rbRange.Checked)
+            {
+                Items = Items.Skip((int)nudStart.Value).Take((int)nudCount.Value);
+            }
+            if (Items.Count() > 0)
+            {
+                if (Items.First().EntryType == ObjectTypes.OBJECT_TYPE.OBJECT)
+                {
+                    MapRender.MapForm.BackgroundImage.Dispose();
+                    MapRender.MapForm.BackgroundImage = MapRender.Render(Items.Select(m => new DrawObject(m, Color.Fuchsia, 10)));
+                }
+                else
+                {
+                    MessageBox.Show("This type of entry has no map coordinates", "Invalid entry type", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No items to show (0 items selected)", "Invalid entry type", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
