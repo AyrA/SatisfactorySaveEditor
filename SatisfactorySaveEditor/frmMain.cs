@@ -158,6 +158,10 @@ You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limite
                     {
                         O.ObjectColor = Color.Fuchsia;
                     }
+                    if (P.ObjectData.Name.Contains("Foundation"))
+                    {
+                        O.ObjectColor = Color.DarkGray;
+                    }
                     Objects.Add(O);
                 }
                 //Enumerate players seperately because we want them bigger
