@@ -168,7 +168,7 @@
             // ttInfo
             // 
             this.ttInfo.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.ttInfo.ToolTipTitle = "Object Duplicator Info";
+            this.ttInfo.ToolTipTitle = "Object Deleter Info";
             // 
             // btnMap
             // 

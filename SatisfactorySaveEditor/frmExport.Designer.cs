@@ -46,6 +46,7 @@
             this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
             this.btnImport = new System.Windows.Forms.Button();
             this.cbReplaceAll = new System.Windows.Forms.CheckBox();
+            this.cbFixNames = new System.Windows.Forms.CheckBox();
             this.gbExport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).BeginInit();
@@ -186,6 +187,7 @@
             // 
             this.gbImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImport.Controls.Add(this.cbFixNames);
             this.gbImport.Controls.Add(this.cbReplaceAll);
             this.gbImport.Controls.Add(this.btnImport);
             this.gbImport.Location = new System.Drawing.Point(12, 118);
@@ -219,8 +221,11 @@
             // 
             // ttInfo
             // 
+            this.ttInfo.AutoPopDelay = 60000;
+            this.ttInfo.InitialDelay = 500;
+            this.ttInfo.ReshowDelay = 100;
             this.ttInfo.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.ttInfo.ToolTipTitle = "Object Duplicator Info";
+            this.ttInfo.ToolTipTitle = "Export/Import Info";
             // 
             // btnImport
             // 
@@ -239,10 +244,27 @@
             this.cbReplaceAll.AutoSize = true;
             this.cbReplaceAll.Location = new System.Drawing.Point(9, 23);
             this.cbReplaceAll.Name = "cbReplaceAll";
-            this.cbReplaceAll.Size = new System.Drawing.Size(252, 17);
+            this.cbReplaceAll.Size = new System.Drawing.Size(174, 17);
             this.cbReplaceAll.TabIndex = 24;
-            this.cbReplaceAll.Text = "&Remove identical existing types before importing";
+            this.cbReplaceAll.Text = "&Remove identical existing types";
+            this.ttInfo.SetToolTip(this.cbReplaceAll, "Setting this option will first remove all entries of the same type. For example i" +
+        "t would delete all your foundations before importing new ones.");
             this.cbReplaceAll.UseVisualStyleBackColor = true;
+            // 
+            // cbFixNames
+            // 
+            this.cbFixNames.AutoSize = true;
+            this.cbFixNames.Checked = true;
+            this.cbFixNames.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbFixNames.Location = new System.Drawing.Point(189, 23);
+            this.cbFixNames.Name = "cbFixNames";
+            this.cbFixNames.Size = new System.Drawing.Size(110, 17);
+            this.cbFixNames.TabIndex = 24;
+            this.cbFixNames.Text = "Fix internal names";
+            this.ttInfo.SetToolTip(this.cbFixNames, "This fixes the \"InternalName\" property of imported items.\r\nThis name is supposed " +
+        "to be unique across your entire save file.\r\n\r\nIt will only fix names where neces" +
+        "sary.");
+            this.cbFixNames.UseVisualStyleBackColor = true;
             // 
             // frmExport
             // 
@@ -287,5 +309,6 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.CheckBox cbReplaceAll;
+        private System.Windows.Forms.CheckBox cbFixNames;
     }
 }

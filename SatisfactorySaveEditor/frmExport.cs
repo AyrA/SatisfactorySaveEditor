@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SatisfactorySaveEditor.ObjectTypes;
+using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -124,10 +125,33 @@ namespace SatisfactorySaveEditor
                         F.Entries = F.Entries.Where(m => !Names.Contains(m.ObjectData.Name)).ToList();
                         ReplaceCount = TotalStart - F.Entries.Count;
                     }
-                    F.Entries.AddRange(Entries);
-                    if(ReplaceCount>=0)
+                    if (cbFixNames.Checked)
                     {
-                        MessageBox.Show($"Import complete. Deleted {ReplaceCount} existing entries","Import complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        var Names = F.Entries.Select(m => m.ObjectData.InternalName).ToArray();
+                        foreach (var E in Entries)
+                        {
+                            if (Names.Contains(E.ObjectData.InternalName))
+                            {
+                                string BaseName = E.ObjectData.InternalName;
+                                if (BaseName.Contains("_"))
+                                {
+                                    BaseName = BaseName.Substring(0, BaseName.LastIndexOf('_')) + "_";
+                                }
+                                string NewName = null;
+                                int NameCounter = 0;
+                                do
+                                {
+                                    NewName = string.Format("{0}_{1}", BaseName, NameCounter++);
+                                } while (Names.Contains(NewName));
+                                E.ObjectData.InternalName = NewName;
+                            }
+                        }
+                    }
+                    F.Entries.AddRange(Entries);
+
+                    if (ReplaceCount >= 0)
+                    {
+                        MessageBox.Show($"Import complete. Deleted {ReplaceCount} existing entries", "Import complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
