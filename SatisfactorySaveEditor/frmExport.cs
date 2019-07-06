@@ -46,7 +46,7 @@ namespace SatisfactorySaveEditor
                 nudCount.Value = 1;
                 nudCount.Maximum = Count;
                 var Pos = rbAllItems.Location;
-                rbAllItems.Text = $"All items (total: {Count})";
+                rbAllItems.Text = $"All ({Count})";
                 rbAllItems.Location = Pos;
             }
         }
@@ -96,6 +96,50 @@ namespace SatisfactorySaveEditor
                     Ser.Serialize(SW, Items.ToArray());
                     Clipboard.SetText(SW.ToString());
                 }
+            }
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                var Ser = new XmlSerializer(typeof(SaveFileEntry[]));
+                using (var SR = new StringReader(Clipboard.GetText()))
+                {
+                    SaveFileEntry[] Entries;
+                    try
+                    {
+                        Entries = (SaveFileEntry[])Ser.Deserialize(SR);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("There is no save file content in your clipboard", "No content", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+                    int ReplaceCount = -1;
+                    if (cbReplaceAll.Checked)
+                    {
+                        var Names = Entries.Select(m => m.ObjectData.Name).Distinct().ToArray();
+                        var TotalStart = F.Entries.Count;
+                        F.Entries = F.Entries.Where(m => !Names.Contains(m.ObjectData.Name)).ToList();
+                        ReplaceCount = TotalStart - F.Entries.Count;
+                    }
+                    F.Entries.AddRange(Entries);
+                    if(ReplaceCount>=0)
+                    {
+                        MessageBox.Show($"Import complete. Deleted {ReplaceCount} existing entries","Import complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Import complete", "Import complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    HasChange = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no save file content in your clipboard", "No content", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

@@ -44,9 +44,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.btnImport = new System.Windows.Forms.Button();
+            this.cbReplaceAll = new System.Windows.Forms.CheckBox();
             this.gbExport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).BeginInit();
+            this.gbImport.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbExport
@@ -110,7 +113,7 @@
             this.btnExport.Size = new System.Drawing.Size(71, 23);
             this.btnExport.TabIndex = 22;
             this.btnExport.Text = "&Export";
-            this.ttInfo.SetToolTip(this.btnExport, "Export the given items to clipboard");
+            this.ttInfo.SetToolTip(this.btnExport, "Export the given items to the clipboard");
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -120,9 +123,9 @@
             this.rbAllItems.AutoSize = true;
             this.rbAllItems.Location = new System.Drawing.Point(287, 64);
             this.rbAllItems.Name = "rbAllItems";
-            this.rbAllItems.Size = new System.Drawing.Size(63, 17);
+            this.rbAllItems.Size = new System.Drawing.Size(36, 17);
             this.rbAllItems.TabIndex = 16;
-            this.rbAllItems.Text = "All items";
+            this.rbAllItems.Text = "All";
             this.ttInfo.SetToolTip(this.rbAllItems, "Export all items");
             this.rbAllItems.UseVisualStyleBackColor = true;
             // 
@@ -183,9 +186,11 @@
             // 
             this.gbImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbImport.Controls.Add(this.cbReplaceAll);
+            this.gbImport.Controls.Add(this.btnImport);
             this.gbImport.Location = new System.Drawing.Point(12, 118);
             this.gbImport.Name = "gbImport";
-            this.gbImport.Size = new System.Drawing.Size(468, 114);
+            this.gbImport.Size = new System.Drawing.Size(468, 58);
             this.gbImport.TabIndex = 0;
             this.gbImport.TabStop = false;
             this.gbImport.Text = "Import";
@@ -195,7 +200,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoEllipsis = true;
-            this.label4.Location = new System.Drawing.Point(12, 243);
+            this.label4.Location = new System.Drawing.Point(12, 193);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(391, 18);
             this.label4.TabIndex = 21;
@@ -204,7 +209,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(409, 238);
+            this.btnClose.Location = new System.Drawing.Point(409, 188);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(71, 23);
             this.btnClose.TabIndex = 23;
@@ -217,16 +222,38 @@
             this.ttInfo.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.ttInfo.ToolTipTitle = "Object Duplicator Info";
             // 
+            // btnImport
+            // 
+            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImport.Location = new System.Drawing.Point(385, 19);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(71, 23);
+            this.btnImport.TabIndex = 23;
+            this.btnImport.Text = "&Import";
+            this.ttInfo.SetToolTip(this.btnImport, "Imports the given items from the clipboard");
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // cbReplaceAll
+            // 
+            this.cbReplaceAll.AutoSize = true;
+            this.cbReplaceAll.Location = new System.Drawing.Point(9, 23);
+            this.cbReplaceAll.Name = "cbReplaceAll";
+            this.cbReplaceAll.Size = new System.Drawing.Size(252, 17);
+            this.cbReplaceAll.TabIndex = 24;
+            this.cbReplaceAll.Text = "&Remove identical existing types before importing";
+            this.cbReplaceAll.UseVisualStyleBackColor = true;
+            // 
             // frmExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 273);
+            this.ClientSize = new System.Drawing.Size(492, 223);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.gbImport);
             this.Controls.Add(this.gbExport);
             this.Controls.Add(this.btnClose);
-            this.MinimumSize = new System.Drawing.Size(500, 300);
+            this.MinimumSize = new System.Drawing.Size(500, 250);
             this.Name = "frmExport";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -235,6 +262,8 @@
             this.gbExport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).EndInit();
+            this.gbImport.ResumeLayout(false);
+            this.gbImport.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -256,5 +285,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.CheckBox cbReplaceAll;
     }
 }
