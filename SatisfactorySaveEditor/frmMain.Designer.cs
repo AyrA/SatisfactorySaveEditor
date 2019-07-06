@@ -71,6 +71,7 @@
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
             this.openLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -391,7 +392,8 @@
             this.generalActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editHeaderToolStripMenuItem,
             this.duplicatorToolStripMenuItem,
-            this.deleterToolStripMenuItem});
+            this.deleterToolStripMenuItem,
+            this.exportImportToolStripMenuItem});
             this.generalActionsToolStripMenuItem.Name = "generalActionsToolStripMenuItem";
             this.generalActionsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.generalActionsToolStripMenuItem.Text = "&General Actions";
@@ -439,6 +441,14 @@
             this.openLocationToolStripMenuItem.Text = "Open &Location";
             this.openLocationToolStripMenuItem.ToolTipText = "Opens the save file directory";
             this.openLocationToolStripMenuItem.Click += new System.EventHandler(this.openLocationToolStripMenuItem_Click);
+            // 
+            // exportImportToolStripMenuItem
+            // 
+            this.exportImportToolStripMenuItem.Name = "exportImportToolStripMenuItem";
+            this.exportImportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportImportToolStripMenuItem.Text = "&Export/Import";
+            this.exportImportToolStripMenuItem.ToolTipText = "Export and import save file contents";
+            this.exportImportToolStripMenuItem.Click += new System.EventHandler(this.exportImportToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -502,5 +512,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redrawMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLocationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportImportToolStripMenuItem;
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace SatisfactorySaveEditor.ObjectTypes
 {
     /// <summary>
     /// Script object entry
     /// </summary>
+    [Serializable]
     public class GameScript : GameBaseObject
     {
         /// <summary>
@@ -22,6 +24,14 @@ namespace SatisfactorySaveEditor.ObjectTypes
             ScriptName = BR.ReadIntString();
 
             ObjectType = OBJECT_TYPE.SCRIPT;
+        }
+
+        /// <summary>
+        /// Creates an empty script entry
+        /// </summary>
+        public GameScript()
+        {
+
         }
 
         /// <summary>

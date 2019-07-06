@@ -6,6 +6,7 @@ namespace SatisfactorySaveEditor.ObjectTypes
     /// <summary>
     /// Serves as the base for object entries
     /// </summary>
+    [Serializable]
     public class GameBaseObject : ICloneable
     {
         /// <summary>

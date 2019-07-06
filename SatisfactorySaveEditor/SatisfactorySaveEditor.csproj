@@ -60,6 +60,12 @@
     <Compile Include="frmDuplicator.Designer.cs">
       <DependentUpon>frmDuplicator.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExport.Designer.cs">
+      <DependentUpon>frmExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmHeaderEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDuplicator.resx">
       <DependentUpon>frmDuplicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExport.resx">
+      <DependentUpon>frmExport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmHeaderEditor.resx">
       <DependentUpon>frmHeaderEditor.cs</DependentUpon>

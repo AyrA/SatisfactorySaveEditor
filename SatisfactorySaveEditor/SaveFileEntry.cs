@@ -1,12 +1,15 @@
 ﻿using SatisfactorySaveEditor.ObjectTypes;
 using System;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace SatisfactorySaveEditor
 {
     /// <summary>
     /// Generic entry in the save file
     /// </summary>
+    [XmlInclude(typeof(GameObject)),XmlInclude(typeof(GameScript))]
+    [Serializable]
     public class SaveFileEntry : ICloneable
     {
         /// <summary>
@@ -27,6 +30,14 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public byte[] Properties
         { get; set; }
+
+        /// <summary>
+        /// Creates an empty save file entry
+        /// </summary>
+        public SaveFileEntry()
+        {
+            Properties = new byte[0];
+        }
 
         /// <summary>
         /// Reads a new entry from the stream

@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace SatisfactorySaveEditor.ObjectTypes
 {
     /// <summary>
     /// "Constructable" Game object
     /// </summary>
+    [Serializable]
     public class GameObject : GameBaseObject
     {
         /// <summary>
@@ -43,6 +45,14 @@ namespace SatisfactorySaveEditor.ObjectTypes
             UnknownHeaderEnd = BR.ReadInt32();
 
             ObjectType = OBJECT_TYPE.OBJECT;
+        }
+
+        /// <summary>
+        /// Creates an empty game object
+        /// </summary>
+        public GameObject()
+        {
+
         }
 
         /// <summary>

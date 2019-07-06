@@ -493,6 +493,20 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             System.Diagnostics.Process.Start(Environment.ExpandEnvironmentVariables(Program.SAVEDIR));
         }
 
+        private void exportImportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                using (var Exporter = new frmExport(F))
+                {
+                    if(Exporter.ShowDialog() == DialogResult.OK)
+                    {
+                        HasChange = true;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)

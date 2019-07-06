@@ -7,6 +7,7 @@ namespace SatisfactorySaveEditor
     /// Map coordinates
     /// </summary>
     /// <remarks>This entire class is purely a guess</remarks>
+    [Serializable]
     public class Vector3 : ICloneable
     {
         /// <summary>
@@ -37,7 +38,11 @@ namespace SatisfactorySaveEditor
             Z = BR.ReadSingle();
         }
 
-        public Vector3(float x,float y,float z)
+        public Vector3() : this(0, 0, 0)
+        {
+        }
+
+        public Vector3(float x = 0f, float y = 0f, float z = 0f)
         {
             X = x;
             Y = y;
