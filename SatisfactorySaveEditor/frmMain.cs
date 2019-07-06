@@ -51,7 +51,7 @@ namespace SatisfactorySaveEditor
                 BackgroundImage = (Image)MapImage.Clone();
             }
 
-            SFD.InitialDirectory = OFD.InitialDirectory = Environment.ExpandEnvironmentVariables(Program.SAVEDIR);
+            SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
             if (!string.IsNullOrEmpty(InitialFile))
             {
                 OpenFile(InitialFile);
@@ -118,7 +118,7 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
             }
         }
 
-        private void OpenFile(string SaveFileName)
+        public void OpenFile(string SaveFileName)
         {
             FileName = SaveFileName;
             using (var FS = File.OpenRead(FileName))
@@ -144,37 +144,7 @@ You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limite
             BackgroundImage.Dispose();
             if (F != null)
             {
-                var Objects = new List<DrawObject>();
-
-                foreach (var P in F.Entries.Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT))
-                {
-                    var O = new DrawObject(P, Color.Green, 2);
-                    //Change color according to object type
-                    if (P.ObjectData.Name.Contains("Build"))
-                    {
-                        O.ObjectColor = Color.Yellow;
-                    }
-                    if (P.ObjectData.Name.Contains("Node"))
-                    {
-                        O.ObjectColor = Color.Fuchsia;
-                    }
-                    if (P.ObjectData.Name.Contains("Foundation"))
-                    {
-                        O.ObjectColor = Color.DarkGray;
-                    }
-                    if (P.ObjectData.Name.Contains("Walkway"))
-                    {
-                        O.ObjectColor = Color.White;
-                    }
-                    Objects.Add(O);
-                }
-                //Enumerate players seperately because we want them bigger
-                foreach (var P in F.Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
-                {
-                    Objects.Add(new DrawObject(P, Color.Red, 10));
-                }
-
-                using (var BMP = MapRender.Render(Objects))
+                using (var BMP = MapRender.RenderFile(F))
                 {
                     //Add file info string
                     using (var G = Graphics.FromImage(BMP))
@@ -472,7 +442,10 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
 
         private void saveFileManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NA("Unimplemented");
+            using (var manager = new frmManager())
+            {
+                manager.ShowDialog();
+            }
         }
 
         private void deleterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -498,7 +471,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
 
         private void openLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Environment.ExpandEnvironmentVariables(Program.SAVEDIR));
+            System.Diagnostics.Process.Start(Program.SaveDirectory);
         }
 
         private void exportImportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -507,7 +480,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             {
                 using (var Exporter = new frmExport(F))
                 {
-                    if(Exporter.ShowDialog() == DialogResult.OK)
+                    if (Exporter.ShowDialog() == DialogResult.OK)
                     {
                         HasChange = true;
                     }

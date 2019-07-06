@@ -73,7 +73,7 @@ namespace SatisfactorySaveEditor
                 BR.ReadInt32(),
                 BR.ReadInt32()
             };
-            PlayTime = TimeSpan.FromSeconds(BR.ReadInt32());
+            PlayTime = TimeSpan.FromSeconds(BR.ReadSingle());
 
             LevelType = BR.ReadIntString();
             var Props = BR.ReadIntString().Trim('?', '\0').Split('?');

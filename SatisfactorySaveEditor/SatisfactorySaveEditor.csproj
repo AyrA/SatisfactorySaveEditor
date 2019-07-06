@@ -78,6 +78,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManager.Designer.cs">
+      <DependentUpon>frmManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapRender.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShortName.cs" />
@@ -116,6 +122,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmManager.resx">
+      <DependentUpon>frmManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Images\Height.png" />
     <EmbeddedResource Include="Images\Map.png" />
   </ItemGroup>

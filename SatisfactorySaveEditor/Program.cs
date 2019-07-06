@@ -10,6 +10,14 @@ namespace SatisfactorySaveEditor
     {
         public const string SAVEDIR = @"%LOCALAPPDATA%\FactoryGame\Saved\SaveGames";
 
+        public static string SaveDirectory
+        {
+            get
+            {
+                return Environment.ExpandEnvironmentVariables(SAVEDIR);
+            }
+        }
+
         public struct RET
         {
             public const int SUCCESS = 0;
@@ -38,7 +46,7 @@ namespace SatisfactorySaveEditor
         private static void Test()
         {
             //Note to testers: Do not close the stream early. This protects you from overwriting the save file.
-            using (var FS = File.OpenRead(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "Test.sav")))
+            using (var FS = File.OpenRead(Path.Combine(Program.SaveDirectory, "Test.sav")))
             {
                 using (var BR = new BinaryReader(FS))
                 {

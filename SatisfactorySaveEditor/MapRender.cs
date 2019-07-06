@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace SatisfactorySaveEditor
 {
@@ -148,6 +149,41 @@ namespace SatisfactorySaveEditor
         public static Image Render(DrawObject Object)
         {
             return Render(new DrawObject[] { Object });
+        }
+
+        public static Image RenderFile(SaveFile F)
+        {
+            var Objects = new List<DrawObject>();
+
+            foreach (var P in F.Entries.Where(m => m.EntryType == OBJECT_TYPE.OBJECT))
+            {
+                var O = new DrawObject(P, Color.Green, 2);
+                //Change color according to object type
+                if (P.ObjectData.Name.Contains("Build"))
+                {
+                    O.ObjectColor = Color.Yellow;
+                }
+                if (P.ObjectData.Name.Contains("Node"))
+                {
+                    O.ObjectColor = Color.Fuchsia;
+                }
+                if (P.ObjectData.Name.Contains("Foundation"))
+                {
+                    O.ObjectColor = Color.DarkGray;
+                }
+                if (P.ObjectData.Name.Contains("Walkway"))
+                {
+                    O.ObjectColor = Color.White;
+                }
+                Objects.Add(O);
+            }
+            //Enumerate players seperately because we want them bigger
+            foreach (var P in F.Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
+            {
+                Objects.Add(new DrawObject(P, Color.Red, 10));
+            }
+
+            return Render(Objects);
         }
     }
 }
