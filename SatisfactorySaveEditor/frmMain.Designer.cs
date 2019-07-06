@@ -34,6 +34,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redrawMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quickActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +70,7 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
-            this.redrawMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,6 +94,7 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.redrawMapToolStripMenuItem,
+            this.openLocationToolStripMenuItem,
             this.exitToolStripMenuItem,
             this.saveFileManagerToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -126,6 +128,14 @@
             this.saveAsToolStripMenuItem.Text = "&Save As...";
             this.saveAsToolStripMenuItem.ToolTipText = "Saves the file under a new name";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // redrawMapToolStripMenuItem
+            // 
+            this.redrawMapToolStripMenuItem.Name = "redrawMapToolStripMenuItem";
+            this.redrawMapToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.redrawMapToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.redrawMapToolStripMenuItem.Text = "&Redraw Map";
+            this.redrawMapToolStripMenuItem.Click += new System.EventHandler(this.redrawMapToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -165,7 +175,7 @@
             this.removeAnimalPartsToolStripMenuItem,
             this.removeAnimalsToolStripMenuItem});
             this.mapFeaturesToolStripMenuItem.Name = "mapFeaturesToolStripMenuItem";
-            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.mapFeaturesToolStripMenuItem.Text = "&Map Features";
             this.mapFeaturesToolStripMenuItem.ToolTipText = "Map/Environment specifics";
             // 
@@ -277,7 +287,7 @@
             this.resetToolStripMenuItem,
             this.restorePickupsToolStripMenuItem});
             this.dropPodsToolStripMenuItem.Name = "dropPodsToolStripMenuItem";
-            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.dropPodsToolStripMenuItem.Text = "&Drop Pods";
             this.dropPodsToolStripMenuItem.ToolTipText = "Actions for Drop Pods";
             // 
@@ -302,7 +312,7 @@
             this.funToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resizeDoggosToolStripMenuItem});
             this.funToolStripMenuItem.Name = "funToolStripMenuItem";
-            this.funToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.funToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.funToolStripMenuItem.Text = "&Fun";
             this.funToolStripMenuItem.ToolTipText = "Funny changes that don\'t have a benefit to them";
             // 
@@ -363,7 +373,7 @@
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.modifyToolStripMenuItem.Text = "&Modify";
             this.modifyToolStripMenuItem.ToolTipText = "Modifies an inventory";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
@@ -371,7 +381,7 @@
             // linkTogetherToolStripMenuItem
             // 
             this.linkTogetherToolStripMenuItem.Name = "linkTogetherToolStripMenuItem";
-            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.linkTogetherToolStripMenuItem.Text = "&Link together";
             this.linkTogetherToolStripMenuItem.ToolTipText = "Links two inventories together";
             this.linkTogetherToolStripMenuItem.Click += new System.EventHandler(this.linkTogetherToolStripMenuItem_Click);
@@ -389,7 +399,7 @@
             // editHeaderToolStripMenuItem
             // 
             this.editHeaderToolStripMenuItem.Name = "editHeaderToolStripMenuItem";
-            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.editHeaderToolStripMenuItem.Text = "&Edit Header";
             this.editHeaderToolStripMenuItem.ToolTipText = "Edits the save file header";
             this.editHeaderToolStripMenuItem.Click += new System.EventHandler(this.editHeaderToolStripMenuItem_Click);
@@ -397,7 +407,7 @@
             // duplicatorToolStripMenuItem
             // 
             this.duplicatorToolStripMenuItem.Name = "duplicatorToolStripMenuItem";
-            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.duplicatorToolStripMenuItem.Text = "D&uplicator";
             this.duplicatorToolStripMenuItem.ToolTipText = "Duplicates game entries";
             this.duplicatorToolStripMenuItem.Click += new System.EventHandler(this.duplicatorToolStripMenuItem_Click);
@@ -405,7 +415,7 @@
             // deleterToolStripMenuItem
             // 
             this.deleterToolStripMenuItem.Name = "deleterToolStripMenuItem";
-            this.deleterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleterToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.deleterToolStripMenuItem.Text = "&Deleter";
             this.deleterToolStripMenuItem.ToolTipText = "Deleted individual entries or groups of them";
             this.deleterToolStripMenuItem.Click += new System.EventHandler(this.deleterToolStripMenuItem_Click);
@@ -422,13 +432,13 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
-            // redrawMapToolStripMenuItem
+            // openLocationToolStripMenuItem
             // 
-            this.redrawMapToolStripMenuItem.Name = "redrawMapToolStripMenuItem";
-            this.redrawMapToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.redrawMapToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.redrawMapToolStripMenuItem.Text = "&Redraw Map";
-            this.redrawMapToolStripMenuItem.Click += new System.EventHandler(this.redrawMapToolStripMenuItem_Click);
+            this.openLocationToolStripMenuItem.Name = "openLocationToolStripMenuItem";
+            this.openLocationToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.openLocationToolStripMenuItem.Text = "Open &Location";
+            this.openLocationToolStripMenuItem.ToolTipText = "Opens the save file directory";
+            this.openLocationToolStripMenuItem.Click += new System.EventHandler(this.openLocationToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -491,5 +501,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveFileManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redrawMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openLocationToolStripMenuItem;
     }
 }

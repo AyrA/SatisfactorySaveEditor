@@ -488,6 +488,11 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             }
         }
 
+        private void openLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Environment.ExpandEnvironmentVariables(Program.SAVEDIR));
+        }
+
         #endregion
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
