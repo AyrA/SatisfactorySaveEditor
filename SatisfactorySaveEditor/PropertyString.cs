@@ -28,6 +28,11 @@ namespace SatisfactorySaveEditor
             Value = BR.ReadIntString();
         }
 
+        /// <summary>
+        /// Initializes a new property string instance
+        /// </summary>
+        /// <param name="Name">String name</param>
+        /// <param name="Value">String value</param>
         public PropertyString(string Name,string Value)
         {
             this.Name = Name;

@@ -50,6 +50,11 @@ namespace SatisfactorySaveEditor.ObjectTypes
             BW.WriteIntString(InternalName);
         }
 
+        /// <summary>
+        /// Clones the object
+        /// </summary>
+        /// <remarks>The base object can't be cloned. Children of this type have to implement it</remarks>
+        /// <returns>-</returns>
         public virtual object Clone()
         {
             throw new NotImplementedException("BaseObject can't be cloned");

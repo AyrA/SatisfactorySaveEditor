@@ -44,6 +44,10 @@ namespace SatisfactorySaveEditor.ObjectTypes
             BW.WriteIntString(ScriptName);
         }
 
+        /// <summary>
+        /// Clones this instance
+        /// </summary>
+        /// <returns>Copy</returns>
         public override object Clone()
         {
             return (GameScript)MemberwiseClone();

@@ -18,9 +18,23 @@ namespace SatisfactorySaveEditor
         /// </summary>
         private static byte[] MapData = null;
 
+        /// <summary>
+        /// Creates a console window
+        /// </summary>
+        /// <returns>true, if window was created</returns>
+        /// <remarks>if this returns false, you likely already have a window</remarks>
         [DllImport("kernel32.dll")]
         public static extern bool AllocConsole();
 
+        /// <summary>
+        /// Removes the console window handle from this application.
+        /// Also removes the window itself if this was the last handle.
+        /// </summary>
+        /// <returns>true, if removed</returns>
+        /// <remarks>
+        /// If this returns false, there is likely no window present.
+        /// Releasing the window will stop blocking scripts that use this application
+        /// </remarks>
         [DllImport("kernel32.dll")]
         public static extern bool FreeConsole();
 
@@ -62,8 +76,14 @@ namespace SatisfactorySaveEditor
             BW.Write(Data);
         }
 
+        /// <summary>
+        /// Translates game coordinates to relative map coordinates for the image system
+        /// </summary>
+        /// <param name="V">Map coordinates</param>
+        /// <returns>Image coordinates (relative, 0-1)</returns>
         public static PointF TranslateFromMap(Vector3 V)
         {
+            //NOTE: ONLY A GUESS, FEEL FREE TO IMPROVE
             const int MIN_X = -330000;
             const int MAX_X = 428000;
             const int MIN_Y = -370000;
@@ -71,7 +91,6 @@ namespace SatisfactorySaveEditor
             const int SIZE_X = MAX_X - MIN_X;
             const int SIZE_Y = MAX_Y - MIN_Y;
             //Map dimensions
-            //Rectangle R = new Rectangle(-406400, -406400, 508000 + 406400, 508000 + 406400);
             Rectangle R = new Rectangle(MIN_X, MIN_Y, SIZE_X, SIZE_Y);
             var X = Math.Min(1f, Math.Max(0f, (V.X - R.X) / R.Width));
             var Y = Math.Min(1f, Math.Max(0f, (V.Y - R.Y) / R.Height));
@@ -99,6 +118,15 @@ namespace SatisfactorySaveEditor
             return (byte[])MapData.Clone();
         }
 
+        /// <summary>
+        /// Resizes an image to the given maximum dimensions,
+        /// respecting the aspect ratio of said image
+        /// </summary>
+        /// <param name="I">Source image</param>
+        /// <param name="MaxWidth">New maximum width</param>
+        /// <param name="MaxHeight">New maximum height</param>
+        /// <returns>Scaled image</returns>
+        /// <remarks>This will not dispose either of the images</remarks>
         public static Image ResizeImage(Image I, int MaxWidth, int MaxHeight)
         {
             var S = new SizeF(I.Size);
@@ -108,7 +136,8 @@ namespace SatisfactorySaveEditor
         }
 
         /// <summary>
-        /// Generate a Hex dump from binary data
+        /// Generate a Hex dump from binary data that looks like it would in a hex editor.
+        /// Can be used to dump contents to the console when debugging
         /// </summary>
         /// <param name="Data">Binary data</param>
         /// <param name="Width">Hex Width in bytes</param>

@@ -4,9 +4,8 @@ using System.IO;
 namespace SatisfactorySaveEditor
 {
     /// <summary>
-    /// Map coordinates
+    /// Map coordinates for 3 dimensions
     /// </summary>
-    /// <remarks>This entire class is purely a guess</remarks>
     [Serializable]
     public class Vector3 : ICloneable
     {
@@ -38,10 +37,19 @@ namespace SatisfactorySaveEditor
             Z = BR.ReadSingle();
         }
 
+        /// <summary>
+        /// Creates an empty instance for deserialization
+        /// </summary>
         public Vector3() : this(0, 0, 0)
         {
         }
 
+        /// <summary>
+        /// Creates an instance with the given points
+        /// </summary>
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="z">Z</param>
         public Vector3(float x = 0f, float y = 0f, float z = 0f)
         {
             X = x;
@@ -69,6 +77,10 @@ namespace SatisfactorySaveEditor
             BW.Write(Z);
         }
 
+        /// <summary>
+        /// Creates a copy of this instance
+        /// </summary>
+        /// <returns>Copy</returns>
         public object Clone()
         {
             return new Vector3(X, Y, Z);

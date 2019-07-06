@@ -1,5 +1,4 @@
-﻿using SatisfactorySaveEditor.ObjectTypes;
-using System;
+﻿using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -114,10 +113,11 @@ namespace SatisfactorySaveEditor
                     }
                     catch
                     {
-                        MessageBox.Show("There is no save file content in your clipboard", "No content", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("The text in your clipboard is not valid save file data", "No content", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
                     int ReplaceCount = -1;
+                    //Replace all items with the same name
                     if (cbReplaceAll.Checked)
                     {
                         var Names = Entries.Select(m => m.ObjectData.Name).Distinct().ToArray();
@@ -125,6 +125,7 @@ namespace SatisfactorySaveEditor
                         F.Entries = F.Entries.Where(m => !Names.Contains(m.ObjectData.Name)).ToList();
                         ReplaceCount = TotalStart - F.Entries.Count;
                     }
+                    //Automatically fix internal names by adding incrementing numbers until they're unique.
                     if (cbFixNames.Checked)
                     {
                         var Names = F.Entries.Select(m => m.ObjectData.InternalName).ToArray();

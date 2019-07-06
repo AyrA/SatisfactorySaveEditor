@@ -71,6 +71,14 @@ namespace SatisfactorySaveEditor
             ObjectData.Export(BW);
         }
 
+        /// <summary>
+        /// Copies this instance
+        /// </summary>
+        /// <returns>Fully independent clone of this instance</returns>
+        /// <remarks>
+        /// This will not in any way change any properties,
+        /// including those supposed to be unique
+        /// </remarks>
         public object Clone()
         {
             var Copy = (SaveFileEntry)MemberwiseClone();

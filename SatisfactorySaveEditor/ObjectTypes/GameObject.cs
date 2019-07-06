@@ -69,6 +69,10 @@ namespace SatisfactorySaveEditor.ObjectTypes
             BW.Write(UnknownHeaderEnd);
         }
 
+        /// <summary>
+        /// Clones this instance
+        /// </summary>
+        /// <returns>Copy</returns>
         public override object Clone()
         {
             var Copy = (GameObject)MemberwiseClone();

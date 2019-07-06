@@ -3,8 +3,17 @@ using System.Linq;
 
 namespace SatisfactorySaveEditor
 {
+    /// <summary>
+    /// Provides simplified save file operation
+    /// </summary>
     public static class SaveFileHelper
     {
+        /// <summary>
+        /// Remove all lizard doggos
+        /// </summary>
+        /// <remarks>Includes tamed ones</remarks>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RemoveLizardDoggos(SaveFile F)
         {
             var ItemList = new string[] {
@@ -13,6 +22,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores all rocks on the map
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestoreRocks(SaveFile F)
         {
             var ItemList = new string[] {
@@ -22,6 +36,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Removes all rocks from the map
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RemoveRocks(SaveFile F)
         {
             var ItemList = new string[] {
@@ -42,6 +61,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => Entries.Contains(m));
         }
 
+        /// <summary>
+        /// Restores all removed plants
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestorePlants(SaveFile F)
         {
             var ItemList = new string[] {
@@ -50,6 +74,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores all pickup items and removes custom pickup items
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestorePickups(SaveFile F)
         {
             var ItemList = new string[] {
@@ -66,6 +95,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores all berry bushes, nuts and mushrooms
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestoreBerries(SaveFile F)
         {
             var ItemList = new string[] {
@@ -84,6 +118,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores all drop pods into the unopened state
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestoreDropPods(SaveFile F)
         {
             var ItemList = new string[] {
@@ -96,6 +135,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores all artifacts
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestoreArtifacts(SaveFile F)
         {
             var ItemList = new string[] {
@@ -112,6 +156,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Removes all stray animal parts the player forgot to pick up
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RemoveAnimalParts(SaveFile F)
         {
             var ItemList = new string[] {
@@ -125,6 +174,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores all power slugs
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RestoreSlugs(SaveFile F)
         {
             var ItemList = new string[] {
@@ -141,6 +195,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Removes all nice/passive creatures
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RemoveNiceCreatures(SaveFile F)
         {
             var ItemList = new string[] {
@@ -151,6 +210,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Removes all evil creatures
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RemoveEvilCreatures(SaveFile F)
         {
             var ItemList = new string[] {
@@ -163,6 +227,11 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Removes all spawners
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <returns>Number of items processed</returns>
         public static int RemoveCreatureSpawner(SaveFile F)
         {
             var ItemList = new string[] {
@@ -172,6 +241,13 @@ namespace SatisfactorySaveEditor
             return F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
         }
 
+        /// <summary>
+        /// Restores the map into a mostly "untouched" state,
+        /// ignoring player built objects
+        /// </summary>
+        /// <param name="F">Save file</param>
+        /// <param name="ReplantPlants">Add all collected plants back to the map</param>
+        /// <returns>Number of items processed</returns>
         public static int RestoreMap(SaveFile F, bool ReplantPlants)
         {
             var ItemList = new string[] {
@@ -190,7 +266,7 @@ namespace SatisfactorySaveEditor
                 RestoreBerries(F) +
                 RestoreArtifacts(F) +
                 RemoveAnimalParts(F) +
-                F.Entries.RemoveAll(m => ItemList.Contains(m.ObjectData.Name));
+                RestoreSlugs(F);
         }
 
         /// <summary>
