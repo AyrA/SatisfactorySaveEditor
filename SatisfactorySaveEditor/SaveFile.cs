@@ -11,16 +11,33 @@ namespace SatisfactorySaveEditor
     public class SaveFile
     {
         /// <summary>
-        /// Unknown values at the start of the header (maybe entry type, version, magic number, etc)
+        /// File format version
         /// </summary>
-        public int[] HeaderValues
-        { get; set; }
+        public int SaveHeaderVersion { get; set; }
+        /// <summary>
+        /// Version of the save game
+        /// </summary>
+        public int SaveVersion { get; set; }
+        /// <summary>
+        /// Game version
+        /// </summary>
+        public int BuildVersion { get; set; }
 
         /// <summary>
         /// Time played. Maximum is likely <see cref="int.MaxValue"/>
         /// </summary>
         public TimeSpan PlayTime
         { get; set; }
+
+        /// <summary>
+        /// Last time this game was saved
+        /// </summary>
+        public DateTime SaveDate { get; set; }
+        /// <summary>
+        /// Determines if a session is visible
+        /// </summary>
+        /// <remarks>Probably a <see cref="bool"/></remarks>
+        public byte SessionVisibility { get; set; }
 
         /// <summary>
         /// Type of Level. Always "Persistent_Level"?
@@ -49,14 +66,6 @@ namespace SatisfactorySaveEditor
         /// </summary>
         /// <remarks>Clearing it restores slugs, artifacts and mushrooms but not berries for example</remarks>
         public List<PropertyString> StringList { get; set; }
-        /// <summary>
-        /// 9 Unknown bytes
-        /// </summary>
-        public byte[] UnknownBytes { get; set; }
-        /// <summary>
-        /// unknown 4 bytes that look like a somewhat believable integer
-        /// </summary>
-        public int UnknownInt { get; set; }
 
         /// <summary>
         /// Reads a new SaveFile
@@ -68,12 +77,10 @@ namespace SatisfactorySaveEditor
             Entries = new List<SaveFileEntry>();
             StringList = new List<PropertyString>();
 
-            HeaderValues = new int[]
-            {
-                BR.ReadInt32(),
-                BR.ReadInt32()
-            };
-            PlayTime = TimeSpan.FromSeconds(BR.ReadSingle());
+
+            SaveHeaderVersion = BR.ReadInt32();
+            SaveVersion = BR.ReadInt32();
+            BuildVersion = BR.ReadInt32();
 
             LevelType = BR.ReadIntString();
             var Props = BR.ReadIntString().Trim('?', '\0').Split('?');
@@ -91,11 +98,12 @@ namespace SatisfactorySaveEditor
             }
             //Session name is in the properties too for some reason but appears again
             SessionName = BR.ReadIntString();
-            //Somewhat believable integer?
-            UnknownInt = BR.ReadInt32();
-            //No idea
-            UnknownBytes = BR.ReadBytes(9);
+            PlayTime = TimeSpan.FromSeconds(BR.ReadInt32());
+            SaveDate = new DateTime(BR.ReadInt64());
+            //SaveDate = FromUnixTime(BR.ReadInt32());
+            SessionVisibility = BR.ReadByte();
 
+            //Read all entries
             int HeaderCount = BR.ReadInt32();
             for (var i = 0; i < HeaderCount; i++)
             {
@@ -124,14 +132,15 @@ namespace SatisfactorySaveEditor
         {
             using (var BW = new BinaryWriter(S, System.Text.Encoding.ASCII, true))
             {
-                BW.Write(HeaderValues[0]);
-                BW.Write(HeaderValues[1]);
-                BW.Write((int)PlayTime.TotalSeconds);
+                BW.Write(SaveHeaderVersion);
+                BW.Write(SaveVersion);
+                BW.Write(BuildVersion);
                 BW.WriteIntString(LevelType);
                 BW.WriteIntString("?" + string.Join("?", Properties.Select(m => $"{m.Key}={m.Value}")));
                 BW.WriteIntString(SessionName);
-                BW.Write(UnknownInt);
-                BW.Write(UnknownBytes);
+                BW.Write((int)PlayTime.TotalSeconds);
+                BW.Write(SaveDate.Ticks);
+                BW.Write(SessionVisibility);
 
                 BW.Write(Entries.Count);
                 foreach (var E in Entries)
