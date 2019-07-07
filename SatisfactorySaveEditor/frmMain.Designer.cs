@@ -72,6 +72,9 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,7 +84,8 @@
             this.fileToolStripMenuItem,
             this.quickActionsToolStripMenuItem,
             this.inventoriesToolStripMenuItem,
-            this.generalActionsToolStripMenuItem});
+            this.generalActionsToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Size = new System.Drawing.Size(553, 24);
@@ -141,6 +145,7 @@
             // openLocationToolStripMenuItem
             // 
             this.openLocationToolStripMenuItem.Name = "openLocationToolStripMenuItem";
+            this.openLocationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.openLocationToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.openLocationToolStripMenuItem.Text = "Open &Location";
             this.openLocationToolStripMenuItem.ToolTipText = "Opens the save file directory";
@@ -451,6 +456,32 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openHelpToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            this.helpToolStripMenuItem.ToolTipText = "Provides help and info utilities";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
+            this.aboutToolStripMenuItem.ToolTipText = "Shows basic application information";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // openHelpToolStripMenuItem
+            // 
+            this.openHelpToolStripMenuItem.Name = "openHelpToolStripMenuItem";
+            this.openHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openHelpToolStripMenuItem.Text = "&Help";
+            this.openHelpToolStripMenuItem.ToolTipText = "Shows the Help window";
+            this.openHelpToolStripMenuItem.Click += new System.EventHandler(this.openHelpToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,6 +494,7 @@
             this.Text = "Satisfactory Save Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmMain_HelpRequested);
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
             this.ResumeLayout(false);
@@ -515,5 +547,8 @@
         private System.Windows.Forms.ToolStripMenuItem redrawMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLocationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportImportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openHelpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }

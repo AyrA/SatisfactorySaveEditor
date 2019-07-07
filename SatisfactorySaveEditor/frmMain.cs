@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -507,6 +508,31 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             }
         }
 
+        private void redrawMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RedrawMap();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var SB = new StringBuilder();
+            SB.AppendLine("Satisfactory Save File Editor");
+            SB.AppendLine($"Version: {Application.ProductVersion}");
+            SB.AppendLine("License: MIT");
+            SB.AppendLine("Source: https://cable.ayra.ch/satisfactory/editor.php");
+            MessageBox.Show(
+                SB.ToString(),
+                "Application Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
+        private void openHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tools.ShowHelp(GetType().Name);
+        }
+
         #endregion
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -540,9 +566,9 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             }
         }
 
-        private void redrawMapToolStripMenuItem_Click(object sender, EventArgs e)
+        private void frmMain_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
-            RedrawMap();
+            Tools.ShowHelp(GetType().Name);
         }
     }
 }
