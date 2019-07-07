@@ -16,6 +16,11 @@ namespace SatisfactorySaveEditor
             initFiles();
         }
 
+        private void E(string Text, string Title)
+        {
+            MessageBox.Show(Text, Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void initFiles()
         {
             tvFiles.Nodes.Clear();
@@ -146,6 +151,7 @@ namespace SatisfactorySaveEditor
                     {
                         File.Delete(GetName(Node));
                         //Remove node or the entire tree section if it was the last one.
+                        //No need to reload the tree
                         if (Node.Parent.Nodes.Count == 1)
                         {
                             Node.Parent.Remove();
@@ -157,8 +163,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Unable to delete file. Reason: {ex.Message}", "error deleting file", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        E($"Unable to delete file. Reason: {ex.Message}", "error deleting file");
                     }
                 }
             }
@@ -246,7 +251,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Unable to back up your savegame\r\n{ex.Message}", "Backup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        E($"Unable to back up your savegame\r\n{ex.Message}", "Backup Error");
                     }
                 }
             }
@@ -299,7 +304,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Unable to open the selected file.\r\n{ex.Message}", "Import error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    E($"Unable to open the selected file.\r\n{ex.Message}", "Import error");
                     return;
                 }
                 using (FS)
@@ -355,7 +360,7 @@ namespace SatisfactorySaveEditor
                                 }
                                 catch (Exception ex)
                                 {
-                                    MessageBox.Show($"File looks compressed, but we are unable to decompress it.\r\n{ex.Message}", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    E($"File looks compressed, but we are unable to decompress it.\r\n{ex.Message}", "Decompression error");
                                 }
                             }
                             else
@@ -388,9 +393,96 @@ namespace SatisfactorySaveEditor
                                 }
                             }
                         }
-                        //TODO: Rename
                     }
                 }
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var Node = GetSelectedFile();
+            if (Node != null)
+            {
+                FileStream FS = null;
+                SaveFile F = null;
+                try
+                {
+                    FS = File.OpenRead(GetName(Node));
+                }
+                catch (Exception ex)
+                {
+                    E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
+                    return;
+                }
+                using (FS)
+                {
+                    F = SaveFile.Open(FS);
+                }
+                if (F != null)
+                {
+                    using (var Ren = new frmRename(F.SessionName, Node.Text))
+                    {
+                        if (Ren.ShowDialog() == DialogResult.OK)
+                        {
+                            var NewName = Path.Combine(Program.SaveDirectory, Ren.RenameFileName + ".sav");
+                            //Show rename dialog if the file itself is renamed and the destination exists already
+                            if (
+                                Node.Text == Ren.RenameFileName ||
+                                !File.Exists(NewName) ||
+                                MessageBox.Show($"There is already a file named {Ren.RenameFileName}.sav. Overwrite this file?", "Confirm overwrite", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                            {
+                                F.SessionName = Ren.RenameSessionName;
+                                try
+                                {
+                                    FS = File.Create(NewName);
+                                }
+                                catch (Exception ex)
+                                {
+                                    FS = null;
+                                    E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
+                                }
+                                if (FS != null)
+                                {
+                                    using (FS)
+                                    {
+                                        F.Export(FS);
+                                        try
+                                        {
+                                            File.Delete(GetName(Node));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            E($"File renamed, but we are unable to delete the old copy. Please do so manually.\r\n{ex.Message}", "Unable to rename");
+                                        }
+                                        initFiles();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    InvalidMessage();
+                }
+            }
+        }
+
+        private void duplicateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var Node = GetSelectedFile();
+            if (Node != null)
+            {
+                try
+                {
+                    File.Copy(GetName(Node), Tools.GetNewName(GetName(Node)));
+                }
+                catch (Exception ex)
+                {
+                    E($"Unable to duplicate file.\r\n{ex.Message}", "Duplication error");
+                    return;
+                }
+                initFiles();
             }
         }
     }

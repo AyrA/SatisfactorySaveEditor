@@ -40,6 +40,7 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CMS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,36 +72,42 @@
             this.renderToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.backupToolStripMenuItem,
+            this.duplicateToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.CMS.Name = "CMS";
-            this.CMS.Size = new System.Drawing.Size(114, 114);
+            this.CMS.Size = new System.Drawing.Size(119, 136);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.ToolTipText = "Opens the selected file in the save file editor";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // renderToolStripMenuItem
             // 
             this.renderToolStripMenuItem.Name = "renderToolStripMenuItem";
-            this.renderToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.renderToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.renderToolStripMenuItem.Text = "R&ender";
+            this.renderToolStripMenuItem.ToolTipText = "Renders a map of the selected file";
             this.renderToolStripMenuItem.Click += new System.EventHandler(this.renderToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
+            this.deleteToolStripMenuItem.ToolTipText = "Deletes the selected file";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.renameToolStripMenuItem.Text = "&Rename";
+            this.renameToolStripMenuItem.ToolTipText = "Renames the selected file and/or session name";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // btnImport
             // 
@@ -117,7 +124,7 @@
             // 
             this.OFD.DefaultExt = "sav";
             this.OFD.Filter = "Save games|*.sav;*.sav.gz|All files|*.*";
-            this.OFD.Title = "Import save game";
+            this.OFD.Title = "Import a save game or a backup of it";
             // 
             // SFD
             // 
@@ -128,9 +135,18 @@
             // backupToolStripMenuItem
             // 
             this.backupToolStripMenuItem.Name = "backupToolStripMenuItem";
-            this.backupToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.backupToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.backupToolStripMenuItem.Text = "&Backup";
+            this.backupToolStripMenuItem.ToolTipText = "Creates a backup of the selected file";
             this.backupToolStripMenuItem.Click += new System.EventHandler(this.backupToolStripMenuItem_Click);
+            // 
+            // duplicateToolStripMenuItem
+            // 
+            this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.duplicateToolStripMenuItem.Text = "D&uplicate";
+            this.duplicateToolStripMenuItem.ToolTipText = "Duplicates the selected file";
+            this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
             // 
             // frmManager
             // 
@@ -162,5 +178,6 @@
         private System.Windows.Forms.OpenFileDialog OFD;
         private System.Windows.Forms.SaveFileDialog SFD;
         private System.Windows.Forms.ToolStripMenuItem backupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
     }
 }
