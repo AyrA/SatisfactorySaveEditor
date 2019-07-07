@@ -371,13 +371,15 @@ namespace SatisfactorySaveEditor
                     }
                     else
                     {
-                        using (var Ren = new frmRename(F.SessionName, Path.GetFileNameWithoutExtension(OFD.FileName)))
+                        //Supply the NewName path to have a name that's not a conflict by default
+                        using (var Ren = new frmRename(F.SessionName, Path.GetFileNameWithoutExtension(NewName)))
                         {
                             if (Ren.ShowDialog() == DialogResult.OK)
                             {
                                 NewName = Path.Combine(Program.SaveDirectory, Ren.RenameFileName + ".sav");
                                 if (!File.Exists(NewName) || MessageBox.Show($"There is already a file named {Ren.RenameFileName}.sav. Overwrite this file?", "Confirm overwrite", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                                 {
+                                    F.SessionName = Ren.RenameSessionName;
                                     using (var OUT = File.Create(NewName))
                                     {
                                         F.Export(OUT);
