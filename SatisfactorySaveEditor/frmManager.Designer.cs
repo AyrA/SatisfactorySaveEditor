@@ -34,13 +34,13 @@
             this.CMS = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnImport = new System.Windows.Forms.Button();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
-            this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CMS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,14 +93,6 @@
             this.renderToolStripMenuItem.ToolTipText = "Renders a map of the selected file";
             this.renderToolStripMenuItem.Click += new System.EventHandler(this.renderToolStripMenuItem_Click);
             // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.deleteToolStripMenuItem.Text = "&Delete";
-            this.deleteToolStripMenuItem.ToolTipText = "Deletes the selected file";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
@@ -108,29 +100,6 @@
             this.renameToolStripMenuItem.Text = "&Rename";
             this.renameToolStripMenuItem.ToolTipText = "Renames the selected file and/or session name";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
-            // 
-            // btnImport
-            // 
-            this.btnImport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnImport.Location = new System.Drawing.Point(0, 550);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(792, 23);
-            this.btnImport.TabIndex = 3;
-            this.btnImport.Text = "&Import";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // OFD
-            // 
-            this.OFD.DefaultExt = "sav";
-            this.OFD.Filter = "Save games|*.sav;*.sav.gz|All files|*.*";
-            this.OFD.Title = "Import a save game or a backup of it";
-            // 
-            // SFD
-            // 
-            this.SFD.DefaultExt = "sav.gz";
-            this.SFD.Filter = "Save file backup|*.sav.gz|All files|*.*";
-            this.SFD.Title = "Backup save game";
             // 
             // backupToolStripMenuItem
             // 
@@ -147,6 +116,37 @@
             this.duplicateToolStripMenuItem.Text = "D&uplicate";
             this.duplicateToolStripMenuItem.ToolTipText = "Duplicates the selected file";
             this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.deleteToolStripMenuItem.Text = "&Delete";
+            this.deleteToolStripMenuItem.ToolTipText = "Deletes the selected file";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnImport.Location = new System.Drawing.Point(0, 550);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(792, 23);
+            this.btnImport.TabIndex = 3;
+            this.btnImport.Text = "&Import file or restore from backup";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // OFD
+            // 
+            this.OFD.DefaultExt = "sav";
+            this.OFD.Filter = "Save games|*.sav;*.sav.gz|All files|*.*";
+            this.OFD.Title = "Import a save game or a backup of it";
+            // 
+            // SFD
+            // 
+            this.SFD.DefaultExt = "sav.gz";
+            this.SFD.Filter = "Save file backup|*.sav.gz|All files|*.*";
+            this.SFD.Title = "Backup save game";
             // 
             // frmManager
             // 
