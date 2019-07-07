@@ -95,6 +95,9 @@ namespace SatisfactorySaveEditor
                 {
                     Ser.Serialize(SW, Items.ToArray());
                     Clipboard.SetText(SW.ToString());
+                    MessageBox.Show(
+                        $"{Items.Count()} entr{(Items.Count() == 1 ? "y" : "ies")} Exported to clipboard",
+                        "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -113,7 +116,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch
                     {
-                        MessageBox.Show("The text in your clipboard is not valid save file data", "No content", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        Tools.E("The text in your clipboard is not valid save file data", "No content");
                         return;
                     }
                     int ReplaceCount = -1;
@@ -152,11 +155,15 @@ namespace SatisfactorySaveEditor
 
                     if (ReplaceCount >= 0)
                     {
-                        MessageBox.Show($"Import complete. Deleted {ReplaceCount} existing entries", "Import complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            $"Import complete. Deleted {ReplaceCount} existing entries", "Import complete",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show($"Import complete", "Import complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            $"Import complete", "Import complete",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                     HasChange = true;
@@ -164,7 +171,9 @@ namespace SatisfactorySaveEditor
             }
             else
             {
-                MessageBox.Show("There is no save file content in your clipboard", "No content", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(
+                    "Your clipboard is empty", "No content",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
