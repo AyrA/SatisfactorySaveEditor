@@ -98,6 +98,15 @@ namespace SatisfactorySaveEditor
             return new PointF(X, Y);
         }
 
+        /// <summary>
+        /// Copies a file to a new location and compresses it
+        /// </summary>
+        /// <param name="InName">Original file</param>
+        /// <param name="OutName">New file</param>
+        /// <returns>true, if copied and compressed sucessfully</returns>
+        /// <remarks>
+        /// The user must clean up the file referenced by <paramref name="OutName"/> if the function fails.
+        /// </remarks>
         public static bool Compress(string InName, string OutName)
         {
             try
@@ -121,6 +130,28 @@ namespace SatisfactorySaveEditor
         }
 
         /// <summary>
+        /// Gets an embedded resource from the application
+        /// </summary>
+        /// <param name="ResourceName">Full resource name</param>
+        /// <returns>Resource content</returns>
+        public static byte[] GetResource(string ResourceName)
+        {
+            var EA = Assembly.GetExecutingAssembly();
+            if (EA.GetManifestResourceNames().Contains(ResourceName))
+            {
+                using (var S = EA.GetManifestResourceStream(ResourceName))
+                {
+                    using (var MS = new MemoryStream())
+                    {
+                        S.CopyTo(MS);
+                        return MS.ToArray();
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Get the map data from the embedded resource stream
         /// </summary>
         /// <remarks>https://redd.it/bk6lnk</remarks>
@@ -129,14 +160,7 @@ namespace SatisfactorySaveEditor
         {
             if (MapData == null)
             {
-                using (var S = Assembly.GetExecutingAssembly().GetManifestResourceStream("SatisfactorySaveEditor.Images.Map.png"))
-                {
-                    using (var MS = new MemoryStream())
-                    {
-                        S.CopyTo(MS);
-                        MapData = MS.ToArray();
-                    }
-                }
+                MapData = GetResource("SatisfactorySaveEditor.Images.Map.png");
             }
             return (byte[])MapData.Clone();
         }
@@ -213,7 +237,7 @@ namespace SatisfactorySaveEditor
             {
                 return true;
             }
-            
+
             //GZip header has two magic bytes
             byte[] Data = new byte[2];
             int R = FS.Read(Data, 0, 2);
@@ -233,9 +257,18 @@ namespace SatisfactorySaveEditor
             return false;
         }
 
+        /// <summary>
+        /// Changes a file name until it's unique on the file system
+        /// </summary>
+        /// <param name="ExistingFileName">Existing file name</param>
+        /// <returns>New file name</returns>
+        /// <remarks>
+        /// If the existing name doesn't points to an existing file,
+        /// the unchanged parameter is returned.
+        /// </remarks>
         public static string GetNewName(string ExistingFileName)
         {
-            if(string.IsNullOrWhiteSpace(ExistingFileName))
+            if (string.IsNullOrWhiteSpace(ExistingFileName))
             {
                 return Path.GetTempFileName();
             }
@@ -245,10 +278,10 @@ namespace SatisfactorySaveEditor
             var B = Path.GetFileNameWithoutExtension(ExistingFileName);
             var E = Path.GetExtension(ExistingFileName);
             var TempName = ExistingFileName;
-            while(File.Exists(TempName))
+            while (File.Exists(TempName))
             {
                 TempName = Path.Combine(P, $"{B}_{C++}");
-                if(!string.IsNullOrEmpty(E))
+                if (!string.IsNullOrEmpty(E))
                 {
                     TempName += E;
                 }
@@ -256,6 +289,12 @@ namespace SatisfactorySaveEditor
             return TempName;
         }
 
+        /// <summary>
+        /// Shows a generic Error message box
+        /// </summary>
+        /// <param name="Text">Text</param>
+        /// <param name="Title">Box Title</param>
+        /// <remarks>Box has OK button and Error icon</remarks>
         public static void E(string Text, string Title)
         {
             System.Windows.Forms.MessageBox.Show(
@@ -263,6 +302,52 @@ namespace SatisfactorySaveEditor
                 Title,
                 System.Windows.Forms.MessageBoxButtons.OK,
                 System.Windows.Forms.MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// Shows help for the current form
+        /// </summary>
+        /// <param name="FormName">Name of the form that requested the help</param>
+        public static void ShowHelp(string FormName)
+        {
+            var F = System.Windows.Forms.Application.OpenForms
+                .OfType<frmHelp>()
+                .FirstOrDefault();
+            //Show new form if not already there
+            if (F == null)
+            {
+                F = new frmHelp();
+                F.Show();
+            }
+            else
+            {
+                //Bring existing content to the front
+                F.BringToFront();
+                F.Focus();
+            }
+
+            string HelpText = ToString(GetResource("SatisfactorySaveEditor.Help._no.txt"));
+            try
+            {
+                F.HelpText = ToString(GetResource($"SatisfactorySaveEditor.Help.{FormName}.txt"));
+            }
+            catch
+            {
+                F.HelpText = HelpText;
+            }
+        }
+
+        private static string ToString(byte[] Data)
+        {
+            if (Data == null)
+            {
+                throw new ArgumentNullException(nameof(Data));
+            }
+            if (Data.Length == 0)
+            {
+                return string.Empty;
+            }
+            return Encoding.UTF8.GetString(Data);
         }
     }
 }
