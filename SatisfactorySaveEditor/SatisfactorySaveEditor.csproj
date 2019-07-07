@@ -72,6 +72,12 @@
     <Compile Include="frmHeaderEditor.Designer.cs">
       <DependentUpon>frmHeaderEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHelp.Designer.cs">
+      <DependentUpon>frmHelp.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +129,9 @@
     <EmbeddedResource Include="frmHeaderEditor.resx">
       <DependentUpon>frmHeaderEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmHelp.resx">
+      <DependentUpon>frmHelp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,6 +145,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Images\Height.png" />
     <EmbeddedResource Include="Images\Map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\_no.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\frmMain.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

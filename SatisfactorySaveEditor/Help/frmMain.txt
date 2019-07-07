@@ -1,0 +1,12 @@
+﻿Saisfactory Save Editor Main Form
+
+This is the window where you do most of your changes.
+The main area of the window is used to show a map of your save file.
+An image of the map is saved in the same location your current save game is at.
+
+Use the "File" menu for basic File operations.
+
+The "Quick Actions" menu provides pre-made bulk actions for your save file.
+They are mostly made of features that clean up the map and undo player made changes.
+
+The "General Actions" allows you to perform more generic actions for the save game.
