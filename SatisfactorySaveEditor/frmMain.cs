@@ -29,7 +29,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Unable to load your settings. Defaults will be applied. Reason:\r\n\r\n" + ex.Message, "Settings Loader", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Tools.E($"Unable to load your settings. Defaults will be applied. Reason:\r\n{ex.Message}", "Settings Loader");
                     S = new Settings();
                 }
             }
@@ -85,22 +85,38 @@ namespace SatisfactorySaveEditor
 
         private void NA(string Reason)
         {
-            MessageBox.Show($"This function is currently unavailable. Reason:\r\n{Reason}", "Function unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Tools.E($"This function is currently unavailable. Reason:\r\n{Reason}", "Function unavailable");
         }
 
         private void SaveCurrent()
         {
-            var Backup = Path.ChangeExtension(FileName, ".bak");
+            var Backup = Path.ChangeExtension(FileName, ".sav.gz");
             if (!File.Exists(Backup))
             {
-                File.Copy(FileName, Backup);
-                MessageBox.Show($"Because this is your first time overwriting this file, a backup ({Path.GetFileName(Backup)}) has been created in the same directory.", "Backup created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (Tools.Compress(FileName, Backup))
+                {
+                    MessageBox.Show($"Because this is your first time overwriting this file, a backup ({Path.GetFileName(Backup)}) has been created in the same directory.", "Backup created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if(MessageBox.Show($"Unable to create a backup. You can try using the Save file manager to manually create one. Still continue to save the file?", "Backup failed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
             }
-            using (var FS = File.Create(FileName))
+            try
             {
-                F.Export(FS);
+                using (var FS = File.Create(FileName))
+                {
+                    F.Export(FS);
+                }
+                HasChange = false;
             }
-            HasChange = false;
+            catch(Exception ex)
+            {
+                Tools.E($"Unable to save your file.\r\n{ex.Message}", "Saving changes");
+            }
         }
 
         private void ResizeDoggos(float Factor, int Offset)
@@ -520,7 +536,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to save your settings. Reason:\r\n\r\n" + ex.Message, "Settings Loader", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Tools.E($"Unable to save your settings. Reason:\r\n{ex.Message}", "Settings Loader");
             }
         }
 

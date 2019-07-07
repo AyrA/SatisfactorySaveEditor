@@ -98,6 +98,28 @@ namespace SatisfactorySaveEditor
             return new PointF(X, Y);
         }
 
+        public static bool Compress(string InName, string OutName)
+        {
+            try
+            {
+                using (var IN = File.OpenRead(InName))
+                {
+                    using (var OUT = File.Create(OutName))
+                    {
+                        using (var GZS = new GZipStream(OUT, CompressionLevel.Optimal))
+                        {
+                            IN.CopyTo(GZS);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// Get the map data from the embedded resource stream
         /// </summary>
@@ -232,6 +254,15 @@ namespace SatisfactorySaveEditor
                 }
             }
             return TempName;
+        }
+
+        public static void E(string Text, string Title)
+        {
+            System.Windows.Forms.MessageBox.Show(
+                Text,
+                Title,
+                System.Windows.Forms.MessageBoxButtons.OK,
+                System.Windows.Forms.MessageBoxIcon.Error);
         }
     }
 }

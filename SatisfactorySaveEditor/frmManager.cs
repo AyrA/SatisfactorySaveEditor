@@ -16,11 +16,6 @@ namespace SatisfactorySaveEditor
             initFiles();
         }
 
-        private void E(string Text, string Title)
-        {
-            MessageBox.Show(Text, Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         private void initFiles()
         {
             tvFiles.Nodes.Clear();
@@ -163,7 +158,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
-                        E($"Unable to delete file. Reason: {ex.Message}", "error deleting file");
+                        Tools.E($"Unable to delete file. Reason: {ex.Message}", "error deleting file");
                     }
                 }
             }
@@ -171,7 +166,7 @@ namespace SatisfactorySaveEditor
 
         private void InvalidMessage()
         {
-            MessageBox.Show("This save file seems to be invalid and can't be read.", "Invalid save file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Tools.E("This save file seems to be invalid and can't be read.", "Invalid save file");
         }
 
         private void tvFiles_DoubleClick(object sender, EventArgs e)
@@ -251,7 +246,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
-                        E($"Unable to back up your savegame\r\n{ex.Message}", "Backup Error");
+                        Tools.E($"Unable to back up your savegame\r\n{ex.Message}", "Backup Error");
                     }
                 }
             }
@@ -304,7 +299,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
-                    E($"Unable to open the selected file.\r\n{ex.Message}", "Import error");
+                    Tools.E($"Unable to open the selected file.\r\n{ex.Message}", "Import error");
                     return;
                 }
                 using (FS)
@@ -360,7 +355,7 @@ namespace SatisfactorySaveEditor
                                 }
                                 catch (Exception ex)
                                 {
-                                    E($"File looks compressed, but we are unable to decompress it.\r\n{ex.Message}", "Decompression error");
+                                    Tools.E($"File looks compressed, but we are unable to decompress it.\r\n{ex.Message}", "Decompression error");
                                 }
                             }
                             else
@@ -411,7 +406,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
-                    E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
+                    Tools.E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
                     return;
                 }
                 using (FS)
@@ -439,7 +434,7 @@ namespace SatisfactorySaveEditor
                                 catch (Exception ex)
                                 {
                                     FS = null;
-                                    E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
+                                    Tools.E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
                                 }
                                 if (FS != null)
                                 {
@@ -452,7 +447,7 @@ namespace SatisfactorySaveEditor
                                         }
                                         catch (Exception ex)
                                         {
-                                            E($"File renamed, but we are unable to delete the old copy. Please do so manually.\r\n{ex.Message}", "Unable to rename");
+                                            Tools.E($"File renamed, but we are unable to delete the old copy. Please do so manually.\r\n{ex.Message}", "Unable to rename");
                                         }
                                         initFiles();
                                     }
@@ -479,7 +474,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
-                    E($"Unable to duplicate file.\r\n{ex.Message}", "Duplication error");
+                    Tools.E($"Unable to duplicate file.\r\n{ex.Message}", "Duplication error");
                     return;
                 }
                 initFiles();
