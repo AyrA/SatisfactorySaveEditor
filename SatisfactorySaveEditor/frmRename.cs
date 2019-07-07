@@ -8,6 +8,8 @@ namespace SatisfactorySaveEditor
 {
     public partial class frmRename : Form
     {
+        private char[] Invalids;
+
         public string RenameSessionName
         {
             get
@@ -25,6 +27,11 @@ namespace SatisfactorySaveEditor
 
         public frmRename(string SessionName, string FileName)
         {
+            Invalids = Path.GetInvalidFileNameChars()
+                .Concat(Path.GetInvalidPathChars())
+                .Where(m => m > 0)
+                .Distinct()
+                .ToArray();
             InitializeComponent();
             MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
             tbSessionName.Text = SessionName;
@@ -73,7 +80,7 @@ namespace SatisfactorySaveEditor
 
 Valid names do not contain any of these characters:
 
-{new string(Path.GetInvalidFileNameChars())}", "Rename Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+{new string(Invalids)}", "Rename Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
