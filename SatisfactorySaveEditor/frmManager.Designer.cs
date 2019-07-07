@@ -37,6 +37,9 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnImport = new System.Windows.Forms.Button();
+            this.OFD = new System.Windows.Forms.OpenFileDialog();
+            this.SFD = new System.Windows.Forms.SaveFileDialog();
+            this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CMS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,29 +69,30 @@
             this.CMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.renderToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.renameToolStripMenuItem});
+            this.renameToolStripMenuItem,
+            this.backupToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.CMS.Name = "CMS";
-            this.CMS.Size = new System.Drawing.Size(114, 92);
+            this.CMS.Size = new System.Drawing.Size(114, 114);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // renderToolStripMenuItem
             // 
             this.renderToolStripMenuItem.Name = "renderToolStripMenuItem";
-            this.renderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.renderToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.renderToolStripMenuItem.Text = "R&ender";
             this.renderToolStripMenuItem.Click += new System.EventHandler(this.renderToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -107,6 +111,26 @@
             this.btnImport.TabIndex = 3;
             this.btnImport.Text = "&Import";
             this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // OFD
+            // 
+            this.OFD.DefaultExt = "sav";
+            this.OFD.Filter = "Save games|*.sav;*.sav.gz|All files|*.*";
+            this.OFD.Title = "Import save game";
+            // 
+            // SFD
+            // 
+            this.SFD.DefaultExt = "sav.gz";
+            this.SFD.Filter = "Save file backup|*.sav.gz|All files|*.*";
+            this.SFD.Title = "Backup save game";
+            // 
+            // backupToolStripMenuItem
+            // 
+            this.backupToolStripMenuItem.Name = "backupToolStripMenuItem";
+            this.backupToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.backupToolStripMenuItem.Text = "&Backup";
+            this.backupToolStripMenuItem.Click += new System.EventHandler(this.backupToolStripMenuItem_Click);
             // 
             // frmManager
             // 
@@ -135,5 +159,8 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.OpenFileDialog OFD;
+        private System.Windows.Forms.SaveFileDialog SFD;
+        private System.Windows.Forms.ToolStripMenuItem backupToolStripMenuItem;
     }
 }

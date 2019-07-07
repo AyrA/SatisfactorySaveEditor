@@ -151,6 +151,11 @@ namespace SatisfactorySaveEditor
             return Render(new DrawObject[] { Object });
         }
 
+        /// <summary>
+        /// Renders the contents of a save file onto the map
+        /// </summary>
+        /// <param name="F">Save File</param>
+        /// <returns>Map</returns>
         public static Image RenderFile(SaveFile F)
         {
             var Objects = new List<DrawObject>();

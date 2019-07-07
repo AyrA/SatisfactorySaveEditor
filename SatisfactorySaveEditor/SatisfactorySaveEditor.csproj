@@ -84,6 +84,12 @@
     <Compile Include="frmManager.Designer.cs">
       <DependentUpon>frmManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmRename.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRename.Designer.cs">
+      <DependentUpon>frmRename.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapRender.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShortName.cs" />
@@ -124,6 +130,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmManager.resx">
       <DependentUpon>frmManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRename.resx">
+      <DependentUpon>frmRename.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\Height.png" />
     <EmbeddedResource Include="Images\Map.png" />

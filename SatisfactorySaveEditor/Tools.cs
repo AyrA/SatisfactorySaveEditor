@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -170,6 +171,44 @@ namespace SatisfactorySaveEditor
                 }
             }
             return SB.ToString();
+        }
+
+        /// <summary>
+        /// Checks if the given file header indicates gzip
+        /// </summary>
+        /// <param name="FS">possible compressed stream</param>
+        /// <returns></returns>
+        /// <remarks>will not try to decompress anything. Will try to seek back the number of bytes read</remarks>
+        public static bool IsGzFile(Stream FS)
+        {
+            //Null is not a gzip stream
+            if (FS == null)
+            {
+                return false;
+            }
+            //A gzip stream is a gzip stream. Who would have guessed?
+            if (FS is GZipStream)
+            {
+                return true;
+            }
+            
+            //GZip header has two magic bytes
+            byte[] Data = new byte[2];
+            int R = FS.Read(Data, 0, 2);
+            try
+            {
+                //Try seeking back but don't care if we can't
+                FS.Seek(-R, SeekOrigin.Current);
+            }
+            catch
+            {
+
+            }
+            if (R == 2)
+            {
+                return Data[0] == 0x1F && Data[1] == 0x8B;
+            }
+            return false;
         }
     }
 }

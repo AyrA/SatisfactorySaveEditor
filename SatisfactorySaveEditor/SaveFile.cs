@@ -62,7 +62,7 @@ namespace SatisfactorySaveEditor
         /// Reads a new SaveFile
         /// </summary>
         /// <param name="BR">Open Reader</param>
-        public SaveFile(BinaryReader BR)
+        private SaveFile(BinaryReader BR)
         {
             Properties = new Dictionary<string, string>();
             Entries = new List<SaveFileEntry>();
@@ -147,11 +147,51 @@ namespace SatisfactorySaveEditor
                 }
 
                 BW.Write(StringList.Count);
-                foreach(var E in StringList)
+                foreach (var E in StringList)
                 {
                     E.Export(BW);
                 }
             }
+        }
+
+        /// <summary>
+        /// Opens a save file
+        /// </summary>
+        /// <param name="S">Save file stream</param>
+        /// <returns>Save file. Returns null on error</returns>
+        /// <remarks>This also tries to gzip decompress the file if necessary and possible</remarks>
+        public static SaveFile Open(Stream S)
+        {
+            var Pos = S.CanSeek ? S.Position : -1L;
+            try
+            {
+                using (var BR = new BinaryReader(S, System.Text.Encoding.Default, true))
+                {
+                    return new SaveFile(BR);
+                }
+            }
+            catch
+            {
+                if (S.CanSeek)
+                {
+                    S.Position = Pos;
+                    using (var GZS = new System.IO.Compression.GZipStream(S, System.IO.Compression.CompressionMode.Decompress, true))
+                    {
+                        using (var BR = new BinaryReader(GZS, System.Text.Encoding.Default))
+                        {
+                            try
+                            {
+                                return new SaveFile(BR);
+                            }
+                            catch
+                            {
+                                return null;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }

@@ -123,19 +123,16 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
             FileName = SaveFileName;
             using (var FS = File.OpenRead(FileName))
             {
-                using (var BR = new BinaryReader(FS))
+                F = SaveFile.Open(FS);
+                HasChange = false;
+                NameChanged = false;
+                if (S.ShowLimited)
                 {
-                    F = new SaveFile(BR);
-                    HasChange = false;
-                    NameChanged = false;
-                    if (S.ShowLimited)
-                    {
-                        S.ShowLimited = false;
-                        MessageBox.Show(@"This is still in development and functionality is limited.
+                    S.ShowLimited = false;
+                    MessageBox.Show(@"This is still in development and functionality is limited.
 You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    RedrawMap();
                 }
+                RedrawMap();
             }
         }
 
