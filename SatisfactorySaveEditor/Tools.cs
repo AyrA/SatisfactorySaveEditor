@@ -210,5 +210,28 @@ namespace SatisfactorySaveEditor
             }
             return false;
         }
+
+        public static string GetNewName(string ExistingFileName)
+        {
+            if(string.IsNullOrWhiteSpace(ExistingFileName))
+            {
+                return Path.GetTempFileName();
+            }
+            var C = 1;
+            //Get path, base name and extension
+            var P = Path.GetDirectoryName(ExistingFileName);
+            var B = Path.GetFileNameWithoutExtension(ExistingFileName);
+            var E = Path.GetExtension(ExistingFileName);
+            var TempName = ExistingFileName;
+            while(File.Exists(TempName))
+            {
+                TempName = Path.Combine(P, $"{B}_{C++}");
+                if(!string.IsNullOrEmpty(E))
+                {
+                    TempName += E;
+                }
+            }
+            return TempName;
+        }
     }
 }
