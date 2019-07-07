@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
@@ -41,15 +42,20 @@ namespace SatisfactorySaveEditor
 
             MapRender.MapForm = this;
 
-            using (var MS = new MemoryStream(Tools.GetMap(), false))
-            {
-                using (var SRC = Image.FromStream(MS))
+            //Don't block the application startup with the image rendering stuff
+            Thread T = new Thread(delegate () {
+                using (var MS = new MemoryStream(Tools.GetMap(), false))
                 {
-                    MapImage = Tools.ResizeImage(SRC, 1024, 1024);
+                    using (var SRC = Image.FromStream(MS))
+                    {
+                        MapImage = Tools.ResizeImage(SRC, 1024, 1024);
+                    }
+                    Invoke((MethodInvoker)delegate {
+                        BackgroundImage = (Image)MapImage.Clone();
+                    });
                 }
-                BackgroundImageLayout = ImageLayout.Zoom;
-                BackgroundImage = (Image)MapImage.Clone();
-            }
+            });
+            T.Start();
 
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
             if (!string.IsNullOrEmpty(InitialFile))
