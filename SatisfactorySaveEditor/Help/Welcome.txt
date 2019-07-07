@@ -1,0 +1,16 @@
+﻿Satisfactory Save Editor
+
+Welcome to the Satisfactory Save File Editor.
+This application allows you to make generic changes to your save files.
+If you are stuck at any point, press [F1] to bring up this window again.
+
+Getting Help:
+
+If you encounter any problems, contact /u/AyrA_ch on reddit.
+
+Reporting Bugs:
+
+If you believe you found a bug, you can contact me on reddit,
+or if you know how, open an issue on Github:
+https://github.com/AyrA/SatisfactorySaveEditor/issues
+

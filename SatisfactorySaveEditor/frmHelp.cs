@@ -25,5 +25,10 @@ namespace SatisfactorySaveEditor
             var F = new Font(Font.FontFamily, Font.Size * 1.5f);
             Font = F;
         }
+
+        private void frmHelp_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Tools.ShowHelp(GetType().Name);
+        }
     }
 }

@@ -62,9 +62,19 @@
             // 
             this.nudStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nudStart.Location = new System.Drawing.Point(437, 31);
+            this.nudStart.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nudStart.Name = "nudStart";
             this.nudStart.Size = new System.Drawing.Size(71, 20);
             this.nudStart.TabIndex = 6;
+            this.nudStart.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // nudCount
             // 
@@ -131,7 +141,7 @@
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Offset";
-            this.ttInfo.SetToolTip(this.label3, "Start of range (starts at 0)");
+            this.ttInfo.SetToolTip(this.label3, "Start of range (starts at 1)");
             // 
             // label2
             // 
@@ -207,6 +217,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Object Deleter";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmDeleter_HelpRequested);
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).EndInit();
             this.ResumeLayout(false);

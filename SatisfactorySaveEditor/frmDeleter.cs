@@ -40,7 +40,7 @@ namespace SatisfactorySaveEditor
 
             if (rbRange.Checked)
             {
-                Entries = Entries.Skip((int)nudStart.Value).Take((int)nudCount.Value);
+                Entries = Entries.Skip((int)nudStart.Value - 1).Take((int)nudCount.Value);
             }
 
             if (MessageBox.Show(rbAllItems.Checked ? $"Really delete this entry ({Entries.Count()} occurences)?" : $"Really delete {nudCount.Value} instances of this entry?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -85,8 +85,8 @@ namespace SatisfactorySaveEditor
             {
                 var ItemName = ((ShortName)cbItem.SelectedItem).Long;
                 var Count = F.Entries.Count(m => m.ObjectData.Name == ItemName);
-                nudStart.Value = 0;
-                nudStart.Maximum = Count - 1;
+                nudStart.Value = 1;
+                nudStart.Maximum = Count;
                 nudCount.Value = 1;
                 nudCount.Maximum = Count;
                 var Pos = rbAllItems.Location;
@@ -125,6 +125,11 @@ namespace SatisfactorySaveEditor
             {
                 MessageBox.Show("No items to show (0 items selected)", "Invalid entry type", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void frmDeleter_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Tools.ShowHelp(GetType().Name);
         }
     }
 }

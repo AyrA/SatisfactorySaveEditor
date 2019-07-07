@@ -53,6 +53,11 @@ namespace SatisfactorySaveEditor
                     }
                     Invoke((MethodInvoker)delegate {
                         BackgroundImage = (Image)MapImage.Clone();
+                        if(S.ShowWelcomeMessage)
+                        {
+                            S.ShowWelcomeMessage = false;
+                            Tools.ShowHelp("Welcome");
+                        }
                     });
                 }
             });

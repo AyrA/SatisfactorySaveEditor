@@ -152,6 +152,20 @@
   <ItemGroup>
     <EmbeddedResource Include="Help\frmMain.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\Welcome.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\frmHelp.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\frmHeaderEditor.txt" />
+    <Content Include="Help\frmExport.txt" />
+    <Content Include="Help\frmDuplicator.txt" />
+    <Content Include="Help\frmDeleter.txt" />
+    <EmbeddedResource Include="Help\frmRename.txt" />
+    <EmbeddedResource Include="Help\frmManager.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -480,5 +480,10 @@ namespace SatisfactorySaveEditor
                 initFiles();
             }
         }
+
+        private void frmManager_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Tools.ShowHelp(GetType().Name);
+        }
     }
 }

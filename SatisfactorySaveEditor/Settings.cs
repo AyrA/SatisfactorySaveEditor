@@ -30,6 +30,11 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public bool ShowDeletionHint
         { get; set; }
+        /// <summary>
+        /// Shows a one time welcome message
+        /// </summary>
+        public bool ShowWelcomeMessage
+        { get; set; }
 
         /// <summary>
         /// Initializes default settings
@@ -40,6 +45,7 @@ namespace SatisfactorySaveEditor
                 ShowLimited =
                 ShowDuplicationHint =
                 ShowDeletionHint =
+                ShowWelcomeMessage =
                 true;
         }
 

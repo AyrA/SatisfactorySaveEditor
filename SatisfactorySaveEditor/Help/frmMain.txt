@@ -1,4 +1,4 @@
-﻿Saisfactory Save Editor Main Form
+﻿Satisfactory Save Editor Main Form
 
 This is the window where you do most of your changes.
 The main area of the window is used to show a map of your save file.
@@ -10,3 +10,8 @@ The "Quick Actions" menu provides pre-made bulk actions for your save file.
 They are mostly made of features that clean up the map and undo player made changes.
 
 The "General Actions" allows you to perform more generic actions for the save game.
+
+Automatic Backups:
+This editor will automatically create a single backup of any file you save,
+provided that no such backup already exists.
+To create multiple backups, use the Save File Manager [CTRL]+[M].

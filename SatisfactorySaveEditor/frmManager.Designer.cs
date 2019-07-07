@@ -160,6 +160,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Save File Manager";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmManager_HelpRequested);
             this.CMS.ResumeLayout(false);
             this.ResumeLayout(false);
 

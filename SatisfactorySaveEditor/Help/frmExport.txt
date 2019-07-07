@@ -1,0 +1,32 @@
+﻿Satisfactory Save Editor Object Exporter
+
+Here you can export and import individual items or groups of them.
+
+Data format:
+
+The exporter uses XML as underlying data format.
+If you feel confident enough, you can edit it in a text editor before importing again.
+
+Exporting:
+
+Select the item, offset and count you want to export, then click the "Export" button.
+The exported content is placed as text in your clipboard.
+Feel free to either import it into another save file (see "Import" below) or save it in a text editor of your choice.
+
+Note: Exports ARE NOT cumulative. Exporting will erase previously exported content from the clipboard.
+
+Import:
+
+Click the "Import" button to import whatever entries are in your clipboard.
+Optionally apply one of these options:
+
+"Remove identical existing entries" deletes all entries of the same types you try to import.
+For example when you import foundations, it will delete all foundations in the file before importing yours.
+This option is most useful if you want to import entries that are not supposed to exist multiple times.
+
+"Fix internal names" changes the 'InternalName' property of imported items when needed to avoid duplicates.
+This is necessary because this name is supposed to be unique. It is therefore a good idea to leave enabled.
+
+Note: This will not change references that no longer point to a valid name because it was changed.
+In most cases, this is not a problem. It will cause some objects to not work properly,
+for example storage containers.

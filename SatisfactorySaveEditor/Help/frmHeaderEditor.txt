@@ -1,0 +1,3 @@
+﻿Satisfactory Save Editor Header Editor
+
+The header editor allows you to edit basic header properties that don't directly affect the progress of the file.

@@ -125,6 +125,7 @@
             this.MinimumSize = new System.Drawing.Size(300, 130);
             this.Name = "frmRename";
             this.Text = "File rename";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmRename_HelpRequested);
             this.ResumeLayout(false);
             this.PerformLayout();
 

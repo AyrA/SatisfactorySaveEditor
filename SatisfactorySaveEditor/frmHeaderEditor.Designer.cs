@@ -113,6 +113,7 @@
             this.Name = "frmHeaderEditor";
             this.ShowIcon = false;
             this.Text = "Header Editor";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmHeaderEditor_HelpRequested);
             this.ResumeLayout(false);
             this.PerformLayout();
 

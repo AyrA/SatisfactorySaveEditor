@@ -50,6 +50,7 @@
             this.Controls.Add(this.tbHelp);
             this.Name = "frmHelp";
             this.Text = "Satisfactory Save Editor Help";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmHelp_HelpRequested);
             this.ResumeLayout(false);
             this.PerformLayout();
 

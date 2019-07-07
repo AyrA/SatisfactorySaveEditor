@@ -321,6 +321,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Object Duplicator";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmDuplicator_HelpRequested);
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).EndInit();

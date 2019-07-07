@@ -1,0 +1,10 @@
+﻿Satisfactory Save Editor Rename
+
+Here you can rename the session name and file name of a save file.
+Session name and File name must be valid file names.
+This means, these characters are forbidden:
+
+\ / " : ? * < > |
+
+Additionally forbidden are some special unicode characters and the "NULL" character.
+The "OK" button will become unavailable immediately if any invalid characters are entered or a box is empty.

@@ -41,12 +41,12 @@
             this.cbItem = new System.Windows.Forms.ComboBox();
             this.btnMap = new System.Windows.Forms.Button();
             this.gbImport = new System.Windows.Forms.GroupBox();
+            this.cbFixNames = new System.Windows.Forms.CheckBox();
+            this.cbReplaceAll = new System.Windows.Forms.CheckBox();
+            this.btnImport = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
-            this.btnImport = new System.Windows.Forms.Button();
-            this.cbReplaceAll = new System.Windows.Forms.CheckBox();
-            this.cbFixNames = new System.Windows.Forms.CheckBox();
             this.gbExport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStart)).BeginInit();
@@ -197,6 +197,45 @@
             this.gbImport.TabStop = false;
             this.gbImport.Text = "Import";
             // 
+            // cbFixNames
+            // 
+            this.cbFixNames.AutoSize = true;
+            this.cbFixNames.Checked = true;
+            this.cbFixNames.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbFixNames.Location = new System.Drawing.Point(189, 23);
+            this.cbFixNames.Name = "cbFixNames";
+            this.cbFixNames.Size = new System.Drawing.Size(110, 17);
+            this.cbFixNames.TabIndex = 24;
+            this.cbFixNames.Text = "Fix internal names";
+            this.ttInfo.SetToolTip(this.cbFixNames, "This fixes the \"InternalName\" property of imported items.\r\nThis name is supposed " +
+        "to be unique across your entire save file.\r\n\r\nIt will only fix names where neces" +
+        "sary.");
+            this.cbFixNames.UseVisualStyleBackColor = true;
+            // 
+            // cbReplaceAll
+            // 
+            this.cbReplaceAll.AutoSize = true;
+            this.cbReplaceAll.Location = new System.Drawing.Point(9, 23);
+            this.cbReplaceAll.Name = "cbReplaceAll";
+            this.cbReplaceAll.Size = new System.Drawing.Size(174, 17);
+            this.cbReplaceAll.TabIndex = 24;
+            this.cbReplaceAll.Text = "&Remove identical existing types";
+            this.ttInfo.SetToolTip(this.cbReplaceAll, "Setting this option will first remove all entries of the same type. For example i" +
+        "t would delete all your foundations before importing new ones.");
+            this.cbReplaceAll.UseVisualStyleBackColor = true;
+            // 
+            // btnImport
+            // 
+            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImport.Location = new System.Drawing.Point(385, 19);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(71, 23);
+            this.btnImport.TabIndex = 23;
+            this.btnImport.Text = "&Import";
+            this.ttInfo.SetToolTip(this.btnImport, "Imports the given items from the clipboard");
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -227,45 +266,6 @@
             this.ttInfo.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.ttInfo.ToolTipTitle = "Export/Import Info";
             // 
-            // btnImport
-            // 
-            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImport.Location = new System.Drawing.Point(385, 19);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(71, 23);
-            this.btnImport.TabIndex = 23;
-            this.btnImport.Text = "&Import";
-            this.ttInfo.SetToolTip(this.btnImport, "Imports the given items from the clipboard");
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // cbReplaceAll
-            // 
-            this.cbReplaceAll.AutoSize = true;
-            this.cbReplaceAll.Location = new System.Drawing.Point(9, 23);
-            this.cbReplaceAll.Name = "cbReplaceAll";
-            this.cbReplaceAll.Size = new System.Drawing.Size(174, 17);
-            this.cbReplaceAll.TabIndex = 24;
-            this.cbReplaceAll.Text = "&Remove identical existing types";
-            this.ttInfo.SetToolTip(this.cbReplaceAll, "Setting this option will first remove all entries of the same type. For example i" +
-        "t would delete all your foundations before importing new ones.");
-            this.cbReplaceAll.UseVisualStyleBackColor = true;
-            // 
-            // cbFixNames
-            // 
-            this.cbFixNames.AutoSize = true;
-            this.cbFixNames.Checked = true;
-            this.cbFixNames.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbFixNames.Location = new System.Drawing.Point(189, 23);
-            this.cbFixNames.Name = "cbFixNames";
-            this.cbFixNames.Size = new System.Drawing.Size(110, 17);
-            this.cbFixNames.TabIndex = 24;
-            this.cbFixNames.Text = "Fix internal names";
-            this.ttInfo.SetToolTip(this.cbFixNames, "This fixes the \"InternalName\" property of imported items.\r\nThis name is supposed " +
-        "to be unique across your entire save file.\r\n\r\nIt will only fix names where neces" +
-        "sary.");
-            this.cbFixNames.UseVisualStyleBackColor = true;
-            // 
             // frmExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,6 +280,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Export/Import entries";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmExport_HelpRequested);
             this.gbExport.ResumeLayout(false);
             this.gbExport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCount)).EndInit();

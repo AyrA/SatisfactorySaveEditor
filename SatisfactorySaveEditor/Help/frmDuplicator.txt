@@ -1,0 +1,17 @@
+﻿Satisfactory Save Editor Item Duplicator
+
+You can clone any kind of entry with this window,
+including those you almost certainly should not.
+
+You can optionally apply an offset to the copied item.
+When cloning multiple times, the offset is calculated from the previously placed object,
+essentially creating a chain of them.
+
+Be aware that map coordinate units are approximately centimeters.
+An 8x2 foundation is therefore X=800, Y=800, Z=200
+
+The offset is pretty much mandatory when cloning an object lots of times to avoid significant lag.
+
+The [M] button will render your selection (without potential duplicates) on the main window map.
+
+Tip: After you are done duplicating and are back to the main window, press [F5] to refresh the map.

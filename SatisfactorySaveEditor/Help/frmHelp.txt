@@ -1,0 +1,8 @@
+﻿Satisfactory Save Editor Help Form
+
+This is the help window.
+It is shown whenever you press [F1].
+You can continue to work on your save file while this window is being shown.
+
+Pressing [F1] at any time will show the help content relevant to the currently open form.
+You do not need to close the help window for the new text to show up.

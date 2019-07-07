@@ -1,0 +1,10 @@
+﻿Satisfactory Save Editor Object Deleter
+
+Here you can delete any entry from the save file.
+Deleting objects will not give you the resources for them.
+
+Select the object to delete from the list and then chose the range you want to delete.
+
+The [M] button will render your selection on the main window map.
+
+Tip: After you are done deleting and are back to the main window, press [F5] to refresh the map.

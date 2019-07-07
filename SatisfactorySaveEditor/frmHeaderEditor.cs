@@ -42,5 +42,10 @@ namespace SatisfactorySaveEditor
             }
             return false;
         }
+
+        private void frmHeaderEditor_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Tools.ShowHelp(GetType().Name);
+        }
     }
 }

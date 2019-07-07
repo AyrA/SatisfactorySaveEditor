@@ -1,0 +1,30 @@
+﻿Satisfactory Save Editor manager
+
+Here you can manage all your save games.
+
+You can backup, restore, rename, delete and open them.
+
+Most options are available via the context menu.
+Keyboard: [ENTER] will open a file and [DEL] will delete a file.
+For import/restore, press the button at the bottom.
+
+Open:
+This opens a save file in the current save file editor instance.
+You will lose any unsaved progress in a currently opened file.
+
+Delete:
+This deletes a save file after confirmation is given.
+
+Rename:
+This renames a save file and/or session name.
+
+Backups:
+Backup files are gzip compressed to save on space.
+On average, the result will be less than 10% of the original save file size
+
+Import/Restore:
+The import function will autodetect if save files are compressed or not.
+
+Invalid files:
+Invalid files are given in red color.
+Most options are unavailable for these.

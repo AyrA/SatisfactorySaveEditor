@@ -189,5 +189,10 @@ namespace SatisfactorySaveEditor
             }
             Close();
         }
+
+        private void frmExport_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Tools.ShowHelp(GetType().Name);
+        }
     }
 }

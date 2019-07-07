@@ -131,5 +131,10 @@ namespace SatisfactorySaveEditor
                 MessageBox.Show("This type of entry has no map coordinates", "Invalid entry type", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void frmDuplicator_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Tools.ShowHelp(GetType().Name);
+        }
     }
 }
