@@ -37,6 +37,12 @@ namespace SatisfactorySaveEditor
         { get; set; }
 
         /// <summary>
+        /// Last time an update check was performed
+        /// </summary>
+        public DateTime LastUpdateCheck
+        { get; set; }
+
+        /// <summary>
         /// Initializes default settings
         /// </summary>
         public Settings()
@@ -47,6 +53,7 @@ namespace SatisfactorySaveEditor
                 ShowDeletionHint =
                 ShowWelcomeMessage =
                 true;
+            LastUpdateCheck = DateTime.MinValue;
         }
 
         /// <summary>

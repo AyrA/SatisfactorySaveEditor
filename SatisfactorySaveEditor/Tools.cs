@@ -14,6 +14,18 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public static class Tools
     {
+
+        /// <summary>
+        /// Gets the current version without depending on the System.Windows.Forms namespace
+        /// </summary>
+        public static Version CurrentVersion
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version;
+            }
+        }
+
         /// <summary>
         /// Map data cache
         /// </summary>

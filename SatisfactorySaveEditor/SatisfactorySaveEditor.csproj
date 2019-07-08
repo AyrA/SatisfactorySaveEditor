@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -99,6 +100,7 @@
     <Compile Include="MapRender.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShortName.cs" />
+    <Compile Include="UpdateHandler.cs" />
     <Compile Include="Vector4.cs" />
     <Compile Include="SaveFile.cs" />
     <Compile Include="ObjectTypes\GameBaseObject.cs" />

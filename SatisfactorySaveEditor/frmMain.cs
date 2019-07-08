@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -44,16 +43,18 @@ namespace SatisfactorySaveEditor
             MapRender.MapForm = this;
 
             //Don't block the application startup with the image rendering stuff
-            Thread T = new Thread(delegate () {
+            Thread T = new Thread(delegate ()
+            {
                 using (var MS = new MemoryStream(Tools.GetMap(), false))
                 {
                     using (var SRC = Image.FromStream(MS))
                     {
                         MapImage = Tools.ResizeImage(SRC, 1024, 1024);
                     }
-                    Invoke((MethodInvoker)delegate {
+                    Invoke((MethodInvoker)delegate
+                    {
                         BackgroundImage = (Image)MapImage.Clone();
-                        if(S.ShowWelcomeMessage)
+                        if (S.ShowWelcomeMessage)
                         {
                             S.ShowWelcomeMessage = false;
                             Tools.ShowHelp("Welcome");
@@ -62,11 +63,25 @@ namespace SatisfactorySaveEditor
                 }
             });
             T.Start();
+            //Check for updates at most every 24 hours
+            //DEBUG ONLY, FORCE UPDATE
+            if (Program.DEBUG || S.LastUpdateCheck <= DateTime.Now.AddDays(-1))
+            {
+                S.LastUpdateCheck = DateTime.Now;
+                CheckUpdate();
+            }
 
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
             if (!string.IsNullOrEmpty(InitialFile))
             {
-                OpenFile(InitialFile);
+                try
+                {
+                    OpenFile(InitialFile);
+                }
+                catch (Exception ex)
+                {
+                    Tools.E($"Unable to open {InitialFile}\r\n{ex.Message}", "File error");
+                }
             }
 #if DEBUG
             //Enable not fully implemented items
@@ -105,7 +120,7 @@ namespace SatisfactorySaveEditor
                 }
                 else
                 {
-                    if(MessageBox.Show($"Unable to create a backup. You can try using the Save file manager to manually create one. Still continue to save the file?", "Backup failed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.No)
+                    if (MessageBox.Show($"Unable to create a backup. You can try using the Save file manager to manually create one. Still continue to save the file?", "Backup failed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.No)
                     {
                         return;
                     }
@@ -119,7 +134,7 @@ namespace SatisfactorySaveEditor
                 }
                 HasChange = false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Tools.E($"Unable to save your file.\r\n{ex.Message}", "Saving changes");
             }
@@ -196,6 +211,27 @@ You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limite
             {
                 BackgroundImage = MapRender.GetMap();
             }
+        }
+
+        private void CheckUpdate()
+        {
+            Thread T = new Thread(delegate ()
+            {
+                //DEBUG ONLY, FORCE UPDATE
+                var U = Program.DEBUG || UpdateHandler.HasUpdate();
+                if (U)
+                {
+                    if (UpdateHandler.DownloadUpdate())
+                    {
+                        Invoke((MethodInvoker)delegate ()
+                        {
+                            updateAvailableToolStripMenuItem.Visible = true;
+                        });
+                    }
+                }
+            });
+            T.IsBackground = true;
+            T.Start();
         }
 
         #region Menu Actions
@@ -536,6 +572,23 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
         private void openHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Tools.ShowHelp(GetType().Name);
+        }
+
+        private void updateAvailableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                "An update is available for install. Do you want to install it now?" +
+                (HasChange ? "\r\nWARNING! YOU HAVE UNSAVED CHANGES!" : ""),
+                "Update Available",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information,
+                HasChange ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                if (!UpdateHandler.PerformUpdate())
+                {
+                    Tools.E("We are currently unable to update your application.", "Update error");
+                }
+            }
         }
 
         #endregion
