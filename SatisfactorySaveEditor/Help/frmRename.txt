@@ -6,5 +6,5 @@ This means, these characters are forbidden:
 
 \ / " : ? * < > |
 
-Additionally forbidden are some special unicode characters and the "NULL" character.
+Additionally forbidden are some special unicode characters which you are very unlikely to type and the "NULL" character.
 The "OK" button will become unavailable immediately if any invalid characters are entered or a box is empty.
