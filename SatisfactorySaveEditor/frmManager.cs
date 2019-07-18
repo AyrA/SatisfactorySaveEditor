@@ -44,16 +44,17 @@ namespace SatisfactorySaveEditor
                     {
                         //File is valid game file
                         TreeNode Node = null;
-                        if (Sessions.ContainsKey(F.SessionName))
+                        var SessionName = string.IsNullOrWhiteSpace(F.SessionName) ? "<no name>" : F.SessionName;
+                        if (Sessions.ContainsKey(SessionName))
                         {
-                            Node = Sessions[F.SessionName];
+                            Node = Sessions[SessionName];
                         }
                         else
                         {
                             Invoke((MethodInvoker)delegate ()
                             {
-                                Node = tvFiles.Nodes.Add(F.SessionName);
-                                Sessions.Add(F.SessionName, Node);
+                                Node = tvFiles.Nodes.Add(SessionName);
+                                Sessions.Add(SessionName, Node);
                             });
                         }
                         Invoke((MethodInvoker)delegate ()
