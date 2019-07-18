@@ -392,6 +392,7 @@ Once done, you will be able to link two containers together so they share their 
                         NameChanged |= (F.SessionName != FH.SessionName);
                         F.SessionName = FH.SessionName;
                         F.PlayTime = TimeSpan.Parse(FH.PlayTime);
+                        HasChange = true;
                     }
                 }
             }
