@@ -86,8 +86,11 @@ namespace SatisfactorySaveEditor
                 {
                     Invoke((MethodInvoker)delegate ()
                     {
-                        tvFiles.Nodes.Add(Sessions[""]);
-                        Sessions[""].ExpandAll();
+                        if (Sessions[""].TreeView == null)
+                        {
+                            tvFiles.Nodes.Add(Sessions[""]);
+                            Sessions[""].ExpandAll();
+                        }
                     });
                 }
             });
