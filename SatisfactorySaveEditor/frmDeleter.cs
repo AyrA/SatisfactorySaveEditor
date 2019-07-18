@@ -31,7 +31,11 @@ namespace SatisfactorySaveEditor
                 .OrderBy(m => m)
                 .Cast<object>()
                 .ToArray());
-            cbItem.SelectedIndex = LastItem;
+            if (cbItem.Items.Count > 0)
+            {
+                //Don't select beyond the list
+                cbItem.SelectedIndex = Math.Min(LastItem, cbItem.Items.Count - 1);
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
