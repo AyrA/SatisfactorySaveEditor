@@ -1,4 +1,7 @@
-﻿//#define NOFORM
+﻿//Use console only mode
+//#define NOFORM
+//Disable updater
+#define NOUPDATE
 using System;
 using System.IO;
 using System.Linq;
@@ -34,6 +37,7 @@ namespace SatisfactorySaveEditor
         {
             //Set "NOFORM" to better experiment
 #if !NOFORM
+#if !NOUPDATE
             //Perform update automatically if it's pending
             if (args.Length == 0 && File.Exists(UpdateHandler.DefaultUpdateExecutable))
             {
@@ -42,6 +46,7 @@ namespace SatisfactorySaveEditor
                     return RET.SUCCESS;
                 }
             }
+#endif
             //Only run main application part if no update was performed
             if (!UpdateHandler.Update())
             {
