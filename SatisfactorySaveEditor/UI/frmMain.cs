@@ -592,6 +592,26 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             }
         }
 
+        private void clearStringListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                if (F.StringList.Count > 0)
+                {
+                    if (MessageBox.Show("Really clear the list of items/objects you picked up and/or destroyed?", "Clear String List", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        int C = F.StringList.Count;
+                        F.StringList.Clear();
+                        InfoChange(C, "String list");
+                    }
+                }
+                else
+                {
+                    InfoChange(0, "String list");
+                }
+            }
+        }
+
         #endregion
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
