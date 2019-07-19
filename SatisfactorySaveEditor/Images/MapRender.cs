@@ -65,14 +65,17 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public static class MapRender
     {
+        public const int DEFAULT_WIDTH = 1000;
+        public const int DEFAULT_HEIGHT = 1000;
+
         /// <summary>
         /// Unaltered base image
         /// </summary>
-        private static Image BaseImage;
+        private static Image BaseImage = null;
         /// <summary>
         /// Resized base image
         /// </summary>
-        private static Image ScaledImage;
+        private static Image ScaledImage = null;
 
         /// <summary>
         /// Form containing the map
@@ -80,16 +83,25 @@ namespace SatisfactorySaveEditor
         public static System.Windows.Forms.Form MapForm;
 
         /// <summary>
-        /// Static initializer
+        /// Initializes the base image and resized copy
         /// </summary>
-        static MapRender()
+        /// <param name="MaxWidth">Maximum image width</param>
+        /// <param name="MaxHeight">Maximum image height</param>
+        /// <remarks>
+        /// Will not do anything if already called once during the runtime.
+        /// Calls <see cref="SetBaseSize(int, int)"/> to provide the resized option.
+        /// </remarks>
+        public static void Init(int MaxWidth = DEFAULT_WIDTH, int MaxHeight = DEFAULT_HEIGHT)
         {
-            //Load base image and provide initially scaled version
-            using (var MS = new MemoryStream(Tools.GetMap()))
+            if (BaseImage == null)
             {
-                BaseImage = Image.FromStream(MS);
+                //Load base image and provide initially scaled version
+                using (var MS = new MemoryStream(Tools.GetMap()))
+                {
+                    BaseImage = Image.FromStream(MS);
+                }
+                SetBaseSize(MaxWidth, MaxHeight);
             }
-            ScaledImage = Tools.ResizeImage(BaseImage, 1024, 1024);
         }
 
         /// <summary>
@@ -103,8 +115,18 @@ namespace SatisfactorySaveEditor
         /// </remarks>
         public static void SetBaseSize(int MaxWidth, int MaxHeight)
         {
-            ScaledImage.Dispose();
-            ScaledImage = Tools.ResizeImage(BaseImage, MaxWidth, MaxHeight);
+            if (BaseImage == null)
+            {
+                Init(MaxWidth, MaxHeight);
+            }
+            else
+            {
+                if (ScaledImage != null)
+                {
+                    ScaledImage.Dispose();
+                }
+                ScaledImage = Tools.ResizeImage(BaseImage, MaxWidth, MaxHeight);
+            }
         }
 
         /// <summary>
@@ -114,6 +136,7 @@ namespace SatisfactorySaveEditor
         /// <remarks>It's the users responsibility to dispose the image</remarks>
         public static Image GetMap()
         {
+            Init();
             return new Bitmap(ScaledImage);
         }
 
@@ -125,6 +148,7 @@ namespace SatisfactorySaveEditor
         /// <remarks>It's the users responsibility to dispose the image</remarks>
         public static Image Render(IEnumerable<DrawObject> Objects)
         {
+            Init();
             var BMP = new Bitmap(ScaledImage);
             using (var G = Graphics.FromImage(BMP))
             {
@@ -148,6 +172,7 @@ namespace SatisfactorySaveEditor
         /// <remarks>It's the users responsibility to dispose the image</remarks>
         public static Image Render(DrawObject Object)
         {
+            Init();
             return Render(new DrawObject[] { Object });
         }
 
@@ -158,6 +183,7 @@ namespace SatisfactorySaveEditor
         /// <returns>Map</returns>
         public static Image RenderFile(SaveFile F)
         {
+            Init();
             var Objects = new List<DrawObject>();
 
             foreach (var P in F.Entries.Where(m => m.EntryType == OBJECT_TYPE.OBJECT))

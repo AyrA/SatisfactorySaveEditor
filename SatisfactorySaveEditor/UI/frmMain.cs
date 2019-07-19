@@ -16,7 +16,6 @@ namespace SatisfactorySaveEditor
         private bool NameChanged = false;
         private Settings S;
         private string SettingsFile = null;
-        private Image MapImage;
 
         public frmMain(string InitialFile = null)
         {
@@ -45,27 +44,21 @@ namespace SatisfactorySaveEditor
             //Don't block the application startup with the image rendering stuff
             Thread T = new Thread(delegate ()
             {
-                using (var MS = new MemoryStream(Tools.GetMap(), false))
+                MapRender.Init();
+                var img = MapRender.GetMap();
+                Invoke((MethodInvoker)delegate
                 {
-                    using (var SRC = Image.FromStream(MS))
+                    BackgroundImage = img;
+                    if (S.ShowWelcomeMessage)
                     {
-                        MapImage = Tools.ResizeImage(SRC, 1024, 1024);
+                        S.ShowWelcomeMessage = false;
+                        Tools.ShowHelp("Welcome");
                     }
-                    Invoke((MethodInvoker)delegate
-                    {
-                        BackgroundImage = (Image)MapImage.Clone();
-                        if (S.ShowWelcomeMessage)
-                        {
-                            S.ShowWelcomeMessage = false;
-                            Tools.ShowHelp("Welcome");
-                        }
-                    });
-                }
+                });
             });
             T.Start();
-            //Check for updates at most every 24 hours
-            //DEBUG ONLY, FORCE UPDATE
-            if (Program.DEBUG || S.LastUpdateCheck <= DateTime.Now.AddDays(-1))
+            //Check for updates at most every 24 hours but never in debug mode
+            if (!Program.DEBUG && S.LastUpdateCheck <= DateTime.Now.AddDays(-1))
             {
                 S.LastUpdateCheck = DateTime.Now;
                 CheckUpdate();
