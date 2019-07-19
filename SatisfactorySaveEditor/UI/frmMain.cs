@@ -78,7 +78,6 @@ namespace SatisfactorySaveEditor
             }
 #if DEBUG
             //Enable not fully implemented items
-            saveFileManagerToolStripMenuItem.Visible = true;
             inventoriesToolStripMenuItem.Visible = true;
 #endif
         }

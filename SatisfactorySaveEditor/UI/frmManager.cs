@@ -211,6 +211,13 @@ namespace SatisfactorySaveEditor
                                 frm.WindowState = FormWindowState.Maximized;
                                 frm.BackgroundImageLayout = ImageLayout.Zoom;
                                 frm.BackgroundImage = BMP;
+                                frm.KeyDown += delegate (object Sender, KeyEventArgs key)
+                                {
+                                    if (key.KeyCode == Keys.Escape)
+                                    {
+                                        frm.Close();
+                                    }
+                                };
                                 frm.ShowDialog();
                             }
                         }

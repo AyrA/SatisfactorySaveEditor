@@ -174,7 +174,6 @@
             this.saveFileManagerToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.saveFileManagerToolStripMenuItem.Text = "Save File &Manager";
             this.saveFileManagerToolStripMenuItem.ToolTipText = "Manage your save files";
-            this.saveFileManagerToolStripMenuItem.Visible = false;
             this.saveFileManagerToolStripMenuItem.Click += new System.EventHandler(this.saveFileManagerToolStripMenuItem_Click);
             // 
             // quickActionsToolStripMenuItem
