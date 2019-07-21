@@ -69,6 +69,8 @@ namespace SatisfactorySaveEditor
             {
                 if (Logger != TextWriter.Null)
                 {
+                    var DT = DateTime.UtcNow;
+                    Write("{0} {1}: Logger ended", DT.ToLongDateString(), DT.ToLongTimeString());
                     Logger.Flush();
                     Logger.Close();
                     Logger.Dispose();

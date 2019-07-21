@@ -175,7 +175,7 @@ namespace SatisfactorySaveEditor
         {
             if (MapData == null)
             {
-                Log.Write("Initializing map from resource");
+                Log.Write("Tools: Initializing map from resource");
                 MapData = GetResource("SatisfactorySaveEditor.Images.Map.png");
             }
             return (byte[])MapData.Clone();
@@ -192,9 +192,9 @@ namespace SatisfactorySaveEditor
         /// <remarks>This will not dispose either of the images</remarks>
         public static Image ResizeImage(Image I, int MaxWidth, int MaxHeight)
         {
-            Log.Write("Requesting image resize");
             try
             {
+                Log.Write("Tools: Requesting image resize W={0}->{2} H={1}->{3}", I.Width, I.Height, MaxWidth, MaxHeight);
                 var S = new SizeF(I.Size);
                 var Factor = Math.Min(MaxWidth / S.Width, MaxHeight / S.Height);
                 var NewSize = new Size((int)(S.Width * Factor), (int)(S.Height * Factor));
@@ -398,7 +398,7 @@ namespace SatisfactorySaveEditor
                         ((System.Windows.Forms.Form)sender).Close();
                     }
                 };
-                Log.Write("Registered [ESC] handler on {0}", Source.GetType().FullName);
+                Log.Write("{0}: Registered [ESC] handler on {0}", Source.GetType().Name);
             }
             catch (Exception ex)
             {

@@ -581,6 +581,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             SB.AppendLine($"Version: {Application.ProductVersion}");
             SB.AppendLine("License: MIT");
             SB.AppendLine("Source: https://cable.ayra.ch/satisfactory/editor.php");
+            SB.AppendLine($"Log: {Log.Logfile}");
             MessageBox.Show(
                 SB.ToString(),
                 "Application Info",
