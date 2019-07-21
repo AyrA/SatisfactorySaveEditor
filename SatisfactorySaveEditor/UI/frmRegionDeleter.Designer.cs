@@ -105,6 +105,7 @@
             this.pbMap.TabIndex = 1;
             this.pbMap.TabStop = false;
             this.pbMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseClick);
+            this.pbMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pbMap_MouseClick);
             // 
             // frmRegionDeleter
             // 
