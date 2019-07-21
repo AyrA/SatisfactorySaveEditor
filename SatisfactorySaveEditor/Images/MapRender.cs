@@ -95,6 +95,7 @@ namespace SatisfactorySaveEditor
         {
             if (BaseImage == null)
             {
+                Log.Write("Map: Initializing base image W={0},H={1}", MaxWidth, MaxHeight);
                 //Load base image and provide initially scaled version
                 using (var MS = new MemoryStream(Tools.GetMap()))
                 {
@@ -121,6 +122,7 @@ namespace SatisfactorySaveEditor
             }
             else
             {
+                Log.Write("Map: Re-scale image W={0},H={1}", MaxWidth, MaxHeight);
                 if (ScaledImage != null)
                 {
                     ScaledImage.Dispose();
@@ -148,6 +150,7 @@ namespace SatisfactorySaveEditor
         /// <remarks>It's the users responsibility to dispose the image</remarks>
         public static Image Render(IEnumerable<DrawObject> Objects)
         {
+            Log.Write("Map: Rendering {0} objects", Objects.Count());
             Init();
             var BMP = new Bitmap(ScaledImage);
             using (var G = Graphics.FromImage(BMP))
@@ -224,6 +227,8 @@ namespace SatisfactorySaveEditor
             {
                 Objects.Add(new DrawObject(P, Color.Red, 10));
             }
+
+            Log.Write("Map: Rendering {0} entries as {1} objects", Entries.Count(), Objects.Count);
 
             return Render(Objects);
         }
