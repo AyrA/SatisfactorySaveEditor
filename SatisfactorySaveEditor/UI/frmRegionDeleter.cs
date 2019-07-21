@@ -8,8 +8,15 @@ namespace SatisfactorySaveEditor
 {
     public partial class frmRegionDeleter : Form
     {
+        /// <summary>
+        /// Items with these name parts will be added to the remove list by default
+        /// </summary>
         private const string WHITELIST = "/Buildable/|ResourceNode|ResourceDeposit";
+        /// <summary>
+        /// Items with these names override the <see cref="WHITELIST"/>
+        /// </summary>
         private const string PROTECTED = "MamIntegrated|HubTerminal|WorkBenchIntegrated|StorageIntegrated|GeneratorIntegratedBiomass";
+
         private SaveFile F;
         private List<PointF> Points;
         private bool HasChange;
