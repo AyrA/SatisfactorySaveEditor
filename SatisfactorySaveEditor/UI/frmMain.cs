@@ -160,7 +160,7 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
                 {
                     S.ShowLimited = false;
                     MessageBox.Show(@"This is still in development and functionality is limited.
-You can currently only use the 'Quick Actions' and the 'Header Editor'", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
+If something breaks, please open an issue on GitHub so we can fix it.", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 RedrawMap();
             }
