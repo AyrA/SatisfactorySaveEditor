@@ -69,7 +69,6 @@
             this.generalActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearStringListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +78,8 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.deleteElementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rangeDeleterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
@@ -207,7 +208,7 @@
             this.removeAnimalPartsToolStripMenuItem,
             this.removeAnimalsToolStripMenuItem});
             this.mapFeaturesToolStripMenuItem.Name = "mapFeaturesToolStripMenuItem";
-            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mapFeaturesToolStripMenuItem.Text = "&Map Features";
             this.mapFeaturesToolStripMenuItem.ToolTipText = "Map/Environment specifics";
             // 
@@ -319,7 +320,7 @@
             this.resetToolStripMenuItem,
             this.restorePickupsToolStripMenuItem});
             this.dropPodsToolStripMenuItem.Name = "dropPodsToolStripMenuItem";
-            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dropPodsToolStripMenuItem.Text = "&Drop Pods";
             this.dropPodsToolStripMenuItem.ToolTipText = "Actions for Drop Pods";
             // 
@@ -344,7 +345,7 @@
             this.funToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resizeDoggosToolStripMenuItem});
             this.funToolStripMenuItem.Name = "funToolStripMenuItem";
-            this.funToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.funToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.funToolStripMenuItem.Text = "&Fun";
             this.funToolStripMenuItem.ToolTipText = "Funny changes that don\'t have a benefit to them";
             // 
@@ -356,14 +357,14 @@
             this.largeToolStripMenuItem,
             this.wTFToolStripMenuItem});
             this.resizeDoggosToolStripMenuItem.Name = "resizeDoggosToolStripMenuItem";
-            this.resizeDoggosToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.resizeDoggosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resizeDoggosToolStripMenuItem.Text = "&Resize Doggos";
             this.resizeDoggosToolStripMenuItem.ToolTipText = "Resizes lizard doggos";
             // 
             // tinyToolStripMenuItem
             // 
             this.tinyToolStripMenuItem.Name = "tinyToolStripMenuItem";
-            this.tinyToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.tinyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tinyToolStripMenuItem.Text = "&Tiny";
             this.tinyToolStripMenuItem.ToolTipText = "Factor: 0.25";
             this.tinyToolStripMenuItem.Click += new System.EventHandler(this.tinyToolStripMenuItem_Click);
@@ -371,7 +372,7 @@
             // regularSizeToolStripMenuItem
             // 
             this.regularSizeToolStripMenuItem.Name = "regularSizeToolStripMenuItem";
-            this.regularSizeToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.regularSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.regularSizeToolStripMenuItem.Text = "&Regular Size";
             this.regularSizeToolStripMenuItem.ToolTipText = "Factor: 1.0";
             this.regularSizeToolStripMenuItem.Click += new System.EventHandler(this.regularSizeToolStripMenuItem_Click);
@@ -379,7 +380,7 @@
             // largeToolStripMenuItem
             // 
             this.largeToolStripMenuItem.Name = "largeToolStripMenuItem";
-            this.largeToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.largeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.largeToolStripMenuItem.Text = "&Large";
             this.largeToolStripMenuItem.ToolTipText = "Factor: 20";
             this.largeToolStripMenuItem.Click += new System.EventHandler(this.largeToolStripMenuItem_Click);
@@ -387,7 +388,7 @@
             // wTFToolStripMenuItem
             // 
             this.wTFToolStripMenuItem.Name = "wTFToolStripMenuItem";
-            this.wTFToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.wTFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.wTFToolStripMenuItem.Text = "&WTF";
             this.wTFToolStripMenuItem.ToolTipText = "Factor: 100";
             this.wTFToolStripMenuItem.Click += new System.EventHandler(this.wTFToolStripMenuItem_Click);
@@ -405,7 +406,7 @@
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.modifyToolStripMenuItem.Text = "&Modify";
             this.modifyToolStripMenuItem.ToolTipText = "Modifies an inventory";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
@@ -413,7 +414,7 @@
             // linkTogetherToolStripMenuItem
             // 
             this.linkTogetherToolStripMenuItem.Name = "linkTogetherToolStripMenuItem";
-            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.linkTogetherToolStripMenuItem.Text = "&Link together";
             this.linkTogetherToolStripMenuItem.ToolTipText = "Links two inventories together";
             this.linkTogetherToolStripMenuItem.Click += new System.EventHandler(this.linkTogetherToolStripMenuItem_Click);
@@ -423,8 +424,7 @@
             this.generalActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editHeaderToolStripMenuItem,
             this.duplicatorToolStripMenuItem,
-            this.deleterToolStripMenuItem,
-            this.rangeDeleterToolStripMenuItem,
+            this.deleteElementsToolStripMenuItem,
             this.exportImportToolStripMenuItem,
             this.clearStringListToolStripMenuItem});
             this.generalActionsToolStripMenuItem.Name = "generalActionsToolStripMenuItem";
@@ -446,14 +446,6 @@
             this.duplicatorToolStripMenuItem.Text = "D&uplicator";
             this.duplicatorToolStripMenuItem.ToolTipText = "Duplicates game entries";
             this.duplicatorToolStripMenuItem.Click += new System.EventHandler(this.duplicatorToolStripMenuItem_Click);
-            // 
-            // deleterToolStripMenuItem
-            // 
-            this.deleterToolStripMenuItem.Name = "deleterToolStripMenuItem";
-            this.deleterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.deleterToolStripMenuItem.Text = "&Deleter";
-            this.deleterToolStripMenuItem.ToolTipText = "Deleted individual entries or groups of them";
-            this.deleterToolStripMenuItem.Click += new System.EventHandler(this.deleterToolStripMenuItem_Click);
             // 
             // exportImportToolStripMenuItem
             // 
@@ -484,7 +476,7 @@
             // openHelpToolStripMenuItem
             // 
             this.openHelpToolStripMenuItem.Name = "openHelpToolStripMenuItem";
-            this.openHelpToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openHelpToolStripMenuItem.Text = "&Help";
             this.openHelpToolStripMenuItem.ToolTipText = "Shows the Help window";
             this.openHelpToolStripMenuItem.Click += new System.EventHandler(this.openHelpToolStripMenuItem_Click);
@@ -492,7 +484,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.ToolTipText = "Shows basic application information";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
@@ -518,13 +510,30 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
+            // deleteElementsToolStripMenuItem
+            // 
+            this.deleteElementsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleterToolStripMenuItem,
+            this.rangeDeleterToolStripMenuItem});
+            this.deleteElementsToolStripMenuItem.Name = "deleteElementsToolStripMenuItem";
+            this.deleteElementsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteElementsToolStripMenuItem.Text = "&Delete Elements";
+            this.deleteElementsToolStripMenuItem.ToolTipText = "Deletes entries from the save file using various means";
+            // 
+            // deleterToolStripMenuItem
+            // 
+            this.deleterToolStripMenuItem.Name = "deleterToolStripMenuItem";
+            this.deleterToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.deleterToolStripMenuItem.Text = "&Delete by type";
+            this.deleterToolStripMenuItem.ToolTipText = "Deleted individual entries or groups of them by selecting the entry type, offset " +
+    "and count";
+            // 
             // rangeDeleterToolStripMenuItem
             // 
             this.rangeDeleterToolStripMenuItem.Name = "rangeDeleterToolStripMenuItem";
-            this.rangeDeleterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.rangeDeleterToolStripMenuItem.Text = "&Range Deleter";
-            this.rangeDeleterToolStripMenuItem.ToolTipText = "Deletes objects inside of an area";
-            this.rangeDeleterToolStripMenuItem.Click += new System.EventHandler(this.rangeDeleterToolStripMenuItem_Click);
+            this.rangeDeleterToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.rangeDeleterToolStripMenuItem.Text = "&Delete by map location";
+            this.rangeDeleterToolStripMenuItem.ToolTipText = "Deletes objects inside of a map area";
             // 
             // frmMain
             // 
@@ -587,7 +596,6 @@
         private System.Windows.Forms.ToolStripMenuItem wTFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem duplicatorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveFileManagerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redrawMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLocationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportImportToolStripMenuItem;
@@ -598,6 +606,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearStringListToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem deleteElementsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rangeDeleterToolStripMenuItem;
     }
 }
