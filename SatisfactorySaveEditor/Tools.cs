@@ -345,7 +345,7 @@ namespace SatisfactorySaveEditor
             }
             catch
             {
-                F.HelpText = HelpText;
+                F.HelpText = string.Format(HelpText, $"SatisfactorySaveEditor.Help.{FormName}.txt");
             }
         }
 

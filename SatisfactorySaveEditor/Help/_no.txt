@@ -1,1 +1,6 @@
 ﻿There is no help available for this item right now.
+
+If you believe this is an error,
+you can open an issue at https://github.com/AyrA/SatisfactorySaveEditor/issues
+
+The missing file is {0}
