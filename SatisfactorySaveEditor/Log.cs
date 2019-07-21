@@ -50,7 +50,7 @@ namespace SatisfactorySaveEditor
 
         public static void Write(string Text)
         {
-            var Msg = string.Format("[{0}] {1}", SW.ElapsedMilliseconds, Text);
+            var Msg = string.Format("[{0,9}] {1}", SW.ElapsedMilliseconds, Text);
             lock (Logger)
             {
                 if (Program.DEBUG)
@@ -59,6 +59,7 @@ namespace SatisfactorySaveEditor
                 }
                 OutputDebugString(Msg);
                 Logger.WriteLine(Msg);
+                Logger.Flush();
             }
         }
 
@@ -73,11 +74,11 @@ namespace SatisfactorySaveEditor
             {
                 Write("=== START: {0} handler ===", ex.GetType().FullName);
             }
-            Write("Error: {0}",ex.Message);
+            Write("Error: {0}", ex.Message);
             Write("Stack: {0}", ex.StackTrace);
             if (ex is AggregateException)
             {
-                foreach(var E in ((AggregateException)ex).InnerExceptions)
+                foreach (var E in ((AggregateException)ex).InnerExceptions)
                 {
                     Write(E, false);
                 }
