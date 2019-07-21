@@ -49,16 +49,19 @@ namespace SatisfactorySaveEditor
                     e.Location.X / (float)pbMap.Width,
                     e.Location.Y / (float)pbMap.Height
                     ));
+                Log.Write("{0}: Added point {1}", GetType().Name, Points.Last());
                 RedrawMap(F.Entries);
             }
             if (e.Button == MouseButtons.Right && Points.Count > 0)
             {
                 if (Points.Count > 3)
                 {
+                    Log.Write("{0}: Removed point {1}", GetType().Name, Points.Last());
                     Points.RemoveAt(Points.Count - 1);
                 }
                 else
                 {
+                    Log.Write("{0}: Removed all points", GetType().Name);
                     Points.Clear();
                 }
                 RedrawMap(F.Entries);
@@ -71,6 +74,7 @@ namespace SatisfactorySaveEditor
             {
                 if (MessageBox.Show("Remove all points?", "Reset Map", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
+                    Log.Write("{0}: Cleared point list", GetType().Name);
                     Points.Clear();
                     RedrawMap(F.Entries);
                 }
@@ -87,10 +91,9 @@ namespace SatisfactorySaveEditor
             //Get all items inside the polygon
             var Matches = F.Entries.Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT &&
                 !((ObjectTypes.GameObject)m.ObjectData).ObjectPosition.Equals(ZeroPos) &&
-            IsInside(
-                Tools.TranslateFromMap(((ObjectTypes.GameObject)m.ObjectData).ObjectPosition),
-                A)
+                IsInside(Tools.TranslateFromMap(((ObjectTypes.GameObject)m.ObjectData).ObjectPosition), A)
             ).ToArray();
+            Log.Write("{0}: Items to potentially delete: {1}", GetType().Name, Matches.Length);
             RedrawMap(Matches);
             //Filter Entries
             var WL = Matches
@@ -98,7 +101,7 @@ namespace SatisfactorySaveEditor
                     WLItems.Any(n => m.ObjectData.Name.Contains(n)) &&
                     !ProtectedItems.Any(n => m.ObjectData.Name.Contains(n))
                 ).ToArray();
-
+            Log.Write("{0}: Whitelist contains {1} items", GetType().Name, WL.Length);
             if (Matches.Length > 0)
             {
                 using (var Confirm = new frmElementList(WL, Matches.Where(m => !WL.Contains(m))))
@@ -107,17 +110,20 @@ namespace SatisfactorySaveEditor
                     {
                         var ToRemove = Matches.Where(m => Confirm.ItemsToProcess.Contains(m.ObjectData.Name)).ToArray();
                         F.Entries.RemoveAll(m => ToRemove.Contains(m));
+                        Log.Write("{0}: Removed {1} objects", GetType().Name, ToRemove.Length);
                         MessageBox.Show($"Removed objects: {ToRemove.Length}", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         HasChange |= ToRemove.Length > 0;
                     }
                     else
                     {
+                        Log.Write("{0}: User cancelled delete operation", GetType().Name);
                         MessageBox.Show("Operation cancelled", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
             }
             else
             {
+                Log.Write("{0}: User selected empty region", GetType().Name);
                 MessageBox.Show("The selected region contains no objects.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             RedrawMap(F.Entries);
@@ -130,6 +136,7 @@ namespace SatisfactorySaveEditor
 
         private void RedrawMap(IEnumerable<SaveFileEntry> Entries)
         {
+            Log.Write("{0}: Redrawing the map. Points: {1}", GetType().Name, Points.Count);
             var I = MapRender.RenderEntries(Entries);
             using (var G = Graphics.FromImage(I))
             {
@@ -153,6 +160,7 @@ namespace SatisfactorySaveEditor
                 pbMap.Image.Dispose();
             }
             pbMap.Image = I;
+            Log.Write("{0}: Redrawing complete", GetType().Name);
         }
 
         /// <summary>
@@ -160,7 +168,8 @@ namespace SatisfactorySaveEditor
         /// </summary>
         /// <param name="Query">Point to check</param>
         /// <param name="Polygon">Polygon list</param>
-        /// <returns></returns>
+        /// <returns>true, if inside</returns>
+        /// <remarks>This handles intersecting polygons properly</remarks>
         /// <seealso cref="https://stackoverflow.com/a/14998816"/>
         private bool IsInside(PointF Query, PointF[] Polygon)
         {

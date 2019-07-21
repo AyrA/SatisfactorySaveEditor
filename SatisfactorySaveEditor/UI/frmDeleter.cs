@@ -37,6 +37,7 @@ namespace SatisfactorySaveEditor
                 //Don't select beyond the list
                 cbItem.SelectedIndex = Math.Min(LastItem, cbItem.Items.Count - 1);
             }
+            Log.Write("{0}: List initialized with {1} entries", GetType().Name, cbItem.Items.Count);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -50,6 +51,7 @@ namespace SatisfactorySaveEditor
 
             if (MessageBox.Show(rbAllItems.Checked ? $"Really delete this entry ({Entries.Count()} occurences)?" : $"Really delete {nudCount.Value} instances of this entry?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                Log.Write("{0}: Deleting {1} entries", GetType().Name, Entries.Count());
                 foreach (var E in Entries.ToArray())
                 {
                     F.Entries.Remove(E);

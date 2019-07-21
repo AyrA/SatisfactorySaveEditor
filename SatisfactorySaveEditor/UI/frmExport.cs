@@ -101,6 +101,7 @@ namespace SatisfactorySaveEditor
                         $"{Items.Count()} entr{(Items.Count() == 1 ? "y" : "ies")} Exported to clipboard",
                         "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                Log.Write("{0}: Exported {1} items", GetType().Name, Items.Count());
             }
         }
 
@@ -116,19 +117,22 @@ namespace SatisfactorySaveEditor
                     {
                         Entries = (SaveFileEntry[])Ser.Deserialize(SR);
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Log.Write(new Exception($"{GetType().Name}: Failed to parse clipboard for import", ex));
                         Tools.E("The text in your clipboard is not valid save file data", "No content");
                         return;
                     }
+                    Log.Write("{0}: Importing {1} entries", GetType().Name, Entries.Length);
                     int ReplaceCount = -1;
                     //Replace all items with the same name
                     if (cbReplaceAll.Checked)
                     {
                         var Names = Entries.Select(m => m.ObjectData.Name).Distinct().ToArray();
                         var TotalStart = F.Entries.Count;
-                        F.Entries = F.Entries.Where(m => !Names.Contains(m.ObjectData.Name)).ToList();
+                        F.Entries.RemoveAll(m => Names.Contains(m.ObjectData.Name));
                         ReplaceCount = TotalStart - F.Entries.Count;
+                        Log.Write("{0}: Removed {1} existing entries", GetType().Name, ReplaceCount);
                     }
                     //Automatically fix internal names by adding incrementing numbers until they're unique.
                     if (cbFixNames.Checked)
@@ -149,12 +153,18 @@ namespace SatisfactorySaveEditor
                                 {
                                     NewName = string.Format("{0}_{1}", BaseName, NameCounter++);
                                 } while (Names.Contains(NewName));
+                                Log.Write("{0}: Fixed name Old={0} New={1}", GetType().Name, E.ObjectData.InternalName, NewName);
                                 E.ObjectData.InternalName = NewName;
+                            }
+                            else
+                            {
+                                Log.Write("{0}: No need to fix {1}", GetType().Name, E.ObjectData.InternalName);
                             }
                         }
                     }
                     F.Entries.AddRange(Entries);
 
+                    Log.Write("{0}: Import complete", GetType().Name);
                     if (ReplaceCount >= 0)
                     {
                         MessageBox.Show(
@@ -173,6 +183,7 @@ namespace SatisfactorySaveEditor
             }
             else
             {
+                Log.Write("{0}: Tried to import empty clipboard", GetType().Name);
                 MessageBox.Show(
                     "Your clipboard is empty", "No content",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

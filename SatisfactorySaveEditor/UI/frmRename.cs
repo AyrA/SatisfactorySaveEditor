@@ -36,19 +36,19 @@ namespace SatisfactorySaveEditor
         private void SetBtn()
         {
             var BaseState = true;
-            if (string.IsNullOrWhiteSpace(tbSessionName.Text))
+            if (BaseState && string.IsNullOrWhiteSpace(tbSessionName.Text))
             {
                 BaseState = false;
             }
-            if (string.IsNullOrWhiteSpace(tbFileName.Text))
+            if (BaseState && string.IsNullOrWhiteSpace(tbFileName.Text))
             {
                 BaseState = false;
             }
-            if (Path.GetInvalidFileNameChars().Any(m => tbSessionName.Text.Contains(m)))
+            if (BaseState && Path.GetInvalidFileNameChars().Any(m => tbSessionName.Text.Contains(m)))
             {
                 BaseState = false;
             }
-            if (Path.GetInvalidFileNameChars().Any(m => tbFileName.Text.Contains(m)))
+            if (BaseState && Path.GetInvalidFileNameChars().Any(m => tbFileName.Text.Contains(m)))
             {
                 BaseState = false;
             }

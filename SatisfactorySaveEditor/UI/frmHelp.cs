@@ -13,6 +13,7 @@ namespace SatisfactorySaveEditor
             }
             set
             {
+                Log.Write("{0}: Updating help text", GetType().Name);
                 tbHelp.Text = value;
             }
         }
@@ -24,6 +25,7 @@ namespace SatisfactorySaveEditor
             //Increase from the default font size because this might contain lots of text
             var F = new Font(Font.FontFamily, Font.Size * 1.5f);
             Font = F;
+            Log.Write("{0}: Form created", GetType().Name);
             Tools.SetupEscHandler(this);
         }
 

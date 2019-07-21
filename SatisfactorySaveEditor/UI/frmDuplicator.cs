@@ -28,6 +28,7 @@ namespace SatisfactorySaveEditor
             {
                 cbObject.SelectedIndex = 0;
             }
+            Log.Write("{0}: List initialized with {1} entries", GetType().Name, cbObject.Items.Count);
             Tools.SetupEscHandler(this);
         }
 
@@ -70,6 +71,7 @@ namespace SatisfactorySaveEditor
         {
             if (MessageBox.Show($"Really copy the entry {nudCount.Value} times?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                Log.Write("{0}: Creating {1} duplicates", GetType().Name, nudCount.Value);
                 //Names of all existing objects
                 var Names = F.Entries
                     .Select(m => m.ObjectData)
@@ -110,6 +112,8 @@ namespace SatisfactorySaveEditor
                         }
                         F.Entries.Add(Copy);
                     }
+                    //Update possible offsets for this item
+                    nudOffset.Maximum += nudCount.Value;
                     MessageBox.Show($"Done", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     HasChange = true;
                 }
@@ -124,7 +128,7 @@ namespace SatisfactorySaveEditor
         private void btnMap_Click(object sender, EventArgs e)
         {
             var ItemName = ((ShortName)cbObject.SelectedItem).Long;
-            var Item = F.Entries.Where(m => m.ObjectData.Name == ItemName).Skip((int)nudOffset.Value-1).First();
+            var Item = F.Entries.Where(m => m.ObjectData.Name == ItemName).Skip((int)nudOffset.Value - 1).First();
             if (Item.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT)
             {
                 MapRender.MapForm.BackgroundImage.Dispose();

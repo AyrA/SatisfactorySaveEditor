@@ -37,8 +37,9 @@ namespace SatisfactorySaveEditor
                             F = SaveFile.Open(FS);
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Log.Write(new Exception($"Invalid or locked save file: {FileName}", ex));
                     }
 
                     if (F != null)
@@ -86,6 +87,7 @@ namespace SatisfactorySaveEditor
                 //Add invalid nodes on the bottom
                 if (Sessions.ContainsKey(""))
                 {
+                    Log.Write("{0}: At least one invalid save file was found", GetType().Name);
                     Invoke((MethodInvoker)delegate ()
                     {
                         if (Sessions[""].TreeView == null)
@@ -147,6 +149,7 @@ namespace SatisfactorySaveEditor
             {
                 if (MessageBox.Show($"Really delete the file {Node.Text}.sav of session {Node.Parent.Text}", "Delete file", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
+                    Log.Write("{0}: Deleting {1}.sav", GetType().Name, Node.Text);
                     try
                     {
                         File.Delete(GetName(Node));
@@ -163,6 +166,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
+                        Log.Write(new Exception($"Unable to delete {Node.Text}.sav", ex));
                         Tools.E($"Unable to delete file. Reason: {ex.Message}", "error deleting file");
                     }
                 }
@@ -191,6 +195,7 @@ namespace SatisfactorySaveEditor
             {
                 if (IsValidNode(Node))
                 {
+                    Log.Write("{0}: Rendering {1}.sav", GetType().Name, Node.Text);
                     using (var FS = File.OpenRead(GetName(Node)))
                     {
                         SaveFile F;
@@ -198,8 +203,9 @@ namespace SatisfactorySaveEditor
                         {
                             F = SaveFile.Open(FS);
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Log.Write(new Exception("Attempted to render invalid file", ex));
                             InvalidMessage();
                             return;
                         }
@@ -252,6 +258,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
+                        Log.Write(new Exception("Unable to perform a backup", ex));
                         Tools.E($"Unable to back up your savegame\r\n{ex.Message}", "Backup Error");
                     }
                 }
@@ -305,6 +312,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
+                    Log.Write(new Exception($"Unable to import {OFD.FileName}", ex));
                     Tools.E($"Unable to open the selected file.\r\n{ex.Message}", "Import error");
                     return;
                 }
@@ -343,6 +351,7 @@ namespace SatisfactorySaveEditor
                             FS.Seek(0, SeekOrigin.Begin);
                             if (Tools.IsGzFile(FS))
                             {
+                                Log.Write("{0}: looks compressed: {1}", GetType().Name, OFD.FileName);
                                 try
                                 {
                                     using (var GZS = new GZipStream(FS, CompressionMode.Decompress))
@@ -361,11 +370,13 @@ namespace SatisfactorySaveEditor
                                 }
                                 catch (Exception ex)
                                 {
+                                    Log.Write(new Exception($"Unable to decompress {OFD.FileName}", ex));
                                     Tools.E($"File looks compressed, but we are unable to decompress it.\r\n{ex.Message}", "Decompression error");
                                 }
                             }
                             else
                             {
+                                Log.Write("{0}: Importing uncompressed {1}", GetType().Name, OFD.FileName);
                                 //File is not compressed. Just copy as-is
                                 using (var OUT = File.Create(NewName))
                                 {
@@ -392,6 +403,10 @@ namespace SatisfactorySaveEditor
                                     }
                                     initFiles();
                                 }
+                                else
+                                {
+                                    Log.Write("{0}: import destination exists: User cancelled", GetType().Name);
+                                }
                             }
                         }
                     }
@@ -412,6 +427,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
+                    Log.Write(new Exception("Unable to rename the file", ex));
                     Tools.E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
                     return;
                 }
@@ -439,6 +455,7 @@ namespace SatisfactorySaveEditor
                                 }
                                 catch (Exception ex)
                                 {
+                                    Log.Write(new Exception("Unable to rename the file", ex));
                                     FS = null;
                                     Tools.E($"Unable to rename the file.\r\n{ex.Message}", "File rename");
                                 }
@@ -453,6 +470,7 @@ namespace SatisfactorySaveEditor
                                         }
                                         catch (Exception ex)
                                         {
+                                            Log.Write(new Exception("Unable to delete the old copy", ex));
                                             Tools.E($"File renamed, but we are unable to delete the old copy. Please do so manually.\r\n{ex.Message}", "Unable to rename");
                                         }
                                         initFiles();
@@ -480,6 +498,7 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
+                    Log.Write(new Exception("Unable to duplicate save file", ex));
                     Tools.E($"Unable to duplicate file.\r\n{ex.Message}", "Duplication error");
                     return;
                 }

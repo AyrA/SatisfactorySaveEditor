@@ -28,12 +28,14 @@ namespace SatisfactorySaveEditor
                 }
                 catch (Exception ex)
                 {
+                    Log.Write(new Exception("Unable to load the settings", ex));
                     Tools.E($"Unable to load your settings. Defaults will be applied. Reason:\r\n{ex.Message}", "Settings Loader");
                     S = new Settings();
                 }
             }
             else
             {
+                Log.Write("{0}: Creating settings for first run", GetType().Name);
                 S = new Settings();
             }
 
@@ -44,6 +46,7 @@ namespace SatisfactorySaveEditor
             //Don't block the application startup with the image rendering stuff
             Thread T = new Thread(delegate ()
             {
+                Log.Write("{0}: Rendering map", GetType().Name);
                 MapRender.Init();
                 var img = MapRender.GetMap();
                 Invoke((MethodInvoker)delegate
@@ -62,9 +65,11 @@ namespace SatisfactorySaveEditor
                         }
                         catch (Exception ex)
                         {
+                            Log.Write(new Exception("Unable to load file from command line argument", ex));
                             Tools.E($"Unable to open {InitialFile}\r\n{ex.Message}", "File error");
                         }
                     }
+                    Log.Write("{0}: Initializer complete", GetType().Name);
                 });
             });
             T.Start();
@@ -72,6 +77,7 @@ namespace SatisfactorySaveEditor
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
             Tools.SetupEscHandler(this);
 #if DEBUG
+            Log.Write("{0}: Enabling debug menu items", GetType().Name);
             //Enable not fully implemented items
             inventoriesToolStripMenuItem.Visible = true;
 #endif
@@ -103,14 +109,17 @@ namespace SatisfactorySaveEditor
             {
                 if (Tools.Compress(FileName, Backup))
                 {
+                    Log.Write("{0}: Created backup file {1}", GetType().Name, Backup);
                     MessageBox.Show($"Because this is your first time overwriting this file, a backup ({Path.GetFileName(Backup)}) has been created in the same directory.", "Backup created", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     if (MessageBox.Show($"Unable to create a backup. You can try using the Save file manager to manually create one. Still continue to save the file?", "Backup failed", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.No)
                     {
+                        Log.Write("{0}: Unable to create backup. User exit", GetType().Name);
                         return;
                     }
+                    Log.Write("{0}: Unable to create backup. User continue", GetType().Name);
                 }
             }
             try
@@ -123,7 +132,8 @@ namespace SatisfactorySaveEditor
             }
             catch (Exception ex)
             {
-                Tools.E($"Unable to save your file.\r\n{ex.Message}", "Saving changes");
+                Log.Write(new Exception("Unable to save changes", ex));
+                Tools.E($"Unable to save your file. Make sure it's not currently loaded in Satisfactory or another application.\r\n{ex.Message}", "Saving changes");
             }
         }
 
@@ -150,24 +160,35 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
 
         public void OpenFile(string SaveFileName)
         {
-            FileName = SaveFileName;
-            using (var FS = File.OpenRead(FileName))
+            Log.Write("{0}: Loading {1}", GetType().Name, SaveFileName);
+            try
             {
-                F = SaveFile.Open(FS);
-                HasChange = false;
-                NameChanged = false;
-                if (S.ShowLimited)
+                using (var FS = File.OpenRead(SaveFileName))
                 {
-                    S.ShowLimited = false;
-                    MessageBox.Show(@"This is still in development and functionality is limited.
+                    F = SaveFile.Open(FS);
+                    FileName = SaveFileName;
+                    HasChange = false;
+                    NameChanged = false;
+                    if (S.ShowLimited)
+                    {
+                        S.ShowLimited = false;
+                        MessageBox.Show(@"This is still in development and functionality is limited.
 If something breaks, please open an issue on GitHub so we can fix it.", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    RedrawMap();
+                    Log.Write("{0}: File loaded. {1} entries total", GetType().Name, F.Entries.Count);
                 }
-                RedrawMap();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(new Exception("Unable to load the save file", ex));
+                Tools.E($"Unable to load the specified file\r\n{ex.Message}", "File read error");
             }
         }
 
         private void RedrawMap()
         {
+            Log.Write("{0}: Rendering Map", GetType().Name);
             BackgroundImage.Dispose();
             if (F != null)
             {
@@ -202,19 +223,30 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
 
         private void CheckUpdate()
         {
+            Log.Write("{0}: Request update check", GetType().Name);
             Thread T = new Thread(delegate ()
             {
                 //DEBUG ONLY, FORCE UPDATE
                 var U = Program.DEBUG || UpdateHandler.HasUpdate();
                 if (U)
                 {
+                    Log.Write("{0}: Update available. Downloading...", GetType().Name);
                     if (UpdateHandler.DownloadUpdate())
                     {
+                        Log.Write("{0}: Update download success", GetType().Name);
                         Invoke((MethodInvoker)delegate ()
                         {
                             updateAvailableToolStripMenuItem.Visible = true;
                         });
                     }
+                    else
+                    {
+                        Log.Write("{0}: Update download failed", GetType().Name);
+                    }
+                }
+                else
+                {
+                    Log.Write("{0}: No update found", GetType().Name);
                 }
             });
             T.IsBackground = true;
@@ -603,7 +635,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
         {
             if (F != null)
             {
-                if(S.ShowRangeDeleterHint)
+                if (S.ShowRangeDeleterHint)
                 {
                     MessageBox.Show(@"The range deleter can be a bit difficult to use.
 By default it only selects player built structures except the HUB components.
@@ -666,6 +698,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             //Check for updates at most every 24 hours but never in debug mode
             if (!Program.DEBUG && S.LastUpdateCheck <= DateTime.UtcNow.AddDays(-1))
             {
+                Log.Write("{0}: Begin daily update check", GetType().Name);
                 S.LastUpdateCheck = DateTime.UtcNow;
                 CheckUpdate();
             }

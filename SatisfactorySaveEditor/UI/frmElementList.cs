@@ -29,6 +29,7 @@ namespace SatisfactorySaveEditor
                 {
                     lvProcess.Items[0].Text = "Creating initial lists 1/3...";
                 });
+                Log.Write("{0}: Creating list of all items", GetType().Name);
                 Entries = ProcessItems
                     .Concat(SkipItems)
                     .Distinct()
@@ -37,6 +38,7 @@ namespace SatisfactorySaveEditor
                 {
                     lvProcess.Items.Add("Creating initial lists 2/3...");
                 });
+                Log.Write("{0}: Creating name list of items that are processed", GetType().Name);
                 Process = ProcessItems
                     .Select(m => new ShortName(m.ObjectData.Name))
                     .Distinct()
@@ -45,6 +47,7 @@ namespace SatisfactorySaveEditor
                 {
                     lvProcess.Items.Add("Creating initial lists 3/3...");
                 });
+                Log.Write("{0}: Creating name list of items that are skipped", GetType().Name);
                 Skip = SkipItems
                     .Select(m => new ShortName(m.ObjectData.Name))
                     .Distinct()
@@ -89,6 +92,7 @@ namespace SatisfactorySaveEditor
 
                     SW.Start();
 
+                    Log.Write("{0}: Creating {1} UI Process list items", GetType().Name, Process.Count);
                     //Process
                     foreach (var SN in Process)
                     {
@@ -107,6 +111,7 @@ namespace SatisfactorySaveEditor
                         lvProcess.Items[0].Text = "Complete";
                     });
 
+                    Log.Write("{0}: Creating {1} UI skip list items", GetType().Name, Skip.Count);
                     //Skip
                     foreach (var SN in Skip)
                     {
@@ -210,6 +215,7 @@ namespace SatisfactorySaveEditor
                 .OfType<ListViewItem>()
                 .Select(m => ((ShortName)m.Tag).Long)
                 .ToArray();
+            Log.Write("{0}: Total items selected: {1}", GetType().Name, ItemsToProcess.Length);
             DialogResult = ItemsToProcess.Length > 0 ? DialogResult.OK : DialogResult.Cancel;
             Close();
         }
