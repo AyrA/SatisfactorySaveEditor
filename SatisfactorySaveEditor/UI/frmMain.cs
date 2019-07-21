@@ -54,22 +54,22 @@ namespace SatisfactorySaveEditor
                         S.ShowWelcomeMessage = false;
                         Tools.ShowHelp("Welcome");
                     }
+                    if (!string.IsNullOrEmpty(InitialFile))
+                    {
+                        try
+                        {
+                            OpenFile(InitialFile);
+                        }
+                        catch (Exception ex)
+                        {
+                            Tools.E($"Unable to open {InitialFile}\r\n{ex.Message}", "File error");
+                        }
+                    }
                 });
             });
             T.Start();
 
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
-            if (!string.IsNullOrEmpty(InitialFile))
-            {
-                try
-                {
-                    OpenFile(InitialFile);
-                }
-                catch (Exception ex)
-                {
-                    Tools.E($"Unable to open {InitialFile}\r\n{ex.Message}", "File error");
-                }
-            }
             Tools.SetupEscHandler(this);
 #if DEBUG
             //Enable not fully implemented items
