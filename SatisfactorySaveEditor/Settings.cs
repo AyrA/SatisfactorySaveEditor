@@ -69,6 +69,7 @@ namespace SatisfactorySaveEditor
         /// <returns>Settings instance</returns>
         public static Settings Load(string Content)
         {
+            Log.Write("Loading settings");
             var S = new XmlSerializer(typeof(Settings));
             using (var SR = new StringReader(Content))
             {
@@ -82,6 +83,7 @@ namespace SatisfactorySaveEditor
         /// <returns>Settings string</returns>
         public string Save()
         {
+            Log.Write("Saving settings");
             var S = new XmlSerializer(typeof(Settings));
             using (var SW = new StringWriter())
             {

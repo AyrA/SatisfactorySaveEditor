@@ -51,6 +51,7 @@ namespace SatisfactorySaveEditor
 
         static UpdateHandler()
         {
+            Log.Write("Initialize UpdateHandler");
             //Enable all Protocols but not SSL3
             //The API might get mad at you if you don't enable the new TLS versions
             //The reason it's done "dynamically" here is to support future protocols automatically.
@@ -88,6 +89,7 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public static void Reset()
         {
+            Log.Write("Resetting Update Status");
             UpdateData = new UpdateInfo();
             InfoReady = false;
         }
@@ -107,8 +109,9 @@ namespace SatisfactorySaveEditor
                 {
                     Res = (HttpWebResponse)Req.GetResponse();
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log.Write(new Exception("Unable to make update request", ex));
                     //Unable to make request at this time
                     return false;
                 }
@@ -131,14 +134,16 @@ namespace SatisfactorySaveEditor
                             InfoReady = true;
                             return true;
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Log.Write(new Exception("Unable to parse update status response", ex));
                             //Invalid return values
                             return false;
                         }
                     }
                 }
             }
+            Log.Write("ObtainUpdateInfo already performed");
             return true;
         }
 
@@ -151,12 +156,14 @@ namespace SatisfactorySaveEditor
         {
             if (!ObtainUpdateInfo())
             {
+                Log.Write("HasUpdate failed: ObtainUpdateInfo not successful");
                 return false;
             }
             if (V == null)
             {
                 return HasUpdate(Tools.CurrentVersion);
             }
+            Log.Write("Checking Update for {0}", V);
             //Our version must be older
             return V.CompareTo(UpdateData.NewVersion) < 0;
         }
@@ -170,6 +177,7 @@ namespace SatisfactorySaveEditor
         {
             if (!ObtainUpdateInfo())
             {
+                Log.Write("DownloadUpdate failed: ObtainUpdateInfo not successful");
                 return false;
             }
             //Generate file name
@@ -183,8 +191,9 @@ namespace SatisfactorySaveEditor
             {
                 FS = File.Create(FileName);
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Write(new Exception($"Unable to write new executable to {FileName}", ex));
                 return false;
             }
             using (FS)
@@ -192,6 +201,7 @@ namespace SatisfactorySaveEditor
                 //Don't bother the API in debug mode
                 if (Program.DEBUG)
                 {
+                    Log.Write("Faking download in Debug mode by copying current executable instead.");
                     using (var IN = File.OpenRead(CurrentExecutable))
                     {
                         IN.CopyTo(FS);
@@ -205,8 +215,9 @@ namespace SatisfactorySaveEditor
                 {
                     Res = (HttpWebResponse)Req.GetResponse();
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log.Write(new Exception("Unable to make executable download request", ex));
                     //Unable to make request at this time
                     return false;
                 }
@@ -217,6 +228,7 @@ namespace SatisfactorySaveEditor
                         S.CopyTo(FS);
                     }
                 }
+                Log.Write("Update ready at {0}", FileName);
                 return true;
             }
         }
@@ -242,8 +254,9 @@ namespace SatisfactorySaveEditor
                     Environment.Exit(0);
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log.Write(new Exception("Unable to launch phase 1 of update", ex));
                 }
             }
             return false;
@@ -260,6 +273,7 @@ namespace SatisfactorySaveEditor
             //No update arguments
             if (Args.Length < 4 || Args[1] != "update" || !File.Exists(Args[3]))
             {
+                Log.Write("Auto Update: No automatic update arguments found.");
                 return false;
             }
             //Args:
@@ -283,9 +297,11 @@ namespace SatisfactorySaveEditor
                             //C# doesn't "knows" that above line will exit
                             return true;
                         }
+                        throw new IOException($"Timeout when trying to copy \"{Args[0]}\" to \"{Args[3]}\"");
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Log.Write(new Exception("Unable to launch phase 2 of update", ex));
                     }
                     break;
                 case "2":
@@ -298,8 +314,10 @@ namespace SatisfactorySaveEditor
                         Process.Start(Args[0]);
                         return true;
                     }
+                    Log.Write("Update Phase 2: Automatic update did not complete in time: Unable to delete {0}", Args[3]);
                     break;
                 default:
+                    Log.Write("Invalid automatic update arguments.");
                     break;
             }
             return false;
@@ -317,8 +335,9 @@ namespace SatisfactorySaveEditor
                 var FI = new FileInfo(FileName);
                 FI.Attributes &= ~FileAttributes.ReadOnly;
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Write(new Exception("Unable to remove readonly attribute", ex));
                 //Unable to remove readonly attribute.
                 //Try deleting anyways
             }

@@ -66,5 +66,30 @@ namespace SatisfactorySaveEditor
         {
             Write(string.Format(Text, Args));
         }
+
+        public static void Write(Exception ex, bool IsRoot = true)
+        {
+            if (IsRoot)
+            {
+                Write("=== START: {0} handler ===", ex.GetType().FullName);
+            }
+            Write("Error: {0}",ex.Message);
+            Write("Stack: {0}", ex.StackTrace);
+            if (ex is AggregateException)
+            {
+                foreach(var E in ((AggregateException)ex).InnerExceptions)
+                {
+                    Write(E, false);
+                }
+            }
+            else
+            {
+                Write(ex.InnerException, false);
+            }
+            if (IsRoot)
+            {
+                Write("=== END: {0} handler ===", ex.GetType().FullName);
+            }
+        }
     }
 }

@@ -121,6 +121,7 @@ namespace SatisfactorySaveEditor
         /// </remarks>
         public static bool Compress(string InName, string OutName)
         {
+            Log.Write("Compressing \"{0}\" --> \"{1}\"", InName, OutName);
             try
             {
                 using (var IN = File.OpenRead(InName))
@@ -134,8 +135,9 @@ namespace SatisfactorySaveEditor
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Write(ex);
                 return false;
             }
             return true;
@@ -160,6 +162,7 @@ namespace SatisfactorySaveEditor
                     }
                 }
             }
+            Log.Write("Attempted to get non-existing resource: {0}", ResourceName);
             return null;
         }
 
@@ -172,6 +175,7 @@ namespace SatisfactorySaveEditor
         {
             if (MapData == null)
             {
+                Log.Write("Initializing map from resource");
                 MapData = GetResource("SatisfactorySaveEditor.Images.Map.png");
             }
             return (byte[])MapData.Clone();
@@ -188,10 +192,19 @@ namespace SatisfactorySaveEditor
         /// <remarks>This will not dispose either of the images</remarks>
         public static Image ResizeImage(Image I, int MaxWidth, int MaxHeight)
         {
-            var S = new SizeF(I.Size);
-            var Factor = Math.Min(MaxWidth / S.Width, MaxHeight / S.Height);
-            var NewSize = new Size((int)(S.Width * Factor), (int)(S.Height * Factor));
-            return new Bitmap(I, NewSize);
+            Log.Write("Requesting image resize");
+            try
+            {
+                var S = new SizeF(I.Size);
+                var Factor = Math.Min(MaxWidth / S.Width, MaxHeight / S.Height);
+                var NewSize = new Size((int)(S.Width * Factor), (int)(S.Height * Factor));
+                return new Bitmap(I, NewSize);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                return null;
+            }
         }
 
         /// <summary>
@@ -258,9 +271,9 @@ namespace SatisfactorySaveEditor
                 //Try seeking back but don't care if we can't
                 FS.Seek(-R, SeekOrigin.Current);
             }
-            catch
+            catch (Exception ex)
             {
-
+                Log.Write(new IOException("Unable to rewind stream in Gzip test", ex));
             }
             if (R == 2)
             {
@@ -309,6 +322,7 @@ namespace SatisfactorySaveEditor
         /// <remarks>Box has OK button and Error icon</remarks>
         public static void E(string Text, string Title)
         {
+            Log.Write("Show UI Error: {0}: {1}", Title, Text);
             System.Windows.Forms.MessageBox.Show(
                 Text,
                 Title,
@@ -322,6 +336,7 @@ namespace SatisfactorySaveEditor
         /// <param name="FormName">Name of the form that requested the help</param>
         public static void ShowHelp(string FormName)
         {
+            Log.Write("Requesting help for {0}", FormName);
             var F = System.Windows.Forms.Application.OpenForms
                 .OfType<frmHelp>()
                 .FirstOrDefault();
@@ -373,14 +388,22 @@ namespace SatisfactorySaveEditor
         /// <param name="Source">Form</param>
         public static void SetupEscHandler(System.Windows.Forms.Form Source)
         {
-            Source.KeyPreview = true;
-            Source.KeyDown += delegate (object sender, System.Windows.Forms.KeyEventArgs e)
+            try
             {
-                if (e.KeyCode == System.Windows.Forms.Keys.Escape)
+                Source.KeyPreview = true;
+                Source.KeyDown += delegate (object sender, System.Windows.Forms.KeyEventArgs e)
                 {
-                    ((System.Windows.Forms.Form)sender).Close();
-                }
-            };
+                    if (e.KeyCode == System.Windows.Forms.Keys.Escape)
+                    {
+                        ((System.Windows.Forms.Form)sender).Close();
+                    }
+                };
+                Log.Write("Registered [ESC] handler on {0}", Source.GetType().FullName);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(new Exception("Unable to register [ESC] handler on form.", ex));
+            }
         }
     }
 }

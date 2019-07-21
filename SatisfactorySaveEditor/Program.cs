@@ -33,6 +33,7 @@ namespace SatisfactorySaveEditor
         [STAThread]
         static int Main(string[] args)
         {
+            Log.Write("Application version {0} start", Tools.CurrentVersion);
             //Set "NOFORM" to better experiment
 #if !NOFORM
             //Perform update automatically if it's pending
@@ -40,6 +41,7 @@ namespace SatisfactorySaveEditor
             {
                 if (UpdateHandler.PerformUpdate())
                 {
+                    Log.Write("Application version {0} end (Update success)", Tools.CurrentVersion);
                     return RET.SUCCESS;
                 }
             }
@@ -52,8 +54,10 @@ namespace SatisfactorySaveEditor
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new frmMain(args.FirstOrDefault()));
             }
+            Log.Write("Application version {0} end", Tools.CurrentVersion);
             return RET.SUCCESS;
 #else
+            Log.Write("Running in test mode");
             //Allocate console or the Console.ReadKey() will crash
             Tools.AllocConsole();
 
