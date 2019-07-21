@@ -57,23 +57,9 @@ namespace SatisfactorySaveEditor
             //Allocate console or the Console.ReadKey() will crash
             Tools.AllocConsole();
 
-            Console.Error.WriteLine(string.Join("\r\n", args));
+            Console.Error.WriteLine("Arguments: {0}",string.Join("\r\n", args));
 
-            //Perform update if it's pending
-            if (args.Length == 0 && File.Exists(UpdateHandler.DefaultUpdateExecutable))
-            {
-                if (UpdateHandler.PerformUpdate())
-                {
-                    return RET.SUCCESS;
-                }
-            }
-            else
-            {
-                //Simulate new version
-                File.Copy(UpdateHandler.CurrentExecutable, UpdateHandler.DefaultUpdateExecutable, true);
-            }
-            UpdateHandler.Update();
-            //Test();
+            Test();
             Console.Error.WriteLine("#END");
             return Exit(RET.SUCCESS);
 #endif
@@ -82,15 +68,12 @@ namespace SatisfactorySaveEditor
         private static void Test()
         {
             //Note to testers: Do not close the stream early. This protects you from overwriting the save file.
-            using (var FS = File.OpenRead(Path.Combine(SaveDirectory, "Test.sav")))
+            using (var FS = File.OpenRead(Path.Combine(SaveDirectory, "Experimental.sav")))
             {
                 var F = SaveFile.Open(FS);
 
                 //Show all entries
                 Console.Error.WriteLine(string.Join("\r\n", F.Entries.OrderBy(m => m.Properties.Length).Select(m => m.ObjectData.Name).Distinct()));
-
-                var E = F.Entries.FirstOrDefault(m => m.ObjectData.Name == "/Game/FactoryGame/Resource/BP_ResourceNode.BP_ResourceNode_C");
-                Console.Error.WriteLine(Tools.HexDump(E.Properties));
 
                 /* Test code to "align" things
                 var o = (ObjectTypes.GameObject)e.ObjectData;
