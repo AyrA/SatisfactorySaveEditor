@@ -80,5 +80,23 @@ namespace SatisfactorySaveEditor
 
             return SortLong ? Long.CompareTo(o.Long) : Short.CompareTo(o.Short);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (obj is ShortName)
+            {
+                return Short == ((ShortName)obj).Short;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Long.GetHashCode();
+        }
     }
 }
