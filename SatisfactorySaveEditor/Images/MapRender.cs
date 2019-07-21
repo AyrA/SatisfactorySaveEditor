@@ -184,9 +184,20 @@ namespace SatisfactorySaveEditor
         public static Image RenderFile(SaveFile F)
         {
             Init();
+            return RenderEntries(F.Entries);
+        }
+
+        /// <summary>
+        /// Renders the given save file entries to the map
+        /// </summary>
+        /// <param name="Entries">Save File Entries</param>
+        /// <returns>Map</returns>
+        public static Image RenderEntries(IEnumerable<SaveFileEntry> Entries)
+        {
+            Init();
             var Objects = new List<DrawObject>();
 
-            foreach (var P in F.Entries.Where(m => m.EntryType == OBJECT_TYPE.OBJECT))
+            foreach (var P in Entries.Where(m => m.EntryType == OBJECT_TYPE.OBJECT))
             {
                 var O = new DrawObject(P, Color.Green, 2);
                 //Change color according to object type
@@ -209,7 +220,7 @@ namespace SatisfactorySaveEditor
                 Objects.Add(O);
             }
             //Enumerate players seperately because we want them bigger
-            foreach (var P in F.Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
+            foreach (var P in Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
             {
                 Objects.Add(new DrawObject(P, Color.Red, 10));
             }
