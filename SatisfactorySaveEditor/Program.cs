@@ -42,6 +42,7 @@ namespace SatisfactorySaveEditor
                 if (UpdateHandler.PerformUpdate())
                 {
                     Log.Write("Application version {0} end (Update success)", Tools.CurrentVersion);
+                    Log.Close();
                     return RET.SUCCESS;
                 }
             }
@@ -55,6 +56,7 @@ namespace SatisfactorySaveEditor
                 Application.Run(new frmMain(args.FirstOrDefault()));
             }
             Log.Write("Application version {0} end", Tools.CurrentVersion);
+            Log.Close();
             return RET.SUCCESS;
 #else
             Log.Write("Running in test mode");

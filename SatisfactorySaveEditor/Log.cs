@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace SatisfactorySaveEditor
 {
@@ -46,6 +47,34 @@ namespace SatisfactorySaveEditor
             }
             var DT = DateTime.UtcNow;
             Write("{0} {1}: Logger initialized", DT.ToLongDateString(), DT.ToLongTimeString());
+            //Flush logger periodically
+            Thread T = new Thread(delegate ()
+            {
+                while (Logger != null && Logger != TextWriter.Null)
+                {
+                    Thread.Sleep(5000);
+                    lock (Logger)
+                    {
+                        Logger.Flush();
+                    }
+                }
+            });
+            T.IsBackground = true;
+            T.Start();
+        }
+
+        public static void Close()
+        {
+            lock (Logger)
+            {
+                if (Logger != TextWriter.Null)
+                {
+                    Logger.Flush();
+                    Logger.Close();
+                    Logger.Dispose();
+                    Logger = TextWriter.Null;
+                }
+            }
         }
 
         public static void Write(string Text)
@@ -59,7 +88,6 @@ namespace SatisfactorySaveEditor
                 }
                 OutputDebugString(Msg);
                 Logger.WriteLine(Msg);
-                Logger.Flush();
             }
         }
 
@@ -76,6 +104,13 @@ namespace SatisfactorySaveEditor
             }
             Write("Error: {0}", ex.Message);
             Write("Stack: {0}", ex.StackTrace);
+            if (ex.Data != null && ex.Data.Count > 0)
+            {
+                foreach (var Entry in ex.Data)
+                {
+                    Write("Data: {0}", Entry);
+                }
+            }
             if (ex is AggregateException)
             {
                 foreach (var E in ((AggregateException)ex).InnerExceptions)
@@ -90,6 +125,11 @@ namespace SatisfactorySaveEditor
             if (IsRoot)
             {
                 Write("=== END: {0} handler ===", ex.GetType().FullName);
+                lock (Logger)
+                {
+                    //Always flush on exceptions
+                    Logger.Flush();
+                }
             }
         }
     }
