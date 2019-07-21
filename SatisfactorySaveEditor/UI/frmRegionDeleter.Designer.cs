@@ -75,7 +75,7 @@
             this.deleteObjectsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteObjectsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteObjectsToolStripMenuItem.Text = "&Delete Objects...";
-            this.deleteObjectsToolStripMenuItem.ToolTipText = "Shows list of elements in the region";
+            this.deleteObjectsToolStripMenuItem.ToolTipText = "Deletes elements in the region (with confirmation)";
             this.deleteObjectsToolStripMenuItem.Click += new System.EventHandler(this.deleteObjectsToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
@@ -92,6 +92,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
+            this.helpToolStripMenuItem.ToolTipText = "Shows the context help. Same as pressing [F1]";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // pbMap

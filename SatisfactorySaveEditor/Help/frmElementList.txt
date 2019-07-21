@@ -9,3 +9,4 @@ Select Items and use the [DEL] key to move it to the other list.
 
 Use the "Confirm" button to confirm the changes.
 To do nothing, move all items to the bottom list and then click "Confirm".
+Closing the form using the [X] control will also discard the changes.

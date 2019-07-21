@@ -5,15 +5,22 @@ This window allows you to delete all objects inside a user selected region.
 Click on the map to set points of a polygon.
 To delete the last point, use the right mouse button.
 
+The objects inside the selected region will be destroyed.
+You will not be given back any items in the process.
+This includes but is not limited to:
+- Items needed to craft the object
+- Items in association with the object (items on belts, storage content, etc)
+- Power Shards
+
 Menu Options:
 
-New Selection
+New Selection (CTRL+N)
 This will erase all points and begins selecting from the start
 
-Delete Objects...
+Delete Objects... (DEL)
 Shows a list of objects inside the region and offers to delete them.
 
-Close
+Close (CTRL+Q)
 Closes the window.
 
 Tip: Keep the window maximized for maximum accuracy.
