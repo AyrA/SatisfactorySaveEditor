@@ -551,6 +551,7 @@
             this.Text = "Satisfactory Save Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmMain_HelpRequested);
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();

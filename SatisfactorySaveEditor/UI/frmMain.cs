@@ -57,12 +57,6 @@ namespace SatisfactorySaveEditor
                 });
             });
             T.Start();
-            //Check for updates at most every 24 hours but never in debug mode
-            if (!Program.DEBUG && S.LastUpdateCheck <= DateTime.Now.AddDays(-1))
-            {
-                S.LastUpdateCheck = DateTime.Now;
-                CheckUpdate();
-            }
 
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
             if (!string.IsNullOrEmpty(InitialFile))
@@ -665,6 +659,16 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
         private void frmMain_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
             Tools.ShowHelp(GetType().Name);
+        }
+
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            //Check for updates at most every 24 hours but never in debug mode
+            if (!Program.DEBUG && S.LastUpdateCheck <= DateTime.UtcNow.AddDays(-1))
+            {
+                S.LastUpdateCheck = DateTime.UtcNow;
+                CheckUpdate();
+            }
         }
     }
 }
