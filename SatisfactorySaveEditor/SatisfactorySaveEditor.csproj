@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\frmElementList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmElementList.Designer.cs">
+      <DependentUpon>frmElementList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmRegionDeleter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmRegionDeleter.Designer.cs">
+      <DependentUpon>frmRegionDeleter.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmDeleter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +137,9 @@
     <EmbeddedResource Include="UI\frmDuplicator.resx">
       <DependentUpon>frmDuplicator.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmElementList.resx">
+      <DependentUpon>frmElementList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmExport.resx">
       <DependentUpon>frmExport.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmRegionDeleter.resx">
+      <DependentUpon>frmRegionDeleter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +179,8 @@
     <EmbeddedResource Include="Help\frmHelp.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Help\frmElementList.txt" />
+    <EmbeddedResource Include="Help\frmRegionDeleter.txt" />
     <Content Include="Help\frmHeaderEditor.txt" />
     <Content Include="Help\frmExport.txt" />
     <Content Include="Help\frmDuplicator.txt" />

@@ -1,0 +1,11 @@
+﻿Element Process List
+
+This form shows the item type and count that are to be processed.
+
+The top list contains items that are to be processed.
+The bottom list contains items to skip.
+
+Select Items and use the [DEL] key to move it to the other list.
+
+Use the "Confirm" button to confirm the changes.
+To do nothing, move all items to the bottom list and then click "Confirm".

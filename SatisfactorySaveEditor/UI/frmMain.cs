@@ -604,6 +604,21 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
             }
         }
 
+        private void rangeDeleterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                using (var Region = new frmRegionDeleter(F))
+                {
+                    if (Region.ShowDialog() == DialogResult.OK)
+                    {
+                        HasChange = true;
+                        RedrawMap();
+                    }
+                }
+            }
+        }
+
         #endregion
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)

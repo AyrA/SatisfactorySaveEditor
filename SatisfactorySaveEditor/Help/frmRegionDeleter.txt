@@ -1,0 +1,19 @@
+﻿Satisfactory Save Editor Region Deleter
+
+This window allows you to delete all objects inside a user selected region.
+
+Click on the map to set points of a polygon.
+To delete the last point, use the right mouse button.
+
+Menu Options:
+
+New Selection
+This will erase all points and begins selecting from the start
+
+Delete Objects...
+Shows a list of objects inside the region and offers to delete them.
+
+Close
+Closes the window.
+
+Tip: Keep the window maximized for maximum accuracy.
