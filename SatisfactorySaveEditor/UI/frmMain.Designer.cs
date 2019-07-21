@@ -527,13 +527,15 @@
             this.deleterToolStripMenuItem.Text = "&Delete by type";
             this.deleterToolStripMenuItem.ToolTipText = "Deleted individual entries or groups of them by selecting the entry type, offset " +
     "and count";
+            this.deleterToolStripMenuItem.Click += new System.EventHandler(this.deleterToolStripMenuItem_Click);
             // 
             // rangeDeleterToolStripMenuItem
             // 
             this.rangeDeleterToolStripMenuItem.Name = "rangeDeleterToolStripMenuItem";
             this.rangeDeleterToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.rangeDeleterToolStripMenuItem.Text = "&Delete by map location";
+            this.rangeDeleterToolStripMenuItem.Text = "Delete by &map location";
             this.rangeDeleterToolStripMenuItem.ToolTipText = "Deletes objects inside of a map area";
+            this.rangeDeleterToolStripMenuItem.Click += new System.EventHandler(this.rangeDeleterToolStripMenuItem_Click);
             // 
             // frmMain
             // 

@@ -35,6 +35,11 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public bool ShowWelcomeMessage
         { get; set; }
+        /// <summary>
+        /// Shows a hint about the range deleter
+        /// </summary>
+        public bool ShowRangeDeleterHint
+        { get; set; }
 
         /// <summary>
         /// Last time an update check was performed
@@ -52,6 +57,7 @@ namespace SatisfactorySaveEditor
                 ShowDuplicationHint =
                 ShowDeletionHint =
                 ShowWelcomeMessage =
+                ShowRangeDeleterHint =
                 true;
             LastUpdateCheck = DateTime.MinValue;
         }

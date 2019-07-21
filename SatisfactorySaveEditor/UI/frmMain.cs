@@ -609,6 +609,15 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
         {
             if (F != null)
             {
+                if(S.ShowRangeDeleterHint)
+                {
+                    MessageBox.Show(@"The range deleter can be a bit difficult to use.
+By default it only selects player built structures except the HUB components.
+Be careful when adding additional entries.
+
+Remember, you can press [F1] on any window to get detailed help.", "Range Deleter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    S.ShowRangeDeleterHint = false;
+                }
                 using (var Region = new frmRegionDeleter(F))
                 {
                     if (Region.ShowDialog() == DialogResult.OK)
