@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Log.cs" />
     <Compile Include="UI\frmElementList.cs">
       <SubType>Form</SubType>
     </Compile>
