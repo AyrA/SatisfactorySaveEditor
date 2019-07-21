@@ -94,5 +94,29 @@ namespace SatisfactorySaveEditor
         {
             return new Vector4(X, Y, Z, W);
         }
+
+        /// <summary>
+        /// Checks if the given Vector has the same coordinates
+        /// </summary>
+        /// <param name="obj">Vector</param>
+        /// <returns>true if same coordinates, false if other coordinates or not same vector type</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (obj is Vector4)
+            {
+                var o = (Vector4)obj;
+                return o.W == W && o.X == X && o.Y == Y && o.Z == Z;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return W.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        }
     }
 }

@@ -85,5 +85,29 @@ namespace SatisfactorySaveEditor
         {
             return new Vector3(X, Y, Z);
         }
+
+        /// <summary>
+        /// Checks if the given Vector has the same coordinates
+        /// </summary>
+        /// <param name="obj">Vector</param>
+        /// <returns>true if same coordinates, false if other coordinates or not same vector type</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (obj is Vector3)
+            {
+                var o = (Vector3)obj;
+                return o.X == X && o.Y == Y && o.Z == Z;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        }
     }
 }
