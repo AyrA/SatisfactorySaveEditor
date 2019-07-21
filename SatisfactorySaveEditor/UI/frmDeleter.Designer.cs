@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDeleter));
             this.cbItem = new System.Windows.Forms.ComboBox();
             this.nudStart = new System.Windows.Forms.NumericUpDown();
             this.nudCount = new System.Windows.Forms.NumericUpDown();
@@ -209,6 +210,7 @@
             this.Controls.Add(this.nudCount);
             this.Controls.Add(this.nudStart);
             this.Controls.Add(this.cbItem);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(430, 140);

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRename));
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -122,8 +123,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 130);
             this.Name = "frmRename";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "File rename";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmRename_HelpRequested);
             this.ResumeLayout(false);

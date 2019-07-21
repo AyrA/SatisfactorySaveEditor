@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManager));
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.lblInfo = new System.Windows.Forms.Label();
             this.CMS = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -156,6 +157,7 @@
             this.Controls.Add(this.tvFiles);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.btnImport);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmManager";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

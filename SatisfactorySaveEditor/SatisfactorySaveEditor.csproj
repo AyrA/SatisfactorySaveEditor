@@ -36,6 +36,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\Icons\edit.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -179,6 +182,13 @@
     <EmbeddedResource Include="Help\frmHelp.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Icons\copy.ico" />
+    <Content Include="Images\Icons\delete.ico" />
+    <Content Include="Images\Icons\edit.ico" />
+    <Content Include="Images\Icons\help.ico" />
+    <Content Include="Images\Icons\rename.ico" />
+    <Content Include="Images\Icons\search.ico" />
+    <Content Include="Images\Icons\settings.ico" />
     <EmbeddedResource Include="Help\frmElementList.txt" />
     <EmbeddedResource Include="Help\frmRegionDeleter.txt" />
     <Content Include="Help\frmHeaderEditor.txt" />

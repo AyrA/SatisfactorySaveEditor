@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRegionDeleter));
             this.mnu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +115,7 @@
             this.ClientSize = new System.Drawing.Size(592, 573);
             this.Controls.Add(this.pbMap);
             this.Controls.Add(this.mnu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnu;
             this.Name = "frmRegionDeleter";
             this.ShowIcon = false;

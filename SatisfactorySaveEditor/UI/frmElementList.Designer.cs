@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmElementList));
             this.divider = new System.Windows.Forms.SplitContainer();
             this.lvProcess = new System.Windows.Forms.ListView();
             this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
             this.lvSkip = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnConfirm = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblSkip = new System.Windows.Forms.Label();
+            this.btnConfirm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.divider)).BeginInit();
             this.divider.Panel1.SuspendLayout();
             this.divider.Panel2.SuspendLayout();
@@ -90,6 +91,15 @@
             // 
             this.chCount.Text = "Count";
             // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(592, 23);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Items in this list will be processed";
+            // 
             // lvSkip
             // 
             this.lvSkip.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -114,6 +124,15 @@
             // 
             this.columnHeader2.Text = "Count";
             // 
+            // lblSkip
+            // 
+            this.lblSkip.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblSkip.Location = new System.Drawing.Point(0, 0);
+            this.lblSkip.Name = "lblSkip";
+            this.lblSkip.Size = new System.Drawing.Size(592, 23);
+            this.lblSkip.TabIndex = 2;
+            this.lblSkip.Text = "Items in this list will be skipped";
+            // 
             // btnConfirm
             // 
             this.btnConfirm.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -125,30 +144,13 @@
             this.btnConfirm.UseVisualStyleBackColor = true;
             this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(592, 23);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Items in this list will be processed";
-            // 
-            // lblSkip
-            // 
-            this.lblSkip.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblSkip.Location = new System.Drawing.Point(0, 0);
-            this.lblSkip.Name = "lblSkip";
-            this.lblSkip.Size = new System.Drawing.Size(592, 23);
-            this.lblSkip.TabIndex = 2;
-            this.lblSkip.Text = "Items in this list will be skipped";
-            // 
             // frmElementList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 573);
             this.Controls.Add(this.divider);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmElementList";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
