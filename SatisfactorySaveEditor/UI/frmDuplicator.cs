@@ -24,7 +24,11 @@ namespace SatisfactorySaveEditor
                 .OrderBy(m => m)
                 .Cast<object>()
                 .ToArray());
-            cbObject.SelectedIndex = 0;
+            if (cbObject.Items.Count > 0)
+            {
+                cbObject.SelectedIndex = 0;
+            }
+            Tools.SetupEscHandler(this);
         }
 
         private void cbObject_SelectedIndexChanged(object sender, EventArgs e)

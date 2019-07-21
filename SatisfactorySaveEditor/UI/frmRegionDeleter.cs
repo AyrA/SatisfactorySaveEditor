@@ -21,6 +21,7 @@ namespace SatisfactorySaveEditor
             Points = new List<PointF>();
             InitializeComponent();
             pbMap.Image = MapRender.RenderFile(F);
+            Tools.SetupEscHandler(this);
         }
 
         private void frmRegionDeleter_HelpRequested(object sender, HelpEventArgs hlpevent)
@@ -91,19 +92,26 @@ namespace SatisfactorySaveEditor
                     !ProtectedItems.Any(n => m.ObjectData.Name.Contains(n))
                 ).ToArray();
 
-            using (var Confirm = new frmElementList(WL, Matches.Where(m => !WL.Contains(m))))
+            if (Matches.Length > 0)
             {
-                if (Confirm.ShowDialog() == DialogResult.OK && Confirm.ItemsToProcess.Length>0)
+                using (var Confirm = new frmElementList(WL, Matches.Where(m => !WL.Contains(m))))
                 {
-                    var ToRemove = Matches.Where(m => Confirm.ItemsToProcess.Contains(m.ObjectData.Name)).ToArray();
-                    F.Entries.RemoveAll(m => ToRemove.Contains(m));
-                    MessageBox.Show($"Removed objects: {ToRemove.Length}");
-                    HasChange |= ToRemove.Length > 0;
+                    if (Confirm.ShowDialog() == DialogResult.OK && Confirm.ItemsToProcess.Length > 0)
+                    {
+                        var ToRemove = Matches.Where(m => Confirm.ItemsToProcess.Contains(m.ObjectData.Name)).ToArray();
+                        F.Entries.RemoveAll(m => ToRemove.Contains(m));
+                        MessageBox.Show($"Removed objects: {ToRemove.Length}", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        HasChange |= ToRemove.Length > 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Operation cancelled", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Operation cancelled");
-                }
+            }
+            else
+            {
+                MessageBox.Show("The selected region contains no objects.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             RedrawMap(F.Entries);
         }

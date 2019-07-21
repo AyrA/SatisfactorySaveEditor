@@ -24,6 +24,7 @@ namespace SatisfactorySaveEditor
             //Increase from the default font size because this might contain lots of text
             var F = new Font(Font.FontFamily, Font.Size * 1.5f);
             Font = F;
+            Tools.SetupEscHandler(this);
         }
 
         private void frmHelp_HelpRequested(object sender, HelpEventArgs hlpevent)

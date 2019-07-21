@@ -53,6 +53,7 @@ namespace SatisfactorySaveEditor
             });
             T.IsBackground = true;
             T.Start();
+            Tools.SetupEscHandler(this);
         }
 
         /// <summary>

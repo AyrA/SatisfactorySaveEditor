@@ -76,6 +76,7 @@ namespace SatisfactorySaveEditor
                     Tools.E($"Unable to open {InitialFile}\r\n{ex.Message}", "File error");
                 }
             }
+            Tools.SetupEscHandler(this);
 #if DEBUG
             //Enable not fully implemented items
             inventoriesToolStripMenuItem.Visible = true;

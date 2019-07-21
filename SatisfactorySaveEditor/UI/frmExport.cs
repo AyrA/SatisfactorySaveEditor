@@ -20,7 +20,9 @@ namespace SatisfactorySaveEditor
             MaximumSize = new Size(int.MaxValue, MinimumSize.Height);
 
             initItemList();
+            Tools.SetupEscHandler(this);
         }
+
         private void initItemList()
         {
             var LastItem = cbItem.Items.Count > 0 ? cbItem.SelectedIndex : 0;

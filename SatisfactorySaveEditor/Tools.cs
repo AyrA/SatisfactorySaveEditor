@@ -349,6 +349,11 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Shortcut to convert byte arrays into UTF8 strings
+        /// </summary>
+        /// <param name="Data">Data</param>
+        /// <returns>Text</returns>
         private static string ToString(byte[] Data)
         {
             if (Data == null)
@@ -360,6 +365,22 @@ namespace SatisfactorySaveEditor
                 return string.Empty;
             }
             return Encoding.UTF8.GetString(Data);
+        }
+
+        /// <summary>
+        /// Sets up a handler to close the given form with escape
+        /// </summary>
+        /// <param name="Source">Form</param>
+        public static void SetupEscHandler(System.Windows.Forms.Form Source)
+        {
+            Source.KeyPreview = true;
+            Source.KeyDown += delegate (object sender, System.Windows.Forms.KeyEventArgs e)
+            {
+                if (e.KeyCode == System.Windows.Forms.Keys.Escape)
+                {
+                    ((System.Windows.Forms.Form)sender).Close();
+                }
+            };
         }
     }
 }
