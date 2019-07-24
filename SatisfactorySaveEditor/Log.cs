@@ -100,6 +100,10 @@ namespace SatisfactorySaveEditor
 
         public static void Write(Exception ex, bool IsRoot = true)
         {
+            if (ex == null)
+            {
+                return;
+            }
             if (IsRoot)
             {
                 Write("=== START: {0} handler ===", ex.GetType().FullName);
