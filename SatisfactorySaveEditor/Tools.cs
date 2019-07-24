@@ -110,6 +110,21 @@ namespace SatisfactorySaveEditor
             return new PointF(X, Y);
         }
 
+        public static Vector3 TranslateToMap(PointF Source)
+        {
+            //NOTE: ONLY A GUESS, FEEL FREE TO IMPROVE
+            const int MIN_X = -330000;
+            const int MAX_X = 428000;
+            const int MIN_Y = -370000;
+            const int MAX_Y = 370000;
+            const int SIZE_X = MAX_X - MIN_X;
+            const int SIZE_Y = MAX_Y - MIN_Y;
+            //Map dimensions
+            var OffsetX = Source.X * (SIZE_X);
+            var OffsetY = Source.Y * (SIZE_Y);
+            return new Vector3(OffsetX + MIN_X, OffsetY + MIN_Y, 0);
+        }
+
         /// <summary>
         /// Copies a file to a new location and compresses it
         /// </summary>
