@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\frmCounter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmCounter.Designer.cs">
+      <DependentUpon>frmCounter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="UI\frmElementList.cs">
       <SubType>Form</SubType>
@@ -135,6 +141,9 @@
     <Compile Include="SaveFileComponents\Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\frmCounter.resx">
+      <DependentUpon>frmCounter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmDeleter.resx">
       <DependentUpon>frmDeleter.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +192,7 @@
     <EmbeddedResource Include="Help\frmHelp.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Help\frmCounter.txt" />
     <Content Include="Images\Icons\copy.ico" />
     <Content Include="Images\Icons\delete.ico" />
     <Content Include="Images\Icons\edit.ico" />
@@ -192,10 +202,10 @@
     <Content Include="Images\Icons\settings.ico" />
     <EmbeddedResource Include="Help\frmElementList.txt" />
     <EmbeddedResource Include="Help\frmRegionDeleter.txt" />
-    <Content Include="Help\frmHeaderEditor.txt" />
-    <Content Include="Help\frmExport.txt" />
-    <Content Include="Help\frmDuplicator.txt" />
-    <Content Include="Help\frmDeleter.txt" />
+    <EmbeddedResource Include="Help\frmHeaderEditor.txt" />
+    <EmbeddedResource Include="Help\frmExport.txt" />
+    <EmbeddedResource Include="Help\frmDuplicator.txt" />
+    <EmbeddedResource Include="Help\frmDeleter.txt" />
     <EmbeddedResource Include="Help\frmRename.txt" />
     <EmbeddedResource Include="Help\frmManager.txt" />
   </ItemGroup>

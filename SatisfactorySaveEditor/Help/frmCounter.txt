@@ -1,0 +1,7 @@
+﻿Satisfactory Save Editor Object Counter
+
+This form counts all objects in your save file.
+
+You can select multiple entries with the mouse by holding down [SHIFT] or [CTRL].
+
+Pressing [ENTER] renders the selected items on the main window map.

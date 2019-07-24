@@ -82,6 +82,7 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.itemCounterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -424,6 +425,7 @@
             // 
             this.generalActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editHeaderToolStripMenuItem,
+            this.itemCounterToolStripMenuItem,
             this.duplicatorToolStripMenuItem,
             this.deleteElementsToolStripMenuItem,
             this.exportImportToolStripMenuItem,
@@ -435,7 +437,7 @@
             // editHeaderToolStripMenuItem
             // 
             this.editHeaderToolStripMenuItem.Name = "editHeaderToolStripMenuItem";
-            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editHeaderToolStripMenuItem.Text = "&Edit Header";
             this.editHeaderToolStripMenuItem.ToolTipText = "Edits the save file header";
             this.editHeaderToolStripMenuItem.Click += new System.EventHandler(this.editHeaderToolStripMenuItem_Click);
@@ -443,7 +445,7 @@
             // duplicatorToolStripMenuItem
             // 
             this.duplicatorToolStripMenuItem.Name = "duplicatorToolStripMenuItem";
-            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.duplicatorToolStripMenuItem.Text = "D&uplicator";
             this.duplicatorToolStripMenuItem.ToolTipText = "Duplicates game entries";
             this.duplicatorToolStripMenuItem.Click += new System.EventHandler(this.duplicatorToolStripMenuItem_Click);
@@ -454,7 +456,7 @@
             this.deleterToolStripMenuItem,
             this.rangeDeleterToolStripMenuItem});
             this.deleteElementsToolStripMenuItem.Name = "deleteElementsToolStripMenuItem";
-            this.deleteElementsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.deleteElementsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteElementsToolStripMenuItem.Text = "&Delete Elements";
             this.deleteElementsToolStripMenuItem.ToolTipText = "Deletes entries from the save file using various means";
             // 
@@ -478,7 +480,7 @@
             // exportImportToolStripMenuItem
             // 
             this.exportImportToolStripMenuItem.Name = "exportImportToolStripMenuItem";
-            this.exportImportToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.exportImportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exportImportToolStripMenuItem.Text = "&Export/Import";
             this.exportImportToolStripMenuItem.ToolTipText = "Export and import save file contents";
             this.exportImportToolStripMenuItem.Click += new System.EventHandler(this.exportImportToolStripMenuItem_Click);
@@ -486,7 +488,7 @@
             // clearStringListToolStripMenuItem
             // 
             this.clearStringListToolStripMenuItem.Name = "clearStringListToolStripMenuItem";
-            this.clearStringListToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.clearStringListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearStringListToolStripMenuItem.Text = "&Clear String List";
             this.clearStringListToolStripMenuItem.ToolTipText = "Removes all strings from the list of picked up items";
             this.clearStringListToolStripMenuItem.Click += new System.EventHandler(this.clearStringListToolStripMenuItem_Click);
@@ -537,6 +539,13 @@
             this.SFD.DefaultExt = "sav";
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
+            // 
+            // itemCounterToolStripMenuItem
+            // 
+            this.itemCounterToolStripMenuItem.Name = "itemCounterToolStripMenuItem";
+            this.itemCounterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.itemCounterToolStripMenuItem.Text = "&Item Counter";
+            this.itemCounterToolStripMenuItem.Click += new System.EventHandler(this.itemCounterToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -614,5 +623,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteElementsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rangeDeleterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemCounterToolStripMenuItem;
     }
 }

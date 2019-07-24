@@ -166,7 +166,7 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
                 using (var FS = File.OpenRead(SaveFileName))
                 {
                     F = SaveFile.Open(FS);
-                    if(F==null)
+                    if (F == null)
                     {
                         throw new InvalidDataException("We are unable to load your save file. It looks invalid.");
                     }
@@ -656,6 +656,17 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                         HasChange = true;
                         RedrawMap();
                     }
+                }
+            }
+        }
+
+        private void itemCounterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (F != null)
+            {
+                using (var Counter = new frmCounter(F.Entries))
+                {
+                    Counter.ShowDialog();
                 }
             }
         }
