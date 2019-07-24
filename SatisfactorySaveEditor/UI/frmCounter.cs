@@ -39,7 +39,8 @@ namespace SatisfactorySaveEditor
                 var Selected = lvCount.SelectedItems
                     .OfType<ListViewItem>()
                     .SelectMany(m => Entries.Where(n => n.ObjectData.Name == m.Tag.ToString()));
-                MapRender.RenderEntries(Selected);
+                MapRender.MapForm.BackgroundImage.Dispose();
+                MapRender.MapForm.BackgroundImage = MapRender.RenderEntries(Selected);
             }
             if (e.KeyCode == Keys.A && e.Control)
             {
