@@ -63,7 +63,7 @@ namespace SatisfactorySaveEditor
             //Allocate console or the Console.ReadKey() will crash
             Tools.AllocConsole();
 
-            Console.Error.WriteLine("Arguments: {0}",string.Join("\r\n", args));
+            Console.Error.WriteLine("Arguments: {0}", string.Join("\r\n", args));
 
             Test();
             Console.Error.WriteLine("#END");
@@ -73,10 +73,34 @@ namespace SatisfactorySaveEditor
 
         private static void Test()
         {
+            const string WHITELIST = "/Buildable/|ResourceNode|ResourceDeposit";
+            const string PROTECTED = "MamIntegrated|HubTerminal|WorkBenchIntegrated|StorageIntegrated|GeneratorIntegratedBiomass";
+            var WLItems = WHITELIST.Split('|');
+            var ProtectedItems = PROTECTED.Split('|');
+            var ZeroPos = new Vector3();
+
             //Note to testers: Do not close the stream early. This protects you from overwriting the save file.
-            using (var FS = File.OpenRead(Path.Combine(SaveDirectory, "Experimental.sav")))
+            using (var FS = File.OpenRead(Path.Combine(SaveDirectory, "Reset.sav")))
             {
                 var F = SaveFile.Open(FS);
+
+                var R = new Random();
+                foreach (var E in F.Entries)
+                {
+                    if (E.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT)
+                    {
+                        var o = (ObjectTypes.GameObject)E.ObjectData;
+                        if (
+                            !o.ObjectPosition.Equals(ZeroPos) &&
+                            WLItems.Any(n => o.Name.Contains(n)) &&
+                            !ProtectedItems.Any(n => o.Name.Contains(n)))
+                        {
+                            var newPos = Tools.TranslateToMap(new System.Drawing.PointF((float)R.NextDouble(), (float)R.NextDouble()));
+                            newPos.Z = 18000;
+                            o.ObjectPosition = newPos;
+                        }
+                    }
+                }
 
                 //Show all entries
                 Console.Error.WriteLine(string.Join("\r\n", F.Entries.OrderBy(m => m.Properties.Length).Select(m => m.ObjectData.Name).Distinct()));
@@ -119,11 +143,11 @@ namespace SatisfactorySaveEditor
                     Console.Error.WriteLine(x);
                 }
                 Console.Error.WriteLine("Placed {0} foundations", ctr);
+                //*/
                 using (var FSOut = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "Test-Edited.sav")))
                 {
                     F.Export(FSOut);
                 }
-                //*/
             }
         }
 
