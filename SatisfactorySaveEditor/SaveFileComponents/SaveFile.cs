@@ -179,7 +179,7 @@ namespace SatisfactorySaveEditor
                     return new SaveFile(BR);
                 }
             }
-            catch
+            catch (Exception OuterEx)
             {
                 if (S.CanSeek)
                 {
@@ -192,9 +192,9 @@ namespace SatisfactorySaveEditor
                             {
                                 return new SaveFile(BR);
                             }
-                            catch
+                            catch (Exception InnerEx)
                             {
-                                return null;
+                                throw new AggregateException("Unable to load save file as either compressed or uncompressed format. It's probably invalid or a recent game update broke the format.", OuterEx, InnerEx);
                             }
                         }
                     }

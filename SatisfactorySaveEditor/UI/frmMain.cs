@@ -166,6 +166,10 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
                 using (var FS = File.OpenRead(SaveFileName))
                 {
                     F = SaveFile.Open(FS);
+                    if(F==null)
+                    {
+                        throw new InvalidDataException("We are unable to load your save file. It looks invalid.");
+                    }
                     FileName = SaveFileName;
                     HasChange = false;
                     NameChanged = false;
