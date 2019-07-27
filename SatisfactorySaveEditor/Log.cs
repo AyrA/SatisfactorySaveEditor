@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -13,11 +14,14 @@ namespace SatisfactorySaveEditor
 
         private static TextWriter Logger;
         private static Stopwatch SW;
+        private static List<string> LogMessages;
+
         public static string Logfile
         { get; private set; }
 
         static Log()
         {
+            LogMessages = new List<string>();
             SW = new Stopwatch();
             SW.Start();
             using (var P = Process.GetCurrentProcess())
@@ -63,6 +67,14 @@ namespace SatisfactorySaveEditor
             T.Start();
         }
 
+        public static string[] GetMessages()
+        {
+            lock (Logger)
+            {
+                return LogMessages.ToArray();
+            }
+        }
+
         public static void Close()
         {
             lock (Logger)
@@ -87,9 +99,15 @@ namespace SatisfactorySaveEditor
                 if (Program.DEBUG)
                 {
                     Debug.WriteLine(Msg);
+                    OutputDebugString(Msg);
                 }
-                OutputDebugString(Msg);
                 Logger.WriteLine(Msg);
+                LogMessages.Add(Msg);
+                if (LogMessages.Count > 1000)
+                {
+                    LogMessages.RemoveRange(1, LogMessages.Count - 999);
+                    LogMessages[0] = "<Log Truncated>";
+                }
             }
         }
 
