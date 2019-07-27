@@ -12,6 +12,8 @@ namespace SatisfactorySaveEditor
     {
         private List<ShortName> Process, Skip;
         private List<SaveFileEntry> Entries;
+        private Thread ItemLoader;
+
 
         /// <summary>
         /// Gets the list of all items to process
@@ -23,7 +25,7 @@ namespace SatisfactorySaveEditor
         {
             InitializeComponent();
             EmptyList();
-            Thread T = new Thread(delegate ()
+            ItemLoader = new Thread(delegate ()
             {
                 Invoke((MethodInvoker)delegate
                 {
@@ -54,8 +56,7 @@ namespace SatisfactorySaveEditor
                     .ToList();
                 RenderList();
             });
-            T.IsBackground = true;
-            T.Start();
+            ItemLoader.IsBackground = true;
             Tools.SetupEscHandler(this);
         }
 
@@ -218,6 +219,11 @@ namespace SatisfactorySaveEditor
             Log.Write("{0}: Total items selected: {1}", GetType().Name, ItemsToProcess.Length);
             DialogResult = ItemsToProcess.Length > 0 ? DialogResult.OK : DialogResult.Cancel;
             Close();
+        }
+
+        private void frmElementList_Shown(object sender, EventArgs e)
+        {
+            ItemLoader.Start();
         }
 
         private void frmElementList_HelpRequested(object sender, HelpEventArgs hlpevent)

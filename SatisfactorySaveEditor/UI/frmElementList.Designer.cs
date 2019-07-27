@@ -155,6 +155,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Element Process List";
+            this.Shown += new System.EventHandler(this.frmElementList_Shown);
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmElementList_HelpRequested);
             this.divider.Panel1.ResumeLayout(false);
             this.divider.Panel2.ResumeLayout(false);
