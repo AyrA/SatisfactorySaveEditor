@@ -114,7 +114,7 @@ namespace SatisfactorySaveEditor
             //Filter if needed
             if (rbRange.Checked)
             {
-                Items = Items.Skip((int)nudStart.Value).Take((int)nudCount.Value);
+                Items = Items.Skip((int)nudStart.Value - 1).Take((int)nudCount.Value);
             }
             if (Items.Count() > 0)
             {
