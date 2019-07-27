@@ -39,6 +39,10 @@ namespace SatisfactorySaveEditor
         /// Current executable path and name
         /// </summary>
         public static readonly string CurrentExecutable;
+        /// <summary>
+        /// User agent string that is used for requests
+        /// </summary>
+        public static readonly string UserAgent;
 
         /// <summary>
         /// Update data
@@ -70,6 +74,7 @@ namespace SatisfactorySaveEditor
                     Path.GetExtension(N));
                 CurrentExecutable = N;
             }
+            UserAgent = $"AyrA-SatisfactorySaveEditor/{Tools.CurrentVersion} +https://github.com/AyrA/SatisfactorySaveEditor";
         }
 
         /// <summary>
@@ -80,7 +85,7 @@ namespace SatisfactorySaveEditor
         private static HttpWebRequest GetReq(string URL)
         {
             var Req = WebRequest.CreateHttp(URL);
-            Req.UserAgent = $"AyrA-SatisfactorySaveEditor/{Tools.CurrentVersion} +https://github.com/AyrA/SatisfactorySaveEditor";
+            Req.UserAgent = UserAgent;
             return Req;
         }
 
