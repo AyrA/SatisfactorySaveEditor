@@ -52,6 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compression.cs" />
+    <Compile Include="ErrorHandler\ErrorHandler.cs" />
+    <Compile Include="ErrorHandler\frmErrorHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorHandler\frmErrorHandler.designer.cs">
+      <DependentUpon>frmErrorHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmCounter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +149,9 @@
     <Compile Include="SaveFileComponents\Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ErrorHandler\frmErrorHandler.resx">
+      <DependentUpon>frmErrorHandler.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmCounter.resx">
       <DependentUpon>frmCounter.cs</DependentUpon>
     </EmbeddedResource>

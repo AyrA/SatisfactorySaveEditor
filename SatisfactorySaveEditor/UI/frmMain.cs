@@ -17,6 +17,22 @@ namespace SatisfactorySaveEditor
         private Settings S;
         private string SettingsFile = null;
 
+        public bool HasFileOpen
+        {
+            get
+            {
+                return F != null;
+            }
+        }
+
+        public SaveFile CurrentFile
+        {
+            get
+            {
+                return (SaveFile)F.Clone();
+            }
+        }
+
         public frmMain(string InitialFile = null)
         {
             SettingsFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings.xml");
@@ -107,7 +123,7 @@ namespace SatisfactorySaveEditor
             var Backup = Path.ChangeExtension(FileName, ".sav.gz");
             if (!File.Exists(Backup))
             {
-                if (Tools.Compress(FileName, Backup))
+                if (Compression.CompressFile(FileName, Backup))
                 {
                     Log.Write("{0}: Created backup file {1}", GetType().Name, Backup);
                     MessageBox.Show($"Because this is your first time overwriting this file, a backup ({Path.GetFileName(Backup)}) has been created in the same directory.", "Backup created", MessageBoxButtons.OK, MessageBoxIcon.Information);

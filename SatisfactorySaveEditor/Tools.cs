@@ -126,39 +126,6 @@ namespace SatisfactorySaveEditor
         }
 
         /// <summary>
-        /// Copies a file to a new location and compresses it
-        /// </summary>
-        /// <param name="InName">Original file</param>
-        /// <param name="OutName">New file</param>
-        /// <returns>true, if copied and compressed sucessfully</returns>
-        /// <remarks>
-        /// The user must clean up the file referenced by <paramref name="OutName"/> if the function fails.
-        /// </remarks>
-        public static bool Compress(string InName, string OutName)
-        {
-            Log.Write("Compressing \"{0}\" --> \"{1}\"", InName, OutName);
-            try
-            {
-                using (var IN = File.OpenRead(InName))
-                {
-                    using (var OUT = File.Create(OutName))
-                    {
-                        using (var GZS = new GZipStream(OUT, CompressionLevel.Optimal))
-                        {
-                            IN.CopyTo(GZS);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex);
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
         /// Gets an embedded resource from the application
         /// </summary>
         /// <param name="ResourceName">Full resource name</param>

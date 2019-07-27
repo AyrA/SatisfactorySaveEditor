@@ -33,9 +33,33 @@ namespace SatisfactorySaveEditor
         [STAThread]
         static int Main(string[] args)
         {
+            ErrorHandler ReleaseModeErrorHandler;
             Log.Write("Application version {0} start", Tools.CurrentVersion);
             //Set "NOFORM" to better experiment
 #if !NOFORM
+            if (!DEBUG)
+            {
+                ReleaseModeErrorHandler = new ErrorHandler();
+                ReleaseModeErrorHandler.ErrorReport += delegate (Exception ex, ErrorHandlerEventArgs e)
+                {
+                    Log.Write("Sending error report");
+                    var Msg = ErrorHandler.generateReport(ex);
+                    var MainForm = Application.OpenForms.OfType<frmMain>().FirstOrDefault();
+                    byte[] CurrentFile = null;
+                    if (MainForm != null && MainForm.HasFileOpen)
+                    {
+                        var F = MainForm.CurrentFile;
+                        using (var MS = new MemoryStream())
+                        {
+                            F.Export(MS);
+                            MS.Position = 0;
+                            CurrentFile = Compression.CompressData(MS.ToArray());
+                        }
+                    }
+                    //Send report
+                    e.Handled = ReleaseModeErrorHandler.UploadReport(Msg, CurrentFile == null ? new byte[0] : CurrentFile);
+                };
+            }
             //Perform update automatically if it's pending
             if (!DEBUG && args.Length == 0 && File.Exists(UpdateHandler.DefaultUpdateExecutable))
             {
