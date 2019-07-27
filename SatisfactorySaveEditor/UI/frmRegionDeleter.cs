@@ -15,7 +15,7 @@ namespace SatisfactorySaveEditor
         /// <summary>
         /// Items with these names override the <see cref="WHITELIST"/>
         /// </summary>
-        private const string PROTECTED = "MamIntegrated|HubTerminal|WorkBenchIntegrated|StorageIntegrated|GeneratorIntegratedBiomass";
+        private const string PROTECTED = "TradingPost|MamIntegrated|HubTerminal|WorkBenchIntegrated|StorageIntegrated|GeneratorIntegratedBiomass";
 
         private SaveFile F;
         private List<PointF> Points;
