@@ -69,6 +69,7 @@
             this.linkTogetherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generalActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemCounterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteElementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,7 +83,6 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
-            this.itemCounterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,7 +97,7 @@
             this.updateAvailableToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(553, 24);
+            this.mnuMain.Size = new System.Drawing.Size(592, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip1";
             // 
@@ -437,15 +437,22 @@
             // editHeaderToolStripMenuItem
             // 
             this.editHeaderToolStripMenuItem.Name = "editHeaderToolStripMenuItem";
-            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editHeaderToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.editHeaderToolStripMenuItem.Text = "&Edit Header";
             this.editHeaderToolStripMenuItem.ToolTipText = "Edits the save file header";
             this.editHeaderToolStripMenuItem.Click += new System.EventHandler(this.editHeaderToolStripMenuItem_Click);
             // 
+            // itemCounterToolStripMenuItem
+            // 
+            this.itemCounterToolStripMenuItem.Name = "itemCounterToolStripMenuItem";
+            this.itemCounterToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.itemCounterToolStripMenuItem.Text = "&Item Counter";
+            this.itemCounterToolStripMenuItem.Click += new System.EventHandler(this.itemCounterToolStripMenuItem_Click);
+            // 
             // duplicatorToolStripMenuItem
             // 
             this.duplicatorToolStripMenuItem.Name = "duplicatorToolStripMenuItem";
-            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.duplicatorToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.duplicatorToolStripMenuItem.Text = "D&uplicator";
             this.duplicatorToolStripMenuItem.ToolTipText = "Duplicates game entries";
             this.duplicatorToolStripMenuItem.Click += new System.EventHandler(this.duplicatorToolStripMenuItem_Click);
@@ -456,7 +463,7 @@
             this.deleterToolStripMenuItem,
             this.rangeDeleterToolStripMenuItem});
             this.deleteElementsToolStripMenuItem.Name = "deleteElementsToolStripMenuItem";
-            this.deleteElementsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteElementsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.deleteElementsToolStripMenuItem.Text = "&Delete Elements";
             this.deleteElementsToolStripMenuItem.ToolTipText = "Deletes entries from the save file using various means";
             // 
@@ -480,7 +487,7 @@
             // exportImportToolStripMenuItem
             // 
             this.exportImportToolStripMenuItem.Name = "exportImportToolStripMenuItem";
-            this.exportImportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportImportToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.exportImportToolStripMenuItem.Text = "&Export/Import";
             this.exportImportToolStripMenuItem.ToolTipText = "Export and import save file contents";
             this.exportImportToolStripMenuItem.Click += new System.EventHandler(this.exportImportToolStripMenuItem_Click);
@@ -488,7 +495,7 @@
             // clearStringListToolStripMenuItem
             // 
             this.clearStringListToolStripMenuItem.Name = "clearStringListToolStripMenuItem";
-            this.clearStringListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearStringListToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.clearStringListToolStripMenuItem.Text = "&Clear String List";
             this.clearStringListToolStripMenuItem.ToolTipText = "Removes all strings from the list of picked up items";
             this.clearStringListToolStripMenuItem.Click += new System.EventHandler(this.clearStringListToolStripMenuItem_Click);
@@ -540,19 +547,12 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
-            // itemCounterToolStripMenuItem
-            // 
-            this.itemCounterToolStripMenuItem.Name = "itemCounterToolStripMenuItem";
-            this.itemCounterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.itemCounterToolStripMenuItem.Text = "&Item Counter";
-            this.itemCounterToolStripMenuItem.Click += new System.EventHandler(this.itemCounterToolStripMenuItem_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(553, 404);
+            this.ClientSize = new System.Drawing.Size(592, 573);
             this.Controls.Add(this.mnuMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuMain;

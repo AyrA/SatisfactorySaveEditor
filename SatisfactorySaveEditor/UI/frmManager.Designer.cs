@@ -159,8 +159,6 @@
             this.Controls.Add(this.btnImport);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmManager";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "Save File Manager";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmManager_HelpRequested);
             this.CMS.ResumeLayout(false);

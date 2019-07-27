@@ -118,8 +118,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnu;
             this.Name = "frmRegionDeleter";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "Region Deleter";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRegionDeleter_FormClosing);

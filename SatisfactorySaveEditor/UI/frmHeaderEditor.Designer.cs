@@ -39,8 +39,8 @@
             // 
             // btnOK
             // 
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(159, 64);
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Location = new System.Drawing.Point(126, 70);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 4;
@@ -50,9 +50,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(240, 64);
+            this.btnCancel.Location = new System.Drawing.Point(207, 70);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -83,7 +83,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSessionName.Location = new System.Drawing.Point(84, 12);
             this.tbSessionName.Name = "tbSessionName";
-            this.tbSessionName.Size = new System.Drawing.Size(231, 20);
+            this.tbSessionName.Size = new System.Drawing.Size(198, 20);
             this.tbSessionName.TabIndex = 1;
             // 
             // tbPlayTime
@@ -92,7 +92,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPlayTime.Location = new System.Drawing.Point(84, 38);
             this.tbPlayTime.Name = "tbPlayTime";
-            this.tbPlayTime.Size = new System.Drawing.Size(231, 20);
+            this.tbPlayTime.Size = new System.Drawing.Size(198, 20);
             this.tbPlayTime.TabIndex = 3;
             // 
             // frmHeaderEditor
@@ -101,7 +101,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(327, 97);
+            this.ClientSize = new System.Drawing.Size(294, 105);
             this.Controls.Add(this.tbPlayTime);
             this.Controls.Add(this.tbSessionName);
             this.Controls.Add(this.label2);
@@ -113,7 +113,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmHeaderEditor";
-            this.ShowIcon = false;
             this.Text = "Header Editor";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmHeaderEditor_HelpRequested);
             this.ResumeLayout(false);

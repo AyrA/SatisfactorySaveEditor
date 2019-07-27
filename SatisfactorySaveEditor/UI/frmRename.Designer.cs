@@ -42,7 +42,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(124, 69);
+            this.btnOK.Location = new System.Drawing.Point(124, 79);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 5;
@@ -53,7 +53,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(205, 69);
+            this.btnCancel.Location = new System.Drawing.Point(205, 79);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 6;
@@ -101,7 +101,7 @@
             // btnHelp
             // 
             this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHelp.Location = new System.Drawing.Point(12, 69);
+            this.btnHelp.Location = new System.Drawing.Point(12, 79);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(75, 23);
             this.btnHelp.TabIndex = 4;
@@ -115,7 +115,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(292, 103);
+            this.ClientSize = new System.Drawing.Size(292, 113);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.tbSessionName);
             this.Controls.Add(this.tbFileName);
@@ -124,10 +124,8 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(300, 130);
+            this.MinimumSize = new System.Drawing.Size(300, 140);
             this.Name = "frmRename";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "File rename";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmRename_HelpRequested);
             this.ResumeLayout(false);

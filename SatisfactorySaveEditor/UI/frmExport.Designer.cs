@@ -242,7 +242,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoEllipsis = true;
-            this.label4.Location = new System.Drawing.Point(12, 193);
+            this.label4.Location = new System.Drawing.Point(12, 203);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(391, 18);
             this.label4.TabIndex = 21;
@@ -251,7 +251,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(409, 188);
+            this.btnClose.Location = new System.Drawing.Point(409, 198);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(71, 23);
             this.btnClose.TabIndex = 23;
@@ -271,16 +271,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 223);
+            this.ClientSize = new System.Drawing.Size(492, 233);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.gbImport);
             this.Controls.Add(this.gbExport);
             this.Controls.Add(this.btnClose);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(500, 250);
+            this.MinimumSize = new System.Drawing.Size(500, 260);
             this.Name = "frmExport";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "Export/Import entries";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmExport_HelpRequested);
             this.gbExport.ResumeLayout(false);
