@@ -152,6 +152,7 @@
             this.Controls.Add(this.divider);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmElementList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Element Process List";
             this.Shown += new System.EventHandler(this.frmElementList_Shown);
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmElementList_HelpRequested);

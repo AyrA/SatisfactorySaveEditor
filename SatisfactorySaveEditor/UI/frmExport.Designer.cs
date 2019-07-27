@@ -279,6 +279,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 260);
             this.Name = "frmExport";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Export/Import entries";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmExport_HelpRequested);
             this.gbExport.ResumeLayout(false);

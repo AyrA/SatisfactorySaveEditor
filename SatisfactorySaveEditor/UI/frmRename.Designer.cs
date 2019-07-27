@@ -126,6 +126,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 140);
             this.Name = "frmRename";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "File rename";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmRename_HelpRequested);
             this.ResumeLayout(false);

@@ -80,6 +80,7 @@
             this.Controls.Add(this.btnHide);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCounter";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Object Counter";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmCounter_HelpRequested);
             this.ResumeLayout(false);

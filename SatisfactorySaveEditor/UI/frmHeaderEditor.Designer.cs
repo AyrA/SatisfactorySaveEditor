@@ -113,6 +113,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmHeaderEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Header Editor";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmHeaderEditor_HelpRequested);
             this.ResumeLayout(false);
