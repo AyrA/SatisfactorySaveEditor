@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace SatisfactorySaveEditor
 {
     /// <summary>
     /// String from the property list.
     /// </summary>
-    public class PropertyString
+    public class PropertyString : ICloneable
     {
         /// <summary>
         /// String Name
@@ -47,6 +48,15 @@ namespace SatisfactorySaveEditor
         {
             BW.WriteIntString(Name);
             BW.WriteIntString(Value);
+        }
+
+        /// <summary>
+        /// Creates an independent copy of this instance
+        /// </summary>
+        /// <returns>new <see cref="PropertyString"/></returns>
+        public object Clone()
+        {
+            return new PropertyString(string.Copy(Name), string.Copy(Value));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SatisfactorySaveEditor
     /// <summary>
     /// Complete save File
     /// </summary>
-    public class SaveFile
+    public class SaveFile : ICloneable
     {
         /// <summary>
         /// File format version
@@ -201,6 +201,20 @@ namespace SatisfactorySaveEditor
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Creates a deep copy of this <see cref="SaveFile"/> instance.
+        /// </summary>
+        /// <returns>Independent <see cref="SaveFile"/> instance</returns>
+        public object Clone()
+        {
+            var Copy = (SaveFile)MemberwiseClone();
+            //Copy reference types
+            Copy.StringList = StringList.Select(m => (PropertyString)m.Clone()).ToList();
+            Copy.Entries = Entries.Select(m => (SaveFileEntry)m.Clone()).ToList();
+            Copy.Properties = new Dictionary<string, string>(Properties);
+            return Copy;
         }
     }
 }
