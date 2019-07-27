@@ -5,3 +5,7 @@ This form counts all objects in your save file.
 You can select multiple entries with the mouse by holding down [SHIFT] or [CTRL].
 
 Pressing [ENTER] renders the selected items on the main window map.
+Double clicking on an entry renders that item only.
+
+Entries with a "disabled" background color don't have coordinates, or they are unset.
+The button on the bottom of the window allows you to show and hide those items.
