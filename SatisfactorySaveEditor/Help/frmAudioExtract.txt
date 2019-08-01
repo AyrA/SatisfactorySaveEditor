@@ -14,6 +14,11 @@ OGG Format: Opus, VBR, 1ch(Mono), Converter arguments: --vbr --padding 0 --bitra
 
 Thanks to the uncompressed wav files you will find that the music sounds great.
 
+File name Format
+================
+The files don't have names on their own in the game file, so they are numbered from 0001 onwards.
+WAV and OGG share the same number pool.
+
 Game Required
 =============
 You need to have the game installed.
@@ -23,27 +28,37 @@ The experimental version tends to give most files.
 Finding the file
 ================
 We try to find the required file for you when you open the form.
+This works if the game is installed in the program files folder only.
+It prefers the experimental over the early access version.
 
 Manual file search
 ==================
-If it's not possible to find the file automatically, you can search for it manually.
+If it's not possible to find the file automatically or you want to try a different file,
+you can search for it manually.
 You need to specify the "FactoryGame-WindowsNoEditor.pak" file.
 It's inside the "FactoryGame\Content\Paks" folder of your satisfactory installation.
 
 WARNING! You can select files from other games.
 This is likely not going to extract the files properly unless they are unencrypted.
-For wav files, they will be unusable unless they are in the format specified above.
+For wav files, they will be unusable unless they are in the format specified above
+because the header is rewritten.
+
+This application is open source.
+You can of course just take out the wav file scanner part and adapt it to support your game.
 
 Automatic file search
 =====================
-As an alternative, the automatic search is offered.
-This will scan all hard drives (it will not scan network drives or removable drives)
+As an alternative to a manual search, the automatic search is offered.
+This will scan all hard drives (it will not scan network drives or removable drives).
+The scan is aborted as soon as a game file is found.
 
 Audio extraction
 ================
 Audio extraction is done in two steps.
 First, we scan the entire game file for audio streams.
 This is a time consuming process because the file is 15 GB in size.
+Note: Because we try to process the input file at maximum speed,
+you will find that your computer will operate sluggish until this process is complete.
 
 The second step is filtering and extraction of the actual files.
 We remove files that are invalid and export all others, ordered by type, then size descending.
@@ -52,17 +67,14 @@ This means you end up with the background music first and the A.D.A. messages la
 Player
 ======
 This application features a very crude audio player that's displayed when at least one file has been found.
-It's meant to preview the files. For proper playback, add the files in the "Audio" directory to your audio player.
+It's meant to preview the files.
+For proper playback, add the files in the "Audio" directory to your audio player.
 
 Note: This application uses QuickPlay.exe to play the audio files.
 It will automatically be downloaded if it doesn't exists.
-If the player controls are disabled, but you have audio files present, make sure QuickPlay exists.
-If not, you can either relaunch the save editor to start the download again,
-or you can download it manually at https://gitload.net/AyrA/QuickPlay
-and place it into the directory that contains the save editor.
 
 File protection
 ===============
 Files will not be overwritten.
-If you want to search for audio files again (for example after an update),
-you have to delete the contents of the "Audio" folder.
+Delete the "Audio" folder if you want to search for audio files again.
+This is useful after a game update.
