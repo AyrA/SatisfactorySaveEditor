@@ -57,6 +57,11 @@ namespace SatisfactorySaveEditor
 
             InitializeComponent();
 
+            if (Program.HasQuickPlay)
+            {
+                extractAudioToolStripMenuItem.Enabled = true;
+            }
+
             MapRender.MapForm = this;
 
             //Don't block the application startup with the image rendering stuff
@@ -203,6 +208,40 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             {
                 Log.Write(new Exception("Unable to load the save file", ex));
                 Tools.E($"Unable to load the specified file\r\n{ex.Message}", "File read error");
+            }
+        }
+
+        public void QPProgress(int Percentage)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate { QPProgress(Percentage); });
+            }
+            else
+            {
+                extractAudioToolStripMenuItem.Text = $"&Downloading QuickPlay: {Percentage}%";
+            }
+        }
+
+        public void QPComplete(Exception e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate { QPComplete(e); });
+            }
+            else
+            {
+                if (e == null)
+                {
+                    extractAudioToolStripMenuItem.Text = $"&Extract Audio";
+                    extractAudioToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    extractAudioToolStripMenuItem.Text = $"&Download failed. Restart application to retry";
+                    Log.Write("QuickPlay: Download error");
+                    Log.Write(e);
+                }
             }
         }
 
@@ -684,6 +723,29 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                 {
                     Counter.ShowDialog();
                 }
+            }
+        }
+
+        private void extractAudioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.HasQuickPlay)
+            {
+                var f = Application.OpenForms.OfType<frmAudioExtract>().FirstOrDefault();
+                if (f == null)
+                {
+                    f = new frmAudioExtract();
+                    f.Show();
+                }
+                else
+                {
+                    f.Show();
+                    f.BringToFront();
+                    f.Focus();
+                }
+            }
+            else
+            {
+                MessageBox.Show("QuickPlay is still being downloaded. Please try again in a few seconds.", "QuickPlay", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SatisfactorySaveEditor
@@ -262,6 +263,23 @@ namespace SatisfactorySaveEditor
                 return Data[0] == 0x1F && Data[1] == 0x8B;
             }
             return false;
+        }
+
+        public static string GetHash(byte[] Data)
+        {
+            using (var MS = new MemoryStream(Data))
+            {
+                return GetHash(MS);
+            }
+        }
+
+        public static string GetHash(Stream S)
+        {
+            using (var H = SHA1.Create())
+            {
+                byte[] Data = H.ComputeHash(S);
+                return string.Join("", Data.Select(m => m.ToString("X2")).ToArray());
+            }
         }
 
         /// <summary>

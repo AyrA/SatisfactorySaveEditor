@@ -1,0 +1,68 @@
+﻿Satisfactory Save Editor Audio Extracter
+
+This form helps you in extracting audio files from your satisfactory game.
+Files included are:
+- Music
+- Ambient noise
+- A.D.A messages
+
+The files have an invalid header and are fixed up properly to play in any standard player.
+Most files are RIFF WAVE, A.D.A messages are OGG.
+
+WAV Format: PCM, 16 bit, LE, 2ch(Stereo)
+OGG Format: Opus, VBR, 1ch(Mono), Converter arguments: --vbr --padding 0 --bitrate 64 --comp 10 --serial 0 --framesize 20
+
+Thanks to the uncompressed wav files you will find that the music sounds great.
+
+Game Required
+=============
+You need to have the game installed.
+Doesn't matters if it's the weekend demo, early access or experimental version.
+The experimental version tends to give most files.
+
+Finding the file
+================
+We try to find the required file for you when you open the form.
+
+Manual file search
+==================
+If it's not possible to find the file automatically, you can search for it manually.
+You need to specify the "FactoryGame-WindowsNoEditor.pak" file.
+It's inside the "FactoryGame\Content\Paks" folder of your satisfactory installation.
+
+WARNING! You can select files from other games.
+This is likely not going to extract the files properly unless they are unencrypted.
+For wav files, they will be unusable unless they are in the format specified above.
+
+Automatic file search
+=====================
+As an alternative, the automatic search is offered.
+This will scan all hard drives (it will not scan network drives or removable drives)
+
+Audio extraction
+================
+Audio extraction is done in two steps.
+First, we scan the entire game file for audio streams.
+This is a time consuming process because the file is 15 GB in size.
+
+The second step is filtering and extraction of the actual files.
+We remove files that are invalid and export all others, ordered by type, then size descending.
+This means you end up with the background music first and the A.D.A. messages last.
+
+Player
+======
+This application features a very crude audio player that's displayed when at least one file has been found.
+It's meant to preview the files. For proper playback, add the files in the "Audio" directory to your audio player.
+
+Note: This application uses QuickPlay.exe to play the audio files.
+It will automatically be downloaded if it doesn't exists.
+If the player controls are disabled, but you have audio files present, make sure QuickPlay exists.
+If not, you can either relaunch the save editor to start the download again,
+or you can download it manually at https://gitload.net/AyrA/QuickPlay
+and place it into the directory that contains the save editor.
+
+File protection
+===============
+Files will not be overwritten.
+If you want to search for audio files again (for example after an update),
+you have to delete the contents of the "Audio" folder.

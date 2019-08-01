@@ -76,6 +76,8 @@
             this.rangeDeleterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearStringListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractAudioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +95,7 @@
             this.quickActionsToolStripMenuItem,
             this.inventoriesToolStripMenuItem,
             this.generalActionsToolStripMenuItem,
+            this.moreToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.updateAvailableToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
@@ -500,6 +503,22 @@
             this.clearStringListToolStripMenuItem.ToolTipText = "Removes all strings from the list of picked up items";
             this.clearStringListToolStripMenuItem.Click += new System.EventHandler(this.clearStringListToolStripMenuItem_Click);
             // 
+            // moreToolStripMenuItem
+            // 
+            this.moreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extractAudioToolStripMenuItem});
+            this.moreToolStripMenuItem.Name = "moreToolStripMenuItem";
+            this.moreToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.moreToolStripMenuItem.Text = "&More";
+            // 
+            // extractAudioToolStripMenuItem
+            // 
+            this.extractAudioToolStripMenuItem.Enabled = false;
+            this.extractAudioToolStripMenuItem.Name = "extractAudioToolStripMenuItem";
+            this.extractAudioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.extractAudioToolStripMenuItem.Text = "&Extract Audio";
+            this.extractAudioToolStripMenuItem.Click += new System.EventHandler(this.extractAudioToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -624,5 +643,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rangeDeleterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem itemCounterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractAudioToolStripMenuItem;
     }
 }

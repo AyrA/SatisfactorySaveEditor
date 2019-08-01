@@ -1,14 +1,17 @@
 ﻿//Use console only mode
 //#define NOFORM
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
 {
     class Program
     {
+        public const string QP_HASH = "888178F6B888A295DB8269CF12B8803BAF2065B6";
 #if DEBUG
         public const bool DEBUG = true;
 #else
@@ -24,6 +27,9 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        public static bool HasQuickPlay
+        { get; private set; }
+
         public struct RET
         {
             public const int SUCCESS = 0;
@@ -35,6 +41,7 @@ namespace SatisfactorySaveEditor
         {
             ErrorHandler ReleaseModeErrorHandler;
             Log.Write("Application version {0} start", Tools.CurrentVersion);
+            CheckQuickPlay();
             //Set "NOFORM" to better experiment
 #if !NOFORM
             if (!DEBUG)
@@ -93,6 +100,72 @@ namespace SatisfactorySaveEditor
             Console.Error.WriteLine("#END");
             return Exit(RET.SUCCESS);
 #endif
+        }
+
+        private static void CheckQuickPlay()
+        {
+            var QP = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "QuickPlay.exe");
+            if (!File.Exists(QP))
+            {
+                HasQuickPlay = false;
+                WebClient WC = new WebClient();
+                WC.Headers.Add("User-Agent", UpdateHandler.UserAgent);
+                WC.DownloadProgressChanged += delegate (object Sender, DownloadProgressChangedEventArgs e)
+                {
+                    if (e.TotalBytesToReceive > 0)
+                    {
+                        var F = Application.OpenForms.OfType<frmMain>().FirstOrDefault();
+                        if (F != null)
+                        {
+                            var Perc = (int)(e.BytesReceived * 100 / e.TotalBytesToReceive);
+                            F.QPProgress(Perc);
+                        }
+                    }
+                };
+                WC.DownloadFileCompleted += delegate (object Sender, AsyncCompletedEventArgs e)
+                {
+                    var F = Application.OpenForms.OfType<frmMain>().FirstOrDefault();
+                    if (e.Cancelled)
+                    {
+                        F.QPComplete(new Exception("The user cancelled the operation"));
+                    }
+                    CheckQuickPlay();
+                    if (F != null)
+                    {
+                        F.QPComplete(e.Error);
+                    }
+                    WC.Dispose();
+                };
+                try
+                {
+                    WC.DownloadFileAsync(new Uri("https://cable.ayra.ch/satisfactory/QuickPlay.exe"), QP);
+                }
+                catch
+                {
+                    HasQuickPlay = false;
+                }
+            }
+            else
+            {
+                var Hash = Tools.GetHash(File.ReadAllBytes(QP));
+                if (Hash != QP_HASH)
+                {
+                    //Hash invalid. Get new copy
+                    try
+                    {
+                        File.Delete(QP);
+                        CheckQuickPlay();
+                    }
+                    catch
+                    {
+                        HasQuickPlay = false;
+                    }
+                }
+                else
+                {
+                    HasQuickPlay = true;
+                }
+            }
         }
 
         private static void Test()

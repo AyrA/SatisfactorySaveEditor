@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -52,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\WaveFinder.cs" />
+    <Compile Include="Audio\WAVHeader.cs" />
     <Compile Include="Compression.cs" />
     <Compile Include="ErrorHandler\ErrorHandler.cs" />
     <Compile Include="ErrorHandler\frmErrorHandler.cs">
@@ -59,6 +63,12 @@
     </Compile>
     <Compile Include="ErrorHandler\frmErrorHandler.designer.cs">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmAudioExtract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmAudioExtract.Designer.cs">
+      <DependentUpon>frmAudioExtract.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\frmCounter.cs">
       <SubType>Form</SubType>
@@ -152,6 +162,9 @@
     <EmbeddedResource Include="ErrorHandler\frmErrorHandler.resx">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmAudioExtract.resx">
+      <DependentUpon>frmAudioExtract.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmCounter.resx">
       <DependentUpon>frmCounter.cs</DependentUpon>
     </EmbeddedResource>
@@ -204,6 +217,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Help\frmCounter.txt" />
+    <EmbeddedResource Include="Help\frmAudioExtract.txt" />
+    <Content Include="Images\Icons\audio.ico" />
     <Content Include="Images\Icons\copy.ico" />
     <Content Include="Images\Icons\delete.ico" />
     <Content Include="Images\Icons\edit.ico" />
