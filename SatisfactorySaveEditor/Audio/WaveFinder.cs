@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -65,7 +66,9 @@ namespace SatisfactorySaveEditor.Audio
             var buffer = new byte[100 * 1000 * 1000];
             var SEQ = Encoding.Default.GetBytes("WAVEfmt ");
 #if DEBUG
-            //For debug only
+            //For debug only.
+            //Right now the audio files seem to be towards the end of the file.
+            //To speed up debugging, we skip the first half of the file.
             S.Seek(S.Length / 2, SeekOrigin.Begin);
 #endif
             while (Cont)
@@ -90,7 +93,9 @@ namespace SatisfactorySaveEditor.Audio
                             }
                             else if (j == SEQ.Length - 1)
                             {
-                                //Found wave chunk
+                                Log.Write("WaveFinder: Found audio at {0}", S.Position - count + i);
+                                var LastPos = S.Position;
+                                //Found wave chunk, go to start of it
                                 S.Seek(StartPos + i - 8, SeekOrigin.Begin);
                                 var Info = new WaveFileInfo()
                                 {
@@ -98,9 +103,9 @@ namespace SatisfactorySaveEditor.Audio
                                     Header = new WAVHeader(S)
                                 };
                                 //This is always 1 for some reason in Satisfactory
-                                Info.Header.ChannelCount = 2;
-                                //Don't bother checking the audio data portion
-                                i += (int)Info.Header.DataSize;
+                                Log.Write("WaveFinder: Audio channel count: {0}", Info.Header.ChannelCount);
+                                //Info.Header.ChannelCount = 2;
+
                                 S.Seek(Info.Header.DataOffset, SeekOrigin.Begin);
                                 if (IsOgg(S))
                                 {
@@ -114,14 +119,53 @@ namespace SatisfactorySaveEditor.Audio
                                 {
                                     Info.Type = WaveFileType.Invalid;
                                 }
+                                //Remove overlapping section
+                                //This means the Wave file was inside another wave file
+                                if (Overlaps(Info, Files.LastOrDefault()))
+                                {
+                                    Log.Write("WaveFinder: Removed overlapping WAV segment at NEW={0}; OLD={1}", Info.FilePosition, Files.Last().FilePosition);
+                                    Files.RemoveAt(Files.Count - 1);
+                                }
                                 Files.Add(Info);
-
+                                //Restore stream position
+                                S.Seek(LastPos, SeekOrigin.Begin);
                             }
                         }
                     }
                 }
             }
             T = null;
+        }
+
+        private static bool Overlaps(WaveFileInfo A, WaveFileInfo B)
+        {
+            if (A == null || B == null)
+            {
+                return false;
+            }
+            //End of A
+            var AE = A.FilePosition + A.Header.DataSize + (A.Header.DataOffset - A.FilePosition);
+            //End of B
+            var BE = B.FilePosition + B.Header.DataSize + (B.Header.DataOffset - B.FilePosition);
+            //A is entirely before B or B is entirely before A
+            if (AE <= B.FilePosition || BE <= A.FilePosition)
+            {
+                return false;
+            }
+
+            //A starts inside B or B starts inside A
+            if ((A.FilePosition > B.FilePosition && A.FilePosition < BE) || (B.FilePosition > A.FilePosition && B.FilePosition < AE))
+            {
+                return true;
+            }
+
+            //A ends inside B or B ends inside A
+            if ((AE > B.FilePosition && AE < BE) || (BE > A.FilePosition && BE < AE))
+            {
+                return true;
+            }
+
+            throw new NotImplementedException("");
         }
 
         private static bool IsOgg(Stream S)

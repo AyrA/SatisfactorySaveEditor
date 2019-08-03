@@ -228,10 +228,11 @@ Select [Cancel] if you did not yet install the game.", "Game File not found", Me
                             if (F.Type == WaveFileType.PCM)
                             {
                                 //Fix values before writing new Header
-                                F.Header.AudioFormat = 1;
-                                F.Header.ChannelCount = 2;
+                                //NOTE: Set different values here for different games
+                                F.Header.AudioFormat = 1; //PCM
                                 F.Header.BitsPerSample = 16;
                                 F.Header.SampleRate = 44100;
+                                //Fix computed values
                                 F.Header.BlockAlign = (ushort)(F.Header.ChannelCount * F.Header.BitsPerSample / 8);
                                 F.Header.ByteRate = F.Header.SampleRate * F.Header.ChannelCount * F.Header.BitsPerSample / 8;
                                 F.Header.Write(OUT);
