@@ -44,8 +44,8 @@
             this.quickActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapFeaturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rocksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreRocksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeRocksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorePlantsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreBerriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreSlugsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -223,28 +223,29 @@
             // rocksToolStripMenuItem
             // 
             this.rocksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.restoreToolStripMenuItem,
-            this.removeToolStripMenuItem});
+            this.restoreRocksToolStripMenuItem,
+            this.removeRocksToolStripMenuItem});
             this.rocksToolStripMenuItem.Name = "rocksToolStripMenuItem";
             this.rocksToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.rocksToolStripMenuItem.Text = "&Rocks";
             this.rocksToolStripMenuItem.ToolTipText = "Rocks that block items";
             // 
-            // restoreToolStripMenuItem
+            // restoreRocksToolStripMenuItem
             // 
-            this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.restoreToolStripMenuItem.Text = "R&estore";
-            this.restoreToolStripMenuItem.ToolTipText = "Restores all rocks";
-            this.restoreToolStripMenuItem.Click += new System.EventHandler(this.restoreToolStripMenuItem_Click);
+            this.restoreRocksToolStripMenuItem.Name = "restoreRocksToolStripMenuItem";
+            this.restoreRocksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.restoreRocksToolStripMenuItem.Text = "R&estore";
+            this.restoreRocksToolStripMenuItem.ToolTipText = "Restores all rocks";
+            this.restoreRocksToolStripMenuItem.Click += new System.EventHandler(this.restoreRocksToolStripMenuItem_Click);
             // 
-            // removeToolStripMenuItem
+            // removeRocksToolStripMenuItem
             // 
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.removeToolStripMenuItem.Text = "&Remove";
-            this.removeToolStripMenuItem.ToolTipText = "Removes all rocks";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            this.removeRocksToolStripMenuItem.Name = "removeRocksToolStripMenuItem";
+            this.removeRocksToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.removeRocksToolStripMenuItem.Text = "&Remove";
+            this.removeRocksToolStripMenuItem.ToolTipText = "Removes all rocks";
+            this.removeRocksToolStripMenuItem.Visible = false;
+            this.removeRocksToolStripMenuItem.Click += new System.EventHandler(this.removeRocksToolStripMenuItem_Click);
             // 
             // restorePlantsToolStripMenuItem
             // 
@@ -618,8 +619,8 @@
         private System.Windows.Forms.OpenFileDialog OFD;
         private System.Windows.Forms.ToolStripMenuItem mapFeaturesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rocksToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreRocksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeRocksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restorePlantsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreBerriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeAnimalPartsToolStripMenuItem;

@@ -14,8 +14,9 @@ namespace SatisfactorySaveEditor
         private SaveFile F = null;
         private bool HasChange = false;
         private bool NameChanged = false;
-        private Settings S;
+        private Settings S = null;
         private string SettingsFile = null;
+        private string OriginalTitle = null;
 
         public bool HasFileOpen
         {
@@ -56,6 +57,8 @@ namespace SatisfactorySaveEditor
             }
 
             InitializeComponent();
+
+            OriginalTitle = Text;
 
             if (Program.HasQuickPlay)
             {
@@ -101,13 +104,14 @@ namespace SatisfactorySaveEditor
             Log.Write("{0}: Enabling debug menu items", GetType().Name);
             //Enable not fully implemented items
             inventoriesToolStripMenuItem.Visible = true;
+            removeRocksToolStripMenuItem.Visible = true;
 #endif
         }
 
         private void InfoChange(int Count, string ItemName)
         {
             HasChange |= Count > 0;
-
+            SetTitle();
             if (Count > 0)
             {
                 MessageBox.Show($"Processed {Count} {ItemName} entries", "File Edit", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -150,6 +154,7 @@ namespace SatisfactorySaveEditor
                     F.Export(FS);
                 }
                 HasChange = false;
+                SetTitle();
             }
             catch (Exception ex)
             {
@@ -194,6 +199,7 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
                     FileName = SaveFileName;
                     HasChange = false;
                     NameChanged = false;
+                    SetTitle();
                     if (S.ShowLimited)
                     {
                         S.ShowLimited = false;
@@ -208,6 +214,25 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             {
                 Log.Write(new Exception("Unable to load the save file", ex));
                 Tools.E($"Unable to load the specified file\r\n{ex.Message}", "File read error");
+            }
+        }
+
+        private void SetTitle()
+        {
+            if (FileName != null)
+            {
+                if (HasChange)
+                {
+                    Text = $"{OriginalTitle} [{Path.GetFileName(FileName)} *]";
+                }
+                else
+                {
+                    Text = $"{OriginalTitle} [{Path.GetFileName(FileName)}]";
+                }
+            }
+            else
+            {
+                Text = OriginalTitle;
             }
         }
 
@@ -359,6 +384,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
                         }
                         FileName = SFD.FileName;
                         HasChange = false;
+                        SetTitle();
                     }
                 }
             }
@@ -372,7 +398,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
             }
         }
 
-        private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
+        private void restoreRocksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (F != null)
             {
@@ -381,7 +407,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
 
         }
 
-        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void removeRocksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NA("Entry layout for removed rocks is unknown");
         }
@@ -480,6 +506,7 @@ Once done, you will be able to link two containers together so they share their 
                         F.SessionName = FH.SessionName;
                         F.PlayTime = TimeSpan.Parse(FH.PlayTime);
                         HasChange = true;
+                        SetTitle();
                     }
                 }
             }
@@ -489,7 +516,7 @@ Once done, you will be able to link two containers together so they share their 
         {
             if (F != null)
             {
-                if (MessageBox.Show(@"Removes animals that generally are friendly to the player (excluding doggos).", "Friendly Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                if (MessageBox.Show(@"Remove animals that generally are friendly to the player (excluding doggos)?", "Friendly Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RemoveNiceCreatures(F), "animals");
                 }
@@ -500,7 +527,7 @@ Once done, you will be able to link two containers together so they share their 
         {
             if (F != null)
             {
-                if (MessageBox.Show(@"Removes animals that are hostile to the player.", "Hostile Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                if (MessageBox.Show(@"Remove animals that are hostile to the player?", "Hostile Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RemoveEvilCreatures(F), "animals");
                 }
@@ -584,6 +611,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                     if (Cloner.ShowDialog() == DialogResult.OK)
                     {
                         HasChange = true;
+                        SetTitle();
                     }
                 }
             }
@@ -613,6 +641,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                     if (Deleter.ShowDialog() == DialogResult.OK)
                     {
                         HasChange = true;
+                        SetTitle();
                     }
                 }
             }
@@ -632,6 +661,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                     if (Exporter.ShowDialog() == DialogResult.OK)
                     {
                         HasChange = true;
+                        SetTitle();
                     }
                 }
             }
@@ -719,6 +749,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                     {
                         HasChange = true;
                         RedrawMap();
+                        SetTitle();
                     }
                 }
             }
@@ -739,6 +770,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
         {
             if (Program.HasQuickPlay)
             {
+                //Allow only one extractor to run but don't make it a modal window
                 var f = Application.OpenForms.OfType<frmAudioExtract>().FirstOrDefault();
                 if (f == null)
                 {
