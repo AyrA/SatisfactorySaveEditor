@@ -229,7 +229,7 @@
     <EmbeddedResource Include="Help\frmAudioExtract.txt" />
     <EmbeddedResource Include="Changelog\v0.1.txt" />
     <EmbeddedResource Include="Changelog\v0.2.txt" />
-    <EmbeddedResource Include="Help\TMP_frmChangeLog.txt" />
+    <EmbeddedResource Include="Help\frmChangeLog.txt" />
     <EmbeddedResource Include="Changelog\v1.2.txt" />
     <EmbeddedResource Include="Changelog\v1.3.txt" />
     <EmbeddedResource Include="Changelog\v1.4.txt" />
