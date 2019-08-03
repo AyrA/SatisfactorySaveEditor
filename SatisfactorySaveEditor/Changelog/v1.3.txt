@@ -1,0 +1,33 @@
+﻿Version 1.3
+
+Released: 2019-06-30 11:55:18 UTC
+
+UI overhaul
+
+The UI has been changed to add new features.
+
+Shortcuts
+
+The File menu now has commonly accepted shortcuts.
+For example CTRL+O to open or F5 to refresh the map.
+
+Settings
+
+A settings class has been added to remember settings.
+There are no user changeable settings as of now,
+but it already remembers which alert boxes it has shown to you.
+
+Short names
+
+Much shorter names are now displayed in drop down fields.
+The ordering is still alphabetical
+
+Map
+
+There is now a map in the main window that renders a crude list of items on your map.
+It shows nodes, natural items and player generated items as well as the player position(s).
+
+The map is automatically exported to the save file location each time you reload it using [F5] or the menu.
+
+Note: I don't know the actual ingame map coordinates exactly.
+The map you will see is only an approximation of the real position but close enough to give you a general overview

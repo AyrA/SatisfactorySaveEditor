@@ -1,0 +1,14 @@
+﻿Version 1.4
+
+Released: 2019-07-06 02:36:30 UTC
+
+Export/Import
+
+Allows you to copy entries from one save file to another.
+This is facilitated via XML code that is placed in the clipboard.
+The code can also be copied from or pasted into any text editor.
+This allows you to save individual objects to disk.
+
+Map item finder
+
+Item select boxes now have an M button next to them to locate the item(s) in the main window map.

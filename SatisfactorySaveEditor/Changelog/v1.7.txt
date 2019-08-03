@@ -1,0 +1,8 @@
+﻿Version 1.7
+
+Released: 2019-07-23 18:50:54 UTC
+
+This version adds a logger that makes debugging issues easier.
+By default the file is placed in the directory the executable is in and it's named lastrun.log
+
+It's overwritten each time you run the application again.

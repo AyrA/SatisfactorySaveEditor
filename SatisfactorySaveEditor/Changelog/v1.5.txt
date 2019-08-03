@@ -1,0 +1,61 @@
+﻿Version 1.5
+
+Released: 2019-07-20 00:04:00 UTC
+
+New Fature: Save File Manager
+
+The save file manager allows you to easily manage all your satisfactory save files:
+
+- Show all files in a tree structure, sorted by session name
+- Open file by double clicking or [ENTER] key
+- Rename file without opening it in the editor
+- Delete unwanted saves
+- Rendering map preview of a save file
+- Duplicator to easily experiment with files
+- Backup and import save files. This supports compressed saves
+
+The save file manager shows corrupted save files in a different color.
+Most options are unavailable for those.
+
+Compression
+
+Save files are compressed using gzip.
+You can use tools like 7-zip to open a compressed save file and decompress it.
+Compression saves 90% of space on average due to the high verbosity of the save file.
+
+Note: You can't directly load compressed save files into satisfactory.
+Import using the button in the save file manager or decompress manually.
+The save file importer automatically detects if decompression is necessary or not.
+
+New Feature: Clear String List
+
+The "Clear String List" option removes the list of items considered removed from the map.
+This is useful if you used the deleter form to reset map features, for example the poison plants.
+
+New Feature: Help
+
+Pressing [F1] at any time opens a help window with relevant information to the current location you are at.
+You can also open the main window help using the "Help" menu option
+
+New Feature: Updater
+
+You can now update the client.
+This is a real updater.
+It will not just open a website or only download a file but actually updates your version.
+You can either update manually through the red main menu item that is shown when an update is available,
+or you can wait and the application automatically updates during the next launch.
+
+Map image
+
+- Foundations are now grey
+- Walkways are now white
+
+Bug fixes
+
+- Only editing the header is now detected as a change
+- Removing the last item in the deleter list no longer crashes
+- Saves with empty session names are now supported
+
+Other changes
+
+Project structure now in order

@@ -64,6 +64,12 @@
     <Compile Include="ErrorHandler\frmErrorHandler.designer.cs">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\frmChangeLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmChangeLog.Designer.cs">
+      <DependentUpon>frmChangeLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmAudioExtract.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +168,9 @@
     <EmbeddedResource Include="ErrorHandler\frmErrorHandler.resx">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmChangeLog.resx">
+      <DependentUpon>frmChangeLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmAudioExtract.resx">
       <DependentUpon>frmAudioExtract.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,6 +227,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Help\frmCounter.txt" />
     <EmbeddedResource Include="Help\frmAudioExtract.txt" />
+    <EmbeddedResource Include="Changelog\v0.1.txt" />
+    <EmbeddedResource Include="Changelog\v0.2.txt" />
+    <EmbeddedResource Include="Help\frmChangelog.txt" />
+    <EmbeddedResource Include="Changelog\v1.2.txt" />
+    <EmbeddedResource Include="Changelog\v1.3.txt" />
+    <EmbeddedResource Include="Changelog\v1.4.txt" />
+    <EmbeddedResource Include="Changelog\v1.5.txt" />
+    <EmbeddedResource Include="Changelog\v1.6.txt" />
+    <EmbeddedResource Include="Changelog\v1.7.txt" />
+    <EmbeddedResource Include="Changelog\v1.8.txt" />
+    <EmbeddedResource Include="Changelog\v1.9.txt" />
+    <EmbeddedResource Include="Changelog\v2.0.txt" />
     <Content Include="Images\Icons\audio.ico" />
     <Content Include="Images\Icons\copy.ico" />
     <Content Include="Images\Icons\delete.ico" />

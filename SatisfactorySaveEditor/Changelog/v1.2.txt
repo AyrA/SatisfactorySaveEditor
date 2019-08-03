@@ -1,0 +1,9 @@
+﻿Version 1.2
+
+Released: 2019-06-12 18:55:08 UTC
+
+You can now duplicate and delete entries from the file.
+Be aware that it will not automatically update related/dependent entries in the file.
+For example deleting a container this way will not get rid of the inventory entry of said container.
+
+The UI should also work consistently now.

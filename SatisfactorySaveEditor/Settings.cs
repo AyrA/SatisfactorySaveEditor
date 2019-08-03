@@ -48,6 +48,12 @@ namespace SatisfactorySaveEditor
         { get; set; }
 
         /// <summary>
+        /// The last version where the changelog was shown
+        /// </summary>
+        public Version LastVersionLogShown
+        { get; set; }
+
+        /// <summary>
         /// Initializes default settings
         /// </summary>
         public Settings()
@@ -59,6 +65,7 @@ namespace SatisfactorySaveEditor
                 ShowWelcomeMessage =
                 ShowRangeDeleterHint =
                 true;
+            LastVersionLogShown = new Version("0.0.0.0");
             LastUpdateCheck = DateTime.MinValue;
         }
 

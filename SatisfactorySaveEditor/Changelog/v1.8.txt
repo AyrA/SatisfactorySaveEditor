@@ -1,0 +1,8 @@
+﻿Version 1.8
+
+Released: 2019-07-24 02:20:15 UTC
+
+This update fixes the error handling:
+
+- Proper message is now written to the log files
+- Better error message is generated for invalid save files.

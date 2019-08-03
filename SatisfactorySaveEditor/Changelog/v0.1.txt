@@ -1,0 +1,5 @@
+﻿Version 0.1
+
+Released: 2019-04-21 23:10:11 UTC
+
+First public release of the editor containing a few quick action commands.

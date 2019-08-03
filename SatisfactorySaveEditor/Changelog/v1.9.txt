@@ -1,0 +1,15 @@
+﻿Version 1.9
+
+Released: 2019-07-27 19:36:57 UTC
+
+The primary function of this update is to allow the user to automatically report errors.
+If the user wants to, it uploads the log,
+error message and current save file to our server for later analysis.
+
+More Features:
+
+- Windows that pop up are now placed more predictable
+- Some dialog windows were enlarged to avoid clipping of controls in Windows 8 and later.
+- Object counter. Shows types and numbers of all things in your save file.
+- Protect hub from being deleted by default in map area delete mode.
+- "M" button in object deleter now shows the correct item (was off by one)

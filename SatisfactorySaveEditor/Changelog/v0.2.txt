@@ -1,0 +1,7 @@
+﻿Version 0.2
+
+Released: 2019-05-18 19:10:41 UTC
+
+- There's now a resize option for your lizard doggos
+- You can now remove friendly and hostile mobs
+- You can restore the slugs

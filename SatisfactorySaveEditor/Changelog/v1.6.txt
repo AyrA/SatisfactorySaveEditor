@@ -1,0 +1,24 @@
+﻿Version 1.6
+
+Released: 2019-07-21 14:50:26 UTC
+
+New Feature: Region based deleter
+
+The region deleter allows you to remove entries based on map location.
+
+Usage is quite simple:
+
+Load a save file and open the region deleter (Menu: General Actions).
+Repeatedly click on the map to set coordinates of a polygon.
+The polygon is rendered after the 3rd click.
+
+After you marked the region you want to clear, use the [DEL] key or the menu.
+This will show a list of all objects about to be removed and those being ignored.
+Using the [DEL] key you can move selected entries between the two lists.
+
+Other changes
+
+- Forms can now be closed using the [ESC] key
+- Updater no longer fires in debug mode.
+- Reorganizing "General Actions" menu to combine the two delete options.
+- Added icons

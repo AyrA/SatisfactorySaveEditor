@@ -1,0 +1,15 @@
+﻿Version 2.0
+
+Released: 2019-08-01 23:22:58 UTC
+
+This version brings you the Audio Extracter.
+It allows you to extract music and more from the game automatically.
+Check its help by pressing [F1] when the form is open.
+
+This version requires QuickPlay.exe.
+If the editor has trouble downloading it, you can do so manually here:
+https://cable.ayra.ch/satisfactory/QuickPlay.exe
+
+Other changes
+
+- The editor is now configured to prefer 64 bit instructions.
