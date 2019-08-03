@@ -318,7 +318,7 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             {
                 cl.ShowDialog();
             }
-            S.LastVersionLogShown = Tools.CurrentVersion;
+            S.LastVersionLogShown = Tools.CurrentVersion.ToString();
         }
 
         #region Menu Actions
@@ -812,7 +812,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                 S.LastUpdateCheck = DateTime.UtcNow;
                 CheckUpdate();
             }
-            if(!S.LastVersionLogShown.Equals(Tools.CurrentVersion))
+            if (S.LastVersionLogShown != Tools.CurrentVersion.ToString())
             {
                 ShowChangeLog();
             }

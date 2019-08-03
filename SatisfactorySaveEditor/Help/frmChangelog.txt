@@ -1,3 +1,5 @@
 ﻿Satisfactory Save Editor Changelog
 
 This form simply shows all changes that were made in a specific version
+
+It pops up automatically after an update

@@ -50,7 +50,7 @@ namespace SatisfactorySaveEditor
         /// <summary>
         /// The last version where the changelog was shown
         /// </summary>
-        public Version LastVersionLogShown
+        public string LastVersionLogShown
         { get; set; }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace SatisfactorySaveEditor
                 ShowWelcomeMessage =
                 ShowRangeDeleterHint =
                 true;
-            LastVersionLogShown = new Version("0.0.0.0");
+            LastVersionLogShown = "0.0.0.0";
             LastUpdateCheck = DateTime.MinValue;
         }
 
