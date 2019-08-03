@@ -346,6 +346,26 @@ namespace SatisfactorySaveEditor
         }
 
         /// <summary>
+        /// Forces an integer into the given range
+        /// </summary>
+        /// <param name="Low">Lowest allowed value</param>
+        /// <param name="Value">Supplied value</param>
+        /// <param name="High">Highest allowed value</param>
+        /// <returns>Value in range of <paramref name="Low"/> to <paramref name="High"/></returns>
+        /// <remarks>
+        /// If <paramref name="Low"/> is more than <paramref name="High"/>,
+        /// <paramref name="High"/> is returned without evaluating <paramref name="Value"/>
+        /// </remarks>
+        public static int Range(int Low, int Value, int High)
+        {
+            if (High <= Low)
+            {
+                return High;
+            }
+            return Math.Max(Low, Math.Min(High, Value));
+        }
+
+        /// <summary>
         /// Shows a generic Error message box
         /// </summary>
         /// <param name="Text">Text</param>
@@ -446,14 +466,14 @@ namespace SatisfactorySaveEditor
                 while (Controls.Count > 0)
                 {
                     var C = Controls.Pop();
-                    if(C.Controls!=null)
+                    if (C.Controls != null)
                     {
-                        foreach(var Child in C.Controls.Cast<Control>())
+                        foreach (var Child in C.Controls.Cast<Control>())
                         {
                             Controls.Push(Child);
                         }
                     }
-                    if(C is TextBox)
+                    if (C is TextBox)
                     {
                         C.KeyDown += delegate (object sender, KeyEventArgs e)
                         {
