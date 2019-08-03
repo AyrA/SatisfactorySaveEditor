@@ -10,12 +10,25 @@ namespace SatisfactorySaveEditor
     class Program
     {
 #if DEBUG
+        /// <summary>
+        /// Allows debug mode check without using #DEBUG
+        /// </summary>
         public const bool DEBUG = true;
 #else
+        /// <summary>
+        /// Allows debug mode check without using #DEBUG
+        /// </summary>
         public const bool DEBUG = false;
 #endif
+        /// <summary>
+        /// Default game save directory
+        /// </summary>
+        /// <remarks>Environment variables are permitted</remarks>
         public const string SAVEDIR = @"%LOCALAPPDATA%\FactoryGame\Saved\SaveGames";
 
+        /// <summary>
+        /// Gets the full path to the save file directory
+        /// </summary>
         public static string SaveDirectory
         {
             get
@@ -24,9 +37,18 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Possible return values
+        /// </summary>
         public struct RET
         {
+            /// <summary>
+            /// Successful run
+            /// </summary>
             public const int SUCCESS = 0;
+            /// <summary>
+            /// Argument problem
+            /// </summary>
             public const int ARG = 1;
         }
 
@@ -35,10 +57,6 @@ namespace SatisfactorySaveEditor
         {
             ErrorHandler ReleaseModeErrorHandler;
             Log.Write("Application version {0} start", Tools.CurrentVersion);
-#if DEBUG
-            QuickPlay.ResetQuickPlay();
-#endif
-            QuickPlay.CheckQuickPlay();
             //Set "NOFORM" to better experiment
 #if !NOFORM
             if (!DEBUG)
@@ -79,6 +97,7 @@ namespace SatisfactorySaveEditor
             {
                 //Remove console handle to not block any scripts.
                 Tools.FreeConsole();
+                QuickPlay.CheckQuickPlay();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new frmMain(args.FirstOrDefault()));
