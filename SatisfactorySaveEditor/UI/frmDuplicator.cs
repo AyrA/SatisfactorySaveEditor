@@ -29,7 +29,7 @@ namespace SatisfactorySaveEditor
                 cbObject.SelectedIndex = 0;
             }
             Log.Write("{0}: List initialized with {1} entries", GetType().Name, cbObject.Items.Count);
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         private void cbObject_SelectedIndexChanged(object sender, EventArgs e)

@@ -28,7 +28,7 @@ namespace SatisfactorySaveEditor
             Points = new List<PointF>();
             InitializeComponent();
             pbMap.Image = MapRender.RenderFile(F);
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         private void frmRegionDeleter_HelpRequested(object sender, HelpEventArgs hlpevent)

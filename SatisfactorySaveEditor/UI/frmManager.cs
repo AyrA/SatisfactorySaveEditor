@@ -14,7 +14,7 @@ namespace SatisfactorySaveEditor
         {
             InitializeComponent();
             initFiles();
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         private void initFiles()
@@ -218,7 +218,7 @@ namespace SatisfactorySaveEditor
                                 frm.WindowState = FormWindowState.Maximized;
                                 frm.BackgroundImageLayout = ImageLayout.Zoom;
                                 frm.BackgroundImage = BMP;
-                                Tools.SetupEscHandler(frm);
+                                Tools.SetupKeyHandlers(frm);
                                 frm.ShowDialog();
                             }
                         }

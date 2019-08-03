@@ -13,7 +13,7 @@ namespace SatisfactorySaveEditor
             InitializeComponent();
             tbSessionName.Text = F.SessionName;
             tbPlayTime.Text = F.PlayTime.ToString();
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         private void btnOK_Click(object sender, EventArgs e)

@@ -45,7 +45,7 @@ namespace SatisfactorySaveEditor
                     break;
                 }
             }
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
             //Resize only horizontally
             MaximumSize = new System.Drawing.Size(int.MaxValue, MinimumSize.Height);
         }

@@ -96,7 +96,7 @@ namespace SatisfactorySaveEditor
             T.Start();
 
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
 #if DEBUG
             Log.Write("{0}: Enabling debug menu items", GetType().Name);
             //Enable not fully implemented items
@@ -310,6 +310,15 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             });
             T.IsBackground = true;
             T.Start();
+        }
+
+        private void ShowChangeLog()
+        {
+            using (var cl = new frmChangeLog())
+            {
+                cl.ShowDialog();
+            }
+            S.LastVersionLogShown = Tools.CurrentVersion;
         }
 
         #region Menu Actions
@@ -749,7 +758,14 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             }
         }
 
+        private void changelogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowChangeLog();
+        }
+
         #endregion
+
+        #region Form Events
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -796,6 +812,12 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                 S.LastUpdateCheck = DateTime.UtcNow;
                 CheckUpdate();
             }
+            if(!S.LastVersionLogShown.Equals(Tools.CurrentVersion))
+            {
+                ShowChangeLog();
+            }
         }
+
+        #endregion
     }
 }

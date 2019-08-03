@@ -17,7 +17,7 @@ namespace SatisfactorySaveEditor
         {
             var Blank = new Vector3(0, 0, 0);
             InitializeComponent();
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
 
             AllEntries = Entries.ToArray();
             MapEntries = AllEntries

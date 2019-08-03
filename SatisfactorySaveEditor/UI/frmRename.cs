@@ -30,7 +30,7 @@ namespace SatisfactorySaveEditor
             tbSessionName.Text = SessionName;
             tbFileName.Text = FileName;
             SetBtn();
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         private void SetBtn()

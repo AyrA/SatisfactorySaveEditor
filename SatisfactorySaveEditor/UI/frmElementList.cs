@@ -57,7 +57,7 @@ namespace SatisfactorySaveEditor
                 RenderList();
             });
             ItemLoader.IsBackground = true;
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         /// <summary>

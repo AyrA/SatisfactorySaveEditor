@@ -26,7 +26,7 @@ namespace SatisfactorySaveEditor
             var F = new Font(Font.FontFamily, Font.Size * 1.5f);
             Font = F;
             Log.Write("{0}: Form created", GetType().Name);
-            Tools.SetupEscHandler(this);
+            Tools.SetupKeyHandlers(this);
         }
 
         private void frmHelp_HelpRequested(object sender, HelpEventArgs hlpevent)

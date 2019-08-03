@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
@@ -7,6 +8,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
 {
@@ -111,6 +114,11 @@ namespace SatisfactorySaveEditor
             return new PointF(X, Y);
         }
 
+        /// <summary>
+        /// Translates relative map coordinates to game coordinates
+        /// </summary>
+        /// <param name="Source">Map coordinate</param>
+        /// <returns>Game coordinate</returns>
         public static Vector3 TranslateToMap(PointF Source)
         {
             //NOTE: ONLY A GUESS, FEEL FREE TO IMPROVE
@@ -147,6 +155,29 @@ namespace SatisfactorySaveEditor
             }
             Log.Write("Attempted to get non-existing resource: {0}", ResourceName);
             return null;
+        }
+
+        /// <summary>
+        /// Gets all files associated with version information
+        /// </summary>
+        /// <returns>Version information list</returns>
+        public static string[] GetVersionFiles()
+        {
+            var EA = Assembly.GetExecutingAssembly();
+            return EA.GetManifestResourceNames()
+                .Where(m => m.StartsWith("SatisfactorySaveEditor.Changelog."))
+                .Select(m => Regex.Match(m, @"v\d+\.\d+").Value)
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Gets a specific version information file
+        /// </summary>
+        /// <param name="VersionFileName">Version file name</param>
+        /// <returns>Version information</returns>
+        public static string GetVersionFile(string VersionFileName)
+        {
+            return Encoding.UTF8.GetString(GetResource($"SatisfactorySaveEditor.Changelog.{VersionFileName}.txt"));
         }
 
         /// <summary>
@@ -383,26 +414,58 @@ namespace SatisfactorySaveEditor
         }
 
         /// <summary>
-        /// Sets up a handler to close the given form with escape
+        /// Sets up a handler to close the given form with [ESC]
+        /// and to select text in textboxes with [CTRL]+[A]
         /// </summary>
         /// <param name="Source">Form</param>
-        public static void SetupEscHandler(System.Windows.Forms.Form Source)
+        public static void SetupKeyHandlers(Form Source)
         {
             try
             {
                 Source.KeyPreview = true;
-                Source.KeyDown += delegate (object sender, System.Windows.Forms.KeyEventArgs e)
+                Source.KeyDown += delegate (object sender, KeyEventArgs e)
                 {
-                    if (e.KeyCode == System.Windows.Forms.Keys.Escape)
+                    if (e.KeyCode == Keys.Escape)
                     {
-                        ((System.Windows.Forms.Form)sender).Close();
+                        ((Form)sender).Close();
                     }
                 };
                 Log.Write("{0}: Registered [ESC] handler on {0}", Source.GetType().Name);
             }
             catch (Exception ex)
             {
-                Log.Write(new Exception("Unable to register [ESC] handler on form.", ex));
+                Log.Write(new Exception(string.Format("{0}: Unable to register [ESC] handler on form.", Source == null ? "<unknown>" : Source.GetType().Name), ex));
+            }
+            //Register CTRL+A handler on all text boxes
+
+            try
+            {
+                var Controls = new Stack<Control>(Source.Controls.Cast<Control>());
+                while (Controls.Count > 0)
+                {
+                    var C = Controls.Pop();
+                    if(C.Controls!=null)
+                    {
+                        foreach(var Child in C.Controls.Cast<Control>())
+                        {
+                            Controls.Push(Child);
+                        }
+                    }
+                    if(C is TextBox)
+                    {
+                        C.KeyDown += delegate (object sender, KeyEventArgs e)
+                        {
+                            if (e.KeyCode == Keys.A && e.Control && !e.Shift && !e.Alt)
+                            {
+                                ((TextBox)sender).SelectAll();
+                            }
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(new Exception("Unable to register CTRL+A handler", ex));
             }
         }
     }

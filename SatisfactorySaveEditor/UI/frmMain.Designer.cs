@@ -85,6 +85,7 @@
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -515,7 +516,7 @@
             // 
             this.extractAudioToolStripMenuItem.Enabled = false;
             this.extractAudioToolStripMenuItem.Name = "extractAudioToolStripMenuItem";
-            this.extractAudioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.extractAudioToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.extractAudioToolStripMenuItem.Text = "&Extract Audio";
             this.extractAudioToolStripMenuItem.Click += new System.EventHandler(this.extractAudioToolStripMenuItem_Click);
             // 
@@ -523,7 +524,8 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openHelpToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.changelogToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -532,7 +534,7 @@
             // openHelpToolStripMenuItem
             // 
             this.openHelpToolStripMenuItem.Name = "openHelpToolStripMenuItem";
-            this.openHelpToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openHelpToolStripMenuItem.Text = "&Help";
             this.openHelpToolStripMenuItem.ToolTipText = "Shows the Help window";
             this.openHelpToolStripMenuItem.Click += new System.EventHandler(this.openHelpToolStripMenuItem_Click);
@@ -540,7 +542,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.ToolTipText = "Shows basic application information";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
@@ -565,6 +567,13 @@
             this.SFD.DefaultExt = "sav";
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
+            // 
+            // changelogToolStripMenuItem
+            // 
+            this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
+            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changelogToolStripMenuItem.Text = "&Changelog";
+            this.changelogToolStripMenuItem.Click += new System.EventHandler(this.changelogToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -645,5 +654,6 @@
         private System.Windows.Forms.ToolStripMenuItem itemCounterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extractAudioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changelogToolStripMenuItem;
     }
 }
