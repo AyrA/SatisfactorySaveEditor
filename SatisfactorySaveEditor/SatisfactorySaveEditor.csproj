@@ -64,6 +64,7 @@
     <Compile Include="ErrorHandler\frmErrorHandler.designer.cs">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
+    <Compile Include="QuickPlay.cs" />
     <Compile Include="UI\frmChangeLog.cs">
       <SubType>Form</SubType>
     </Compile>

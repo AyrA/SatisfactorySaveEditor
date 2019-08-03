@@ -296,6 +296,11 @@ namespace SatisfactorySaveEditor
             return false;
         }
 
+        /// <summary>
+        /// Gets the SHA1 hash of the given data
+        /// </summary>
+        /// <param name="Data">Data to hash</param>
+        /// <returns>Hash of data as hex string</returns>
         public static string GetHash(byte[] Data)
         {
             using (var MS = new MemoryStream(Data))
@@ -304,6 +309,12 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Gets the hash of the given stream
+        /// </summary>
+        /// <param name="S">Stream</param>
+        /// <returns>Hash of data as hex string</returns>
+        /// <remarks>The <see cref="Stream"/> is not rewound or disposed</remarks>
         public static string GetHash(Stream S)
         {
             using (var H = SHA1.Create())
@@ -388,9 +399,7 @@ namespace SatisfactorySaveEditor
         public static void ShowHelp(string FormName)
         {
             Log.Write("Requesting help for {0}", FormName);
-            var F = System.Windows.Forms.Application.OpenForms
-                .OfType<frmHelp>()
-                .FirstOrDefault();
+            var F = GetForm<frmHelp>();
             //Show new form if not already there
             if (F == null)
             {
@@ -491,6 +500,16 @@ namespace SatisfactorySaveEditor
             {
                 Log.Write(new Exception("Unable to register CTRL+A handler", ex));
             }
+        }
+
+        /// <summary>
+        /// Gets the first open form of the given type
+        /// </summary>
+        /// <typeparam name="T">Type of form</typeparam>
+        /// <returns><see cref="Form"/>, or <see cref="null"/> if not found</returns>
+        public static T GetForm<T>() where T : Form
+        {
+            return Application.OpenForms.OfType<T>().FirstOrDefault();
         }
     }
 }

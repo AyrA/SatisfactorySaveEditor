@@ -133,7 +133,8 @@ namespace SatisfactorySaveEditor
                 if (IsValidNode(Node))
                 {
                     Close();
-                    Application.OpenForms.OfType<frmMain>().First().OpenFile(GetName(Node));
+                    //Main form is guaranteed to exist if the manager could be opened
+                    Tools.GetForm<frmMain>().OpenFile(GetName(Node));
                 }
                 else
                 {

@@ -8,16 +8,44 @@ using System.Windows.Forms;
 
 namespace SatisfactorySaveEditor
 {
+    /// <summary>
+    /// Main form of the application.
+    /// </summary>
+    /// <remarks>If you want to add and link a feature, the main menu is here</remarks>
     public partial class frmMain : Form
     {
+        /// <summary>
+        /// File name of the currently edited file
+        /// </summary>
         private string FileName = null;
+        /// <summary>
+        /// Currently open save file
+        /// </summary>
         private SaveFile F = null;
+        /// <summary>
+        /// Indicates that unsaved changes are present
+        /// </summary>
         private bool HasChange = false;
+        /// <summary>
+        /// Indicates that the session name was changed
+        /// </summary>
         private bool NameChanged = false;
+        /// <summary>
+        /// Current settings
+        /// </summary>
         private Settings S = null;
+        /// <summary>
+        /// Full file path of settings file
+        /// </summary>
         private string SettingsFile = null;
+        /// <summary>
+        /// Original editor title text
+        /// </summary>
         private string OriginalTitle = null;
 
+        /// <summary>
+        /// Gets whether a file is open
+        /// </summary>
         public bool HasFileOpen
         {
             get
@@ -26,6 +54,9 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Gets an independent copy of the current save file
+        /// </summary>
         public SaveFile CurrentFile
         {
             get
@@ -34,6 +65,10 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Form constructor
+        /// </summary>
+        /// <param name="InitialFile">Optional file to open after startup</param>
         public frmMain(string InitialFile = null)
         {
             SettingsFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings.xml");
@@ -56,15 +91,21 @@ namespace SatisfactorySaveEditor
                 S = new Settings();
             }
 
-            InitializeComponent();
+            InitializeComponent(); //!!!Read+Write form components only after this line!!!
+
+            //Always start from the save file directory
+            //We can't set this directly in the properties because the path is dynamic
+            OFD.InitialDirectory = Program.SaveDirectory;
 
             OriginalTitle = Text;
 
-            if (Program.HasQuickPlay)
+            //Enable the audio extractor only if QuickPlay is present
+            if (QuickPlay.HasQuickPlay)
             {
                 extractAudioToolStripMenuItem.Enabled = true;
             }
 
+            //Register this as the map rendering form
             MapRender.MapForm = this;
 
             //Don't block the application startup with the image rendering stuff
@@ -81,6 +122,7 @@ namespace SatisfactorySaveEditor
                         S.ShowWelcomeMessage = false;
                         Tools.ShowHelp("Welcome");
                     }
+                    //Open initial file is supplied
                     if (!string.IsNullOrEmpty(InitialFile))
                     {
                         try
@@ -108,6 +150,11 @@ namespace SatisfactorySaveEditor
 #endif
         }
 
+        /// <summary>
+        /// Inform the user of change and set the <see cref="HasChange"/> if <paramref name="Count"/> is more than zero
+        /// </summary>
+        /// <param name="Count">Number of items that changed</param>
+        /// <param name="ItemName">Display name of item that changed</param>
         private void InfoChange(int Count, string ItemName)
         {
             HasChange |= Count > 0;
@@ -122,11 +169,19 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Show a "Feature Not Available" error style message box
+        /// </summary>
+        /// <param name="Reason">Description why the feature is unavailable</param>
         private void NA(string Reason)
         {
             Tools.E($"This function is currently unavailable. Reason:\r\n{Reason}", "Function unavailable");
         }
 
+        /// <summary>
+        /// Saves the current file
+        /// </summary>
+        /// <remarks>This also handles creating backups and resetting the <see cref="HasChange"/> value</remarks>
         private void SaveCurrent()
         {
             var Backup = Path.ChangeExtension(FileName, ".sav.gz");
@@ -163,12 +218,21 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        /// <summary>
+        /// Resizes doggos to the given facttor
+        /// </summary>
+        /// <param name="Factor">Resize factor (1.0=Original)</param>
+        /// <param name="Offset">Z-Offset of doggo</param>
+        /// <remarks>Making doggos larger requires you to move them up</remarks>
         private void ResizeDoggos(float Factor, int Offset)
         {
             var Doggos = F.Entries.Where(m => m.ObjectData.Name == "");
             InfoChange(SaveFileHelper.ItemResizer(Doggos, Factor, Offset), "doggos");
         }
 
+        /// <summary>
+        /// Shows hint about problems regarding object resizing
+        /// </summary>
         private void ResizeHint()
         {
             if (S.ShowResizeHint)
@@ -184,6 +248,10 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
             }
         }
 
+        /// <summary>
+        /// Opens the given save file and sets initial values for variables
+        /// </summary>
+        /// <param name="SaveFileName">Save file full name and path</param>
         public void OpenFile(string SaveFileName)
         {
             Log.Write("{0}: Loading {1}", GetType().Name, SaveFileName);
@@ -212,11 +280,14 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             }
             catch (Exception ex)
             {
-                Log.Write(new Exception("Unable to load the save file", ex));
+                Log.Write(new Exception("Unable to load the save file. File probably in use or broken.", ex));
                 Tools.E($"Unable to load the specified file\r\n{ex.Message}", "File read error");
             }
         }
 
+        /// <summary>
+        /// Updates the window title to show current file name (if any) and an asterisk if changes are unsaved
+        /// </summary>
         private void SetTitle()
         {
             if (FileName != null)
@@ -236,6 +307,11 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             }
         }
 
+        /// <summary>
+        /// Called from external code to update the download progress in the menu
+        /// </summary>
+        /// <param name="Percentage">Progress (0-100)</param>
+        /// <remarks>Thread safe</remarks>
         public void QPProgress(int Percentage)
         {
             if (InvokeRequired)
@@ -244,10 +320,15 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             }
             else
             {
-                extractAudioToolStripMenuItem.Text = $"&Downloading QuickPlay: {Percentage}%";
+                extractAudioToolStripMenuItem.Text = $"&Downloading QuickPlay: {Tools.Range(0, Percentage, 100)}%";
             }
         }
 
+        /// <summary>
+        /// Called from external code to signal a successful or failed update
+        /// </summary>
+        /// <param name="e">Exception, successful if <see cref="null"/></param>
+        /// <remarks>Thread safe</remarks>
         public void QPComplete(Exception e)
         {
             if (InvokeRequired)
@@ -258,18 +339,33 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             {
                 if (e == null)
                 {
+                    //Update success
                     extractAudioToolStripMenuItem.Text = $"&Extract Audio";
                     extractAudioToolStripMenuItem.Enabled = true;
                 }
                 else
                 {
-                    extractAudioToolStripMenuItem.Text = $"&Download failed. Restart application to retry";
+                    //Update failed
+                    var T = QuickPlay.QuickPlayTries;
+                    var M = QuickPlay.MaximumRetries;
+                    if (T < M)
+                    {
+                        extractAudioToolStripMenuItem.Text = $"&{e.Message} ({T}/{M})";
+                    }
+                    else
+                    {
+                        extractAudioToolStripMenuItem.Text = $"&{e.Message}. Click to try again.";
+                    }
+                    extractAudioToolStripMenuItem.Enabled = T >= M;
                     Log.Write("QuickPlay: Download error");
                     Log.Write(e);
                 }
             }
         }
 
+        /// <summary>
+        /// Redraws the map
+        /// </summary>
         private void RedrawMap()
         {
             Log.Write("{0}: Rendering Map", GetType().Name);
@@ -305,6 +401,9 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             }
         }
 
+        /// <summary>
+        /// Performs an update check
+        /// </summary>
         private void CheckUpdate()
         {
             Log.Write("{0}: Request update check", GetType().Name);
@@ -337,6 +436,10 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             T.Start();
         }
 
+        /// <summary>
+        /// Shows the changelog window
+        /// </summary>
+        /// <remarks>Also marks the current version as read</remarks>
         private void ShowChangeLog()
         {
             using (var cl = new frmChangeLog())
@@ -768,10 +871,10 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
 
         private void extractAudioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.HasQuickPlay)
+            if (QuickPlay.HasQuickPlay)
             {
                 //Allow only one extractor to run but don't make it a modal window
-                var f = Application.OpenForms.OfType<frmAudioExtract>().FirstOrDefault();
+                var f = Tools.GetForm<frmAudioExtract>();
                 if (f == null)
                 {
                     f = new frmAudioExtract();
@@ -786,7 +889,13 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             }
             else
             {
-                MessageBox.Show("QuickPlay is still being downloaded. Please try again in a few seconds.", "QuickPlay", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                extractAudioToolStripMenuItem.Enabled = false;
+                var T = new Thread(delegate () {
+                    QuickPlay.ResetQuickPlay();
+                    QuickPlay.CheckQuickPlay();
+                });
+                T.IsBackground = true;
+                T.Start();
             }
         }
 

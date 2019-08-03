@@ -55,7 +55,7 @@ namespace SatisfactorySaveEditor
             if (!LoadAudioPlayer())
             {
                 Log.Write("AudioExtract: No audio files extracted yet");
-                if (!Program.HasQuickPlay)
+                if (!QuickPlay.HasQuickPlay)
                 {
                     gbAudio.Text = "QuickPlay.exe is missing! Press [F1] to see how to obtain it manually.";
                 }
@@ -314,7 +314,7 @@ Select [Cancel] if you did not yet install the game.", "Game File not found", Me
         {
             if (Directory.Exists(AudioDir))
             {
-                if (Program.HasQuickPlay)
+                if (QuickPlay.HasQuickPlay)
                 {
                     var Files = Directory.GetFiles(AudioDir);
                     if (Files.Length > 0)
@@ -336,7 +336,7 @@ Select [Cancel] if you did not yet install the game.", "Game File not found", Me
 
         private void Play(string AudioFile)
         {
-            if (Program.HasQuickPlay)
+            if (QuickPlay.HasQuickPlay)
             {
                 Log.Write("AudioExtract: Play {0}", AudioFile);
                 if (Player == null)
