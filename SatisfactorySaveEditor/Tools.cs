@@ -427,6 +427,8 @@ namespace SatisfactorySaveEditor
                 {
                     if (e.KeyCode == Keys.Escape)
                     {
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
                         ((Form)sender).Close();
                     }
                 };
@@ -457,6 +459,8 @@ namespace SatisfactorySaveEditor
                         {
                             if (e.KeyCode == Keys.A && e.Control && !e.Shift && !e.Alt)
                             {
+                                e.Handled = true;
+                                e.SuppressKeyPress = true;
                                 ((TextBox)sender).SelectAll();
                             }
                         };
