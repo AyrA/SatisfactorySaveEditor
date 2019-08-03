@@ -31,14 +31,27 @@ namespace SatisfactorySaveEditor
         /// Update Info URL
         /// </summary>
         public const string UPDATE_URL = "https://cable.ayra.ch/satisfactory/api/info";
+        
         /// <summary>
         /// The default name used for the update executable if it's not given
         /// </summary>
         public static readonly string DefaultUpdateExecutable;
+        
         /// <summary>
         /// Current executable path and name
         /// </summary>
         public static readonly string CurrentExecutable;
+        /// <summary>
+        /// Gets the path component only of the current executable
+        /// </summary>
+        public static string ExecutablePath
+        {
+            get
+            {
+                return Path.GetDirectoryName(CurrentExecutable);
+            }
+        }
+        
         /// <summary>
         /// User agent string that is used for requests
         /// </summary>
@@ -48,6 +61,7 @@ namespace SatisfactorySaveEditor
         /// Update data
         /// </summary>
         private static UpdateInfo UpdateData;
+        
         /// <summary>
         /// Info ready status
         /// </summary>
