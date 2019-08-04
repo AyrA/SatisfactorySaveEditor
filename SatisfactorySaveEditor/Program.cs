@@ -173,7 +173,7 @@ namespace SatisfactorySaveEditor
                 BaseName = BaseName.Substring(0, BaseName.Length - 1);
                 BaseObject.ObjectPosition.X = -324000;
                 BaseObject.ObjectPosition.Y = -374000;
-                BaseObject.ObjectPosition.Z = 18000;
+                BaseObject.ObjectPosition.Z = 24000;
 
                 int ctr = F.Entries.Count(m => m.ObjectData.Name == "/Game/FactoryGame/Buildable/Building/Foundation/Build_Foundation_8x2_01.Build_Foundation_8x2_01_C");
                 for (var x = 0; x < 940; x += 5)
@@ -191,7 +191,7 @@ namespace SatisfactorySaveEditor
                 }
                 Console.Error.WriteLine("Placed {0} foundations", ctr);
                 //*/
-                using (var FSOut = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables(SAVEDIR), "Test-Edited.sav")))
+                using (var FSOut = File.Create(Path.Combine(SaveDirectory, "Test-Edited.sav")))
                 {
                     F.Export(FSOut);
                 }
