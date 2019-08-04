@@ -142,6 +142,7 @@ namespace SatisfactorySaveEditor
 
             SFD.InitialDirectory = OFD.InitialDirectory = Program.SaveDirectory;
             Tools.SetupKeyHandlers(this);
+            HandleSettingsChange();
 #if DEBUG
             Log.Write("{0}: Enabling debug menu items", GetType().Name);
             //Enable not fully implemented items
@@ -404,7 +405,7 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
         /// <summary>
         /// Performs an update check
         /// </summary>
-        private void CheckUpdate()
+        private void CheckUpdate(bool silent)
         {
             Log.Write("{0}: Request update check", GetType().Name);
             Thread T = new Thread(delegate ()
@@ -419,17 +420,39 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
                         Log.Write("{0}: Update download success", GetType().Name);
                         Invoke((MethodInvoker)delegate ()
                         {
+                            checkForUpdatesToolStripMenuItem.Text = "Update check complete";
                             updateAvailableToolStripMenuItem.Visible = true;
+                            checkForUpdatesToolStripMenuItem.Visible = false;
+                            if (!silent)
+                            {
+                                MessageBox.Show("An update is available. Click the 'update available' menu to install it.", "Update check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         });
                     }
                     else
                     {
                         Log.Write("{0}: Update download failed", GetType().Name);
+                        if (!silent)
+                        {
+                            Invoke((MethodInvoker)delegate ()
+                            {
+                                MessageBox.Show("An update is available but the download failed.", "Update check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                checkForUpdatesToolStripMenuItem.Text = "Retry update check";
+                                checkForUpdatesToolStripMenuItem.Enabled = true;
+                            });
+                        }
                     }
                 }
                 else
                 {
                     Log.Write("{0}: No update found", GetType().Name);
+                    if (!silent)
+                    {
+                        Invoke((MethodInvoker)delegate ()
+                        {
+                            MessageBox.Show("No update is available", "Update check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        });
+                    }
                 }
             });
             T.IsBackground = true;
@@ -447,6 +470,11 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
                 cl.ShowDialog();
             }
             S.LastVersionLogShown = Tools.CurrentVersion.ToString();
+        }
+
+        private void HandleSettingsChange()
+        {
+            checkForUpdatesToolStripMenuItem.Visible = !S.AutoUpdate;
         }
 
         #region Menu Actions
@@ -910,7 +938,20 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             using (var frmS = new frmSettings(S))
             {
                 frmS.ShowDialog();
+                HandleSettingsChange();
             }
+        }
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckUpdate(false);
+            checkForUpdatesToolStripMenuItem.Enabled = false;
+            checkForUpdatesToolStripMenuItem.Text = "Check in progress...";
+        }
+
+        private void websiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://cable.ayra.ch/satisfactory/editor");
         }
 
         #endregion
@@ -960,7 +1001,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             {
                 Log.Write("{0}: Begin daily update check", GetType().Name);
                 S.LastUpdateCheck = DateTime.UtcNow;
-                CheckUpdate();
+                CheckUpdate(true);
             }
             if (S.ShowChangelog && S.LastVersionLogShown != Tools.CurrentVersion.ToString())
             {

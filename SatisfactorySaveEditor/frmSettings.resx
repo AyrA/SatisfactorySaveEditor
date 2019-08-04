@@ -121,7 +121,7 @@
     <value>We made sure that automatic updates are not intrusive.
 If you still prefer to not have them enabled, you can turn them off here.
 Updates are searched at most once every 24 hours.
-If you turn off updates, you have to check the website manually.</value>
+If you turn off automatic updates, you get a manual update check item in the "Help" menu.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
