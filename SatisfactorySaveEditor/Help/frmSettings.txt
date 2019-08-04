@@ -1,0 +1,37 @@
+﻿Satisfactory Save Editor Settings
+
+Here you can change various settings.
+They are saved immediately when you make a change.
+
+Dialog Boxes
+============
+
+In this section you can mark all hint dialogs as read or unread.
+
+Update Settings
+===============
+
+In this section you can change update related settings.
+
+You can turn automatic updates on or off.
+If they are on, we check for updates once at most every 24 hours.
+If you turn them off, you get a manual "Check for Updates" in the "Help" main menu.
+
+After a successful update the change log is shown to give you a quick info of the changes.
+You can turn this off using the second checkbox in this section.
+You can still at any time bring up the changelog window in the "Help" main menu
+
+How Automatic Updates Work
+==========================
+
+Automatic updates are only checked for when the editor is running.
+We do not install and run background applications.
+This would go against the portable nature of this application.
+
+During the update, no personal or statistical information is sent to our server.
+The update checker gets a document from our server that contains the latest version and a download link.
+If your version is older, the file is downloaded.
+After a successful download, you get the red "Update Available" main menu item.
+You can click this item to install the update immediately, or you can ignore it,
+in which case the update is installed during the next start.
+Installation takes about half a second as of now.
