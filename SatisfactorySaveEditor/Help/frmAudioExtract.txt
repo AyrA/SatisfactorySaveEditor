@@ -9,10 +9,13 @@ Files included are:
 The files have an invalid header and are fixed up properly to play in any standard player.
 Most files are RIFF WAVE, A.D.A messages are OGG.
 
-WAV Format: PCM, 16 bit, LE, 2ch(Stereo)
+WAV Format: PCM, 16 bit, LE, 1ch or 2ch(Mono or Stereo)
 OGG Format: Opus, VBR, 1ch(Mono), Converter arguments: --vbr --padding 0 --bitrate 64 --comp 10 --serial 0 --framesize 20
 
 Thanks to the uncompressed wav files you will find that the music sounds great.
+If a WAV file is Mono or Stereo depends on the type of sound.
+Music and "global" effects are usually Stereo.
+Ambient noise that is location sensitive is usually Mono.
 
 File name Format
 ================
