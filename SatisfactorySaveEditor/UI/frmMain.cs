@@ -956,13 +956,13 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
         private void frmMain_Shown(object sender, EventArgs e)
         {
             //Check for updates at most every 24 hours but never in debug mode
-            if (!Program.DEBUG && S.LastUpdateCheck <= DateTime.UtcNow.AddDays(-1))
+            if (S.AutoUpdate && !Program.DEBUG && S.LastUpdateCheck <= DateTime.UtcNow.AddDays(-1))
             {
                 Log.Write("{0}: Begin daily update check", GetType().Name);
                 S.LastUpdateCheck = DateTime.UtcNow;
                 CheckUpdate();
             }
-            if (S.LastVersionLogShown != Tools.CurrentVersion.ToString())
+            if (S.ShowChangelog && S.LastVersionLogShown != Tools.CurrentVersion.ToString())
             {
                 ShowChangeLog();
             }

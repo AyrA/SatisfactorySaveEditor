@@ -42,6 +42,18 @@ namespace SatisfactorySaveEditor
         { get; set; }
 
         /// <summary>
+        /// Performs automatic update checks
+        /// </summary>
+        public bool AutoUpdate
+        { get; set; }
+
+        /// <summary>
+        /// Show the changelog automatically after an update
+        /// </summary>
+        public bool ShowChangelog
+        { get; set; }
+
+        /// <summary>
         /// Last time an update check was performed
         /// </summary>
         public DateTime LastUpdateCheck
@@ -58,15 +70,30 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public Settings()
         {
+            LastVersionLogShown = "0.0.0.0";
+            LastUpdateCheck = DateTime.MinValue;
+            //Default message status
+            MarkDialogsRead(false);
+            //Update settings
+            AutoUpdate = true;
+            //Changelog settings
+            ShowChangelog = true;
+        }
+
+        /// <summary>
+        /// Marks all dialogs as read or unread
+        /// </summary>
+        /// <param name="MarkAsRead">Mark dialogs as read</param>
+        public void MarkDialogsRead(bool MarkAsRead)
+        {
             ShowResizeHint =
                 ShowLimited =
                 ShowDuplicationHint =
                 ShowDeletionHint =
                 ShowWelcomeMessage =
                 ShowRangeDeleterHint =
-                true;
-            LastVersionLogShown = "0.0.0.0";
-            LastUpdateCheck = DateTime.MinValue;
+                !MarkAsRead;
+
         }
 
         /// <summary>
