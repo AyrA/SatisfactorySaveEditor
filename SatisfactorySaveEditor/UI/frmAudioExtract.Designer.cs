@@ -59,28 +59,29 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbResourceFile.Location = new System.Drawing.Point(90, 14);
             this.tbResourceFile.Name = "tbResourceFile";
-            this.tbResourceFile.Size = new System.Drawing.Size(509, 20);
+            this.tbResourceFile.Size = new System.Drawing.Size(464, 20);
             this.tbResourceFile.TabIndex = 1;
             // 
             // btnSelectFile
             // 
             this.btnSelectFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectFile.Location = new System.Drawing.Point(605, 12);
+            this.btnSelectFile.Location = new System.Drawing.Point(560, 12);
             this.btnSelectFile.Name = "btnSelectFile";
-            this.btnSelectFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectFile.Size = new System.Drawing.Size(120, 23);
             this.btnSelectFile.TabIndex = 2;
-            this.btnSelectFile.Text = "Select...";
+            this.btnSelectFile.Text = "&Select...";
             this.btnSelectFile.UseVisualStyleBackColor = true;
             this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
             // 
             // btnScan
             // 
+            this.btnScan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnScan.Enabled = false;
-            this.btnScan.Location = new System.Drawing.Point(12, 62);
+            this.btnScan.Location = new System.Drawing.Point(560, 56);
             this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(72, 23);
-            this.btnScan.TabIndex = 3;
-            this.btnScan.Text = "&Scan";
+            this.btnScan.Size = new System.Drawing.Size(120, 23);
+            this.btnScan.TabIndex = 4;
+            this.btnScan.Text = "Scan && &Extract";
             this.btnScan.UseVisualStyleBackColor = true;
             this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
             // 
@@ -88,11 +89,11 @@
             // 
             this.pbFilePos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbFilePos.Location = new System.Drawing.Point(90, 62);
+            this.pbFilePos.Location = new System.Drawing.Point(90, 56);
             this.pbFilePos.Name = "pbFilePos";
-            this.pbFilePos.Size = new System.Drawing.Size(590, 23);
+            this.pbFilePos.Size = new System.Drawing.Size(464, 23);
             this.pbFilePos.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.pbFilePos.TabIndex = 4;
+            this.pbFilePos.TabIndex = 3;
             // 
             // OFD
             // 
@@ -152,7 +153,7 @@
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
             this.btnStop.TabIndex = 2;
-            this.btnStop.Text = "&Stop";
+            this.btnStop.Text = "S&top";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
@@ -178,7 +179,7 @@
             this.Controls.Add(this.tbResourceFile);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(500, 200);
+            this.MinimumSize = new System.Drawing.Size(450, 200);
             this.Name = "frmAudioExtract";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Audio Extractor";
