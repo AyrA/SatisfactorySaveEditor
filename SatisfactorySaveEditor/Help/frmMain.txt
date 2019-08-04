@@ -4,14 +4,43 @@ This is the window where you do most of your changes.
 The main area of the window is used to show a map of your save file.
 An image of the map is saved in the same location your current save game is at.
 
-Use the "File" menu for basic File operations.
-
-The "Quick Actions" menu provides pre-made bulk actions for your save file.
-They are mostly made of features that clean up the map and undo player made changes.
-
-The "General Actions" allows you to perform more generic actions for the save game.
-
-Automatic Backups:
+Automatic Backups
+=================
 This editor will automatically create a single backup of any file you save,
 provided that no such backup already exists.
 To create multiple backups, use the Save File Manager [CTRL]+[M].
+
+File Menu
+=========
+
+This provides basic File operations
+and has the usual commands (Load, Save, Exit, ...) you find in this menu in most applications.
+
+Quick Actions Menu
+==================
+
+This provides pre-made bulk actions for your save file.
+They are mostly made of features that clean up the map and undo player made changes.
+
+General Actions Menu
+====================
+
+This provides general editing capabilities of the save file.
+
+More Menu
+=========
+
+This provides actions not related to save file editing.
+All options in this menu are going to work without a loaded save file
+
+Help Menu
+=========
+
+Provides help and information.
+This menu also contains a manual update check option for when you disable automatic update checks.
+
+Update Available Menu
+=====================
+
+This red menu item is only shown when an update has been downloaded sucessfully and is ready for installation.
+Clicking this is optional. If you don't, the update is installed during the next launch.
