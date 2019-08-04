@@ -68,6 +68,7 @@
             this.Controls.Add(this.cbVersion);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmChangeLog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Change Log";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.frmChangeLog_HelpRequested);
             this.ResumeLayout(false);

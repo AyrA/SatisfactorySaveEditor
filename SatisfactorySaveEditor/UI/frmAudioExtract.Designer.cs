@@ -36,11 +36,11 @@
             this.pbFilePos = new System.Windows.Forms.ProgressBar();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.gbAudio = new System.Windows.Forms.GroupBox();
+            this.btnOpenDir = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
-            this.btnOpenDir = new System.Windows.Forms.Button();
             this.gbAudio.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,6 +116,16 @@
             this.gbAudio.TabStop = false;
             this.gbAudio.Text = "Audio Player";
             // 
+            // btnOpenDir
+            // 
+            this.btnOpenDir.Location = new System.Drawing.Point(333, 21);
+            this.btnOpenDir.Name = "btnOpenDir";
+            this.btnOpenDir.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenDir.TabIndex = 4;
+            this.btnOpenDir.Text = "&Open Dir";
+            this.btnOpenDir.UseVisualStyleBackColor = true;
+            this.btnOpenDir.Click += new System.EventHandler(this.btnOpenDir_Click);
+            // 
             // btnPrev
             // 
             this.btnPrev.Location = new System.Drawing.Point(9, 21);
@@ -156,16 +166,6 @@
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // btnOpenDir
-            // 
-            this.btnOpenDir.Location = new System.Drawing.Point(333, 21);
-            this.btnOpenDir.Name = "btnOpenDir";
-            this.btnOpenDir.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenDir.TabIndex = 4;
-            this.btnOpenDir.Text = "&Open Dir";
-            this.btnOpenDir.UseVisualStyleBackColor = true;
-            this.btnOpenDir.Click += new System.EventHandler(this.btnOpenDir_Click);
-            // 
             // frmAudioExtract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,6 +180,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 200);
             this.Name = "frmAudioExtract";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Audio Extractor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAudioExtract_FormClosing);
             this.Load += new System.EventHandler(this.frmAudioExtract_Load);
