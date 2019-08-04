@@ -890,7 +890,8 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             else
             {
                 extractAudioToolStripMenuItem.Enabled = false;
-                var T = new Thread(delegate () {
+                var T = new Thread(delegate ()
+                {
                     QuickPlay.ResetQuickPlay();
                     QuickPlay.CheckQuickPlay();
                 });
@@ -902,6 +903,14 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
         private void changelogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowChangeLog();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var frmS = new frmSettings(S))
+            {
+                frmS.ShowDialog();
+            }
         }
 
         #endregion

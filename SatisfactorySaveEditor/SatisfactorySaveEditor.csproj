@@ -64,6 +64,12 @@
     <Compile Include="ErrorHandler\frmErrorHandler.designer.cs">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuickPlay.cs" />
     <Compile Include="UI\frmChangeLog.cs">
       <SubType>Form</SubType>
@@ -168,6 +174,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ErrorHandler\frmErrorHandler.resx">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmChangeLog.resx">
       <DependentUpon>frmChangeLog.cs</DependentUpon>
