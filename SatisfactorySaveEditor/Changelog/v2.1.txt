@@ -1,0 +1,21 @@
+﻿Version 2.1
+
+This is the latest version
+
+Visible changes:
+
+- Fixed button layout in a few windows (nicer alignment, tab order, resizing)
+- Updated the very outdated help from the main window to reflect the latest few changes to the menus
+- New "Settings" option under the "More" item
+- Adding and updating tooltip texts to all main window menu items
+- "Help" menu can open the editor website now
+- Changelog window
+
+Invisible changes:
+
+- QuickPlay downloader is now its own component
+- QuickPlay downloader retries failed downloads a few times
+- Manual update system
+- Commented many functions that were lacking them
+- Added more utility functions to the Tools class
+- Added more log lines
