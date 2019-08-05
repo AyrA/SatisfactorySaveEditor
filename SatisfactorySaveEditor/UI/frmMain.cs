@@ -117,11 +117,6 @@ namespace SatisfactorySaveEditor
                 Invoke((MethodInvoker)delegate
                 {
                     BackgroundImage = img;
-                    if (S.ShowWelcomeMessage)
-                    {
-                        S.ShowWelcomeMessage = false;
-                        Tools.ShowHelp("Welcome");
-                    }
                     //Open initial file is supplied
                     if (!string.IsNullOrEmpty(InitialFile))
                     {
@@ -1006,6 +1001,11 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             if (S.ShowChangelog && S.LastVersionLogShown != Tools.CurrentVersion.ToString())
             {
                 ShowChangeLog();
+            }
+            if (S.ShowWelcomeMessage)
+            {
+                S.ShowWelcomeMessage = false;
+                Tools.ShowHelp("Welcome");
             }
         }
 
