@@ -250,6 +250,7 @@
     <EmbeddedResource Include="Changelog\v1.9.txt" />
     <EmbeddedResource Include="Changelog\v2.0.txt" />
     <EmbeddedResource Include="Help\frmSettings.txt" />
+    <EmbeddedResource Include="Changelog\v2.1.txt" />
     <Content Include="Images\Icons\audio.ico" />
     <Content Include="Images\Icons\copy.ico" />
     <Content Include="Images\Icons\delete.ico" />
