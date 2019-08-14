@@ -1,0 +1,12 @@
+﻿Version 2.2
+
+This is the latest version
+
+Visible changes:
+
+To further improve the application, anonymous usage statistics will be sent to the server from now on.
+You can view all submitted data as well as disable statistics in the settings window.
+
+Invisible changes:
+
+- Simple Usage Logger
