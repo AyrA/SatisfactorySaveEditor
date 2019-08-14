@@ -30,17 +30,23 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.gbMessages = new System.Windows.Forms.GroupBox();
-            this.btnMessageHide = new System.Windows.Forms.Button();
-            this.btnMessageShow = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.lblDIalogHint = new System.Windows.Forms.Label();
+            this.btnMessageShow = new System.Windows.Forms.Button();
+            this.btnMessageHide = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.cbAutoUpdate = new System.Windows.Forms.CheckBox();
             this.cbShowChangeLog = new System.Windows.Forms.CheckBox();
             this.gbUpdate = new System.Windows.Forms.GroupBox();
             this.lblUpdateInfo = new System.Windows.Forms.Label();
             this.lblAutoSave = new System.Windows.Forms.Label();
+            this.gbReport = new System.Windows.Forms.GroupBox();
+            this.lblFeatureReport = new System.Windows.Forms.Label();
+            this.cbRandom = new System.Windows.Forms.CheckBox();
+            this.cbStopReporting = new System.Windows.Forms.CheckBox();
+            this.lblId = new System.Windows.Forms.LinkLabel();
             this.gbMessages.SuspendLayout();
             this.gbUpdate.SuspendLayout();
+            this.gbReport.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbMessages
@@ -57,17 +63,16 @@
             this.gbMessages.TabStop = false;
             this.gbMessages.Text = "Dialog Boxes";
             // 
-            // btnMessageHide
+            // lblDIalogHint
             // 
-            this.btnMessageHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblDIalogHint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMessageHide.Location = new System.Drawing.Point(6, 71);
-            this.btnMessageHide.Name = "btnMessageHide";
-            this.btnMessageHide.Size = new System.Drawing.Size(356, 23);
-            this.btnMessageHide.TabIndex = 1;
-            this.btnMessageHide.Text = "Mark all messages as &read";
-            this.btnMessageHide.UseVisualStyleBackColor = true;
-            this.btnMessageHide.Click += new System.EventHandler(this.btnMessageHide_Click);
+            this.lblDIalogHint.Location = new System.Drawing.Point(11, 21);
+            this.lblDIalogHint.Name = "lblDIalogHint";
+            this.lblDIalogHint.Size = new System.Drawing.Size(345, 44);
+            this.lblDIalogHint.TabIndex = 0;
+            this.lblDIalogHint.Text = "Some dialog boxes are shown once to give hints on some features.\r\nHere you can ma" +
+    "rk them all as read or unread";
             // 
             // btnMessageShow
             // 
@@ -81,27 +86,28 @@
             this.btnMessageShow.UseVisualStyleBackColor = true;
             this.btnMessageShow.Click += new System.EventHandler(this.btnMessageShow_Click);
             // 
+            // btnMessageHide
+            // 
+            this.btnMessageHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMessageHide.Location = new System.Drawing.Point(6, 71);
+            this.btnMessageHide.Name = "btnMessageHide";
+            this.btnMessageHide.Size = new System.Drawing.Size(356, 23);
+            this.btnMessageHide.TabIndex = 1;
+            this.btnMessageHide.Text = "Mark all messages as &read";
+            this.btnMessageHide.UseVisualStyleBackColor = true;
+            this.btnMessageHide.Click += new System.EventHandler(this.btnMessageHide_Click);
+            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(305, 338);
+            this.btnClose.Location = new System.Drawing.Point(305, 508);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 3;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // lblDIalogHint
-            // 
-            this.lblDIalogHint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDIalogHint.Location = new System.Drawing.Point(11, 21);
-            this.lblDIalogHint.Name = "lblDIalogHint";
-            this.lblDIalogHint.Size = new System.Drawing.Size(345, 44);
-            this.lblDIalogHint.TabIndex = 0;
-            this.lblDIalogHint.Text = "Some dialog boxes are shown once to give hints on some features.\r\nHere you can ma" +
-    "rk them all as read or unread";
             // 
             // cbAutoUpdate
             // 
@@ -153,23 +159,82 @@
             // 
             this.lblAutoSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblAutoSave.AutoSize = true;
-            this.lblAutoSave.Location = new System.Drawing.Point(8, 343);
+            this.lblAutoSave.Location = new System.Drawing.Point(8, 513);
             this.lblAutoSave.Name = "lblAutoSave";
             this.lblAutoSave.Size = new System.Drawing.Size(163, 13);
-            this.lblAutoSave.TabIndex = 2;
+            this.lblAutoSave.TabIndex = 3;
             this.lblAutoSave.Text = "Changes are saved automatically";
+            // 
+            // gbReport
+            // 
+            this.gbReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbReport.Controls.Add(this.lblId);
+            this.gbReport.Controls.Add(this.cbRandom);
+            this.gbReport.Controls.Add(this.cbStopReporting);
+            this.gbReport.Controls.Add(this.lblFeatureReport);
+            this.gbReport.Location = new System.Drawing.Point(11, 312);
+            this.gbReport.Name = "gbReport";
+            this.gbReport.Size = new System.Drawing.Size(369, 190);
+            this.gbReport.TabIndex = 2;
+            this.gbReport.TabStop = false;
+            this.gbReport.Text = "Feature Usage Report";
+            // 
+            // lblFeatureReport
+            // 
+            this.lblFeatureReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFeatureReport.Location = new System.Drawing.Point(11, 21);
+            this.lblFeatureReport.Name = "lblFeatureReport";
+            this.lblFeatureReport.Size = new System.Drawing.Size(345, 77);
+            this.lblFeatureReport.TabIndex = 0;
+            this.lblFeatureReport.Text = "We collect limited statistics to improve the application.\r\nClick on your ID to vi" +
+    "ew the statistics online.\r\nPress [F1] for more information.";
+            // 
+            // cbRandom
+            // 
+            this.cbRandom.AutoSize = true;
+            this.cbRandom.Location = new System.Drawing.Point(10, 101);
+            this.cbRandom.Name = "cbRandom";
+            this.cbRandom.Size = new System.Drawing.Size(201, 17);
+            this.cbRandom.TabIndex = 1;
+            this.cbRandom.Text = "&New ID each time you start the editor";
+            this.cbRandom.UseVisualStyleBackColor = true;
+            // 
+            // cbStopReporting
+            // 
+            this.cbStopReporting.AutoSize = true;
+            this.cbStopReporting.Location = new System.Drawing.Point(10, 124);
+            this.cbStopReporting.Name = "cbStopReporting";
+            this.cbStopReporting.Size = new System.Drawing.Size(124, 17);
+            this.cbStopReporting.TabIndex = 2;
+            this.cbStopReporting.Text = "&Stop usage reporting";
+            this.cbStopReporting.UseVisualStyleBackColor = true;
+            this.cbStopReporting.CheckedChanged += new System.EventHandler(this.cbStopReporting_CheckedChanged);
+            // 
+            // lblId
+            // 
+            this.lblId.AutoSize = true;
+            this.lblId.Location = new System.Drawing.Point(11, 153);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(43, 13);
+            this.lblId.TabIndex = 3;
+            this.lblId.TabStop = true;
+            this.lblId.Text = "Your ID";
+            this.lblId.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblId_LinkClicked);
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 373);
+            this.ClientSize = new System.Drawing.Size(392, 543);
+            this.Controls.Add(this.gbReport);
             this.Controls.Add(this.lblAutoSave);
             this.Controls.Add(this.gbUpdate);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.gbMessages);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(400, 400);
+            this.MinimumSize = new System.Drawing.Size(400, 570);
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Application Settings";
@@ -177,6 +242,8 @@
             this.gbMessages.ResumeLayout(false);
             this.gbUpdate.ResumeLayout(false);
             this.gbUpdate.PerformLayout();
+            this.gbReport.ResumeLayout(false);
+            this.gbReport.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,5 +261,10 @@
         private System.Windows.Forms.GroupBox gbUpdate;
         private System.Windows.Forms.Label lblUpdateInfo;
         private System.Windows.Forms.Label lblAutoSave;
+        private System.Windows.Forms.GroupBox gbReport;
+        private System.Windows.Forms.Label lblFeatureReport;
+        private System.Windows.Forms.CheckBox cbRandom;
+        private System.Windows.Forms.CheckBox cbStopReporting;
+        private System.Windows.Forms.LinkLabel lblId;
     }
 }

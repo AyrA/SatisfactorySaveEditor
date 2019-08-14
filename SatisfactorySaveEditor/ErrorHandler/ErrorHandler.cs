@@ -34,6 +34,8 @@ namespace SatisfactorySaveEditor
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            FeatureReport.Used(FeatureReport.Feature.TerminateByError);
+            FeatureReport.Report();
             if (e.ExceptionObject is Exception)
             {
                 Log.Write("{0}: Unhandled exception", nameof(ErrorHandler));

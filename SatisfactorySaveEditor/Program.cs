@@ -95,12 +95,17 @@ namespace SatisfactorySaveEditor
             //Only run main application part if no update was performed
             if (DEBUG || !UpdateHandler.Update())
             {
+#if DEBUG
+                FeatureReport.Used(FeatureReport.Feature.DebugMode);
+#endif
                 //Remove console handle to not block any scripts.
                 Tools.FreeConsole();
                 QuickPlay.CheckQuickPlay();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new frmMain(args.FirstOrDefault()));
+                //Send Report
+                FeatureReport.Report();
             }
             Log.Write("Application version {0} end", Tools.CurrentVersion);
             Log.Close();

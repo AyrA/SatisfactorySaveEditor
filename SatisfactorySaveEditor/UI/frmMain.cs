@@ -90,6 +90,20 @@ namespace SatisfactorySaveEditor
                 Log.Write("{0}: Creating settings for first run", GetType().Name);
                 S = new Settings();
             }
+            //Set up feature reporter
+            if (!S.DisableUsageReport)
+            {
+                if (S.ReportId == Guid.Empty || S.UseRandomId)
+                {
+                    S.ReportId = Guid.NewGuid();
+                }
+                FeatureReport.Id = S.ReportId;
+            }
+            else
+            {
+                //Make sure the Id id is always unset
+                FeatureReport.Id = S.ReportId = Guid.Empty;
+            }
 
             InitializeComponent(); //!!!Read+Write form components only after this line!!!
 
@@ -123,6 +137,7 @@ namespace SatisfactorySaveEditor
                         try
                         {
                             OpenFile(InitialFile);
+                            FeatureReport.Used(FeatureReport.Feature.OpenByCommandLine);
                         }
                         catch (Exception ex)
                         {
@@ -206,6 +221,7 @@ namespace SatisfactorySaveEditor
                 }
                 HasChange = false;
                 SetTitle();
+                FeatureReport.Used(FeatureReport.Feature.SaveFile);
             }
             catch (Exception ex)
             {
@@ -224,6 +240,7 @@ namespace SatisfactorySaveEditor
         {
             var Doggos = F.Entries.Where(m => m.ObjectData.Name == "");
             InfoChange(SaveFileHelper.ItemResizer(Doggos, Factor, Offset), "doggos");
+            FeatureReport.Used(FeatureReport.Feature.QuickAction);
         }
 
         /// <summary>
@@ -271,6 +288,7 @@ Be aware that all creatures have fall damage", "Resizing objects", MessageBoxBut
 If something breaks, please open an issue on GitHub so we can fix it.", "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     RedrawMap();
+                    FeatureReport.Used(FeatureReport.Feature.OpenFile);
                     Log.Write("{0}: File loaded. {1} entries total", GetType().Name, F.Entries.Count);
                 }
             }
@@ -511,6 +529,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
                         FileName = SFD.FileName;
                         HasChange = false;
                         SetTitle();
+                        FeatureReport.Used(FeatureReport.Feature.SaveFile);
                     }
                 }
             }
@@ -521,6 +540,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
             if (F != null && MessageBox.Show("You're about to make a big mistake. Delete the space rabits?", "Abandon Doggos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 InfoChange(SaveFileHelper.RemoveLizardDoggos(F), "Doggos");
+                FeatureReport.Used(FeatureReport.Feature.QuickAction);
             }
         }
 
@@ -529,6 +549,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
             if (F != null)
             {
                 InfoChange(SaveFileHelper.RestoreRocks(F), "Rocks");
+                FeatureReport.Used(FeatureReport.Feature.QuickAction);
             }
 
         }
@@ -543,6 +564,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
             if (F != null)
             {
                 InfoChange(SaveFileHelper.RestorePlants(F), "plants and trees");
+                FeatureReport.Used(FeatureReport.Feature.QuickAction);
             }
 
         }
@@ -552,6 +574,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
             if (F != null)
             {
                 InfoChange(SaveFileHelper.RestoreBerries(F), "berries, nuts and mushrooms");
+                FeatureReport.Used(FeatureReport.Feature.QuickAction);
             }
 
         }
@@ -561,6 +584,7 @@ Proceed WITHOUT changing it?", "Session Name Change recommended", MessageBoxButt
             if (F != null)
             {
                 InfoChange(SaveFileHelper.RemoveAnimalParts(F), "animal parts (organs, etc)");
+                FeatureReport.Used(FeatureReport.Feature.QuickAction);
             }
 
         }
@@ -576,6 +600,7 @@ To just restore the collectable items around them, use the 'Restore Pickups' opt
 Really continue?", "Surplus drives", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RestoreDropPods(F), "drop pods");
+                    FeatureReport.Used(FeatureReport.Feature.QuickAction);
                 }
             }
 
@@ -589,6 +614,7 @@ Really continue?", "Surplus drives", MessageBoxButtons.YesNo, MessageBoxIcon.Exc
 Really continue?", "Surplus drives", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RestorePickups(F), "items");
+                    FeatureReport.Used(FeatureReport.Feature.QuickAction);
                 }
             }
         }
@@ -600,6 +626,7 @@ Really continue?", "Surplus drives", MessageBoxButtons.YesNo, MessageBoxIcon.Exc
                 if (MessageBox.Show(@"Removes all spawner entries. This does not removed spawned animals", "Animal spawner", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RemoveCreatureSpawner(F), "spawner");
+                    FeatureReport.Used(FeatureReport.Feature.QuickAction);
                 }
             }
         }
@@ -633,6 +660,7 @@ Once done, you will be able to link two containers together so they share their 
                         F.PlayTime = TimeSpan.Parse(FH.PlayTime);
                         HasChange = true;
                         SetTitle();
+                        FeatureReport.Used(FeatureReport.Feature.EditHeader);
                     }
                 }
             }
@@ -645,6 +673,7 @@ Once done, you will be able to link two containers together so they share their 
                 if (MessageBox.Show(@"Remove animals that generally are friendly to the player (excluding doggos)?", "Friendly Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RemoveNiceCreatures(F), "animals");
+                    FeatureReport.Used(FeatureReport.Feature.QuickAction);
                 }
             }
         }
@@ -656,6 +685,7 @@ Once done, you will be able to link two containers together so they share their 
                 if (MessageBox.Show(@"Remove animals that are hostile to the player?", "Hostile Animals", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RemoveEvilCreatures(F), "animals");
+                    FeatureReport.Used(FeatureReport.Feature.QuickAction);
                 }
             }
         }
@@ -667,6 +697,7 @@ Once done, you will be able to link two containers together so they share their 
                 if (MessageBox.Show(@"Restore all slugs?", "Restors Slugs", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     InfoChange(SaveFileHelper.RestoreSlugs(F), "slugs");
+                    FeatureReport.Used(FeatureReport.Feature.QuickAction);
                 }
             }
 
@@ -738,6 +769,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                     {
                         HasChange = true;
                         SetTitle();
+                        FeatureReport.Used(FeatureReport.Feature.DuplicateItems);
                     }
                 }
             }
@@ -747,6 +779,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
         {
             using (var manager = new frmManager())
             {
+                FeatureReport.Used(FeatureReport.Feature.Manager);
                 manager.ShowDialog();
             }
         }
@@ -768,6 +801,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                     {
                         HasChange = true;
                         SetTitle();
+                        FeatureReport.Used(FeatureReport.Feature.DeleteByType);
                     }
                 }
             }
@@ -847,6 +881,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
                         int C = F.StringList.Count;
                         F.StringList.Clear();
                         InfoChange(C, "String list");
+                        FeatureReport.Used(FeatureReport.Feature.ClearStringList);
                     }
                 }
                 else
@@ -876,6 +911,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                         HasChange = true;
                         RedrawMap();
                         SetTitle();
+                        FeatureReport.Used(FeatureReport.Feature.DeleteByArea);
                     }
                 }
             }
@@ -888,6 +924,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                 using (var Counter = new frmCounter(F.Entries))
                 {
                     Counter.ShowDialog();
+                    FeatureReport.Used(FeatureReport.Feature.CountItems);
                 }
             }
         }
@@ -902,6 +939,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                 {
                     f = new frmAudioExtract();
                     f.Show();
+                    FeatureReport.Used(FeatureReport.Feature.ExtractAudio);
                 }
                 else
                 {
@@ -926,6 +964,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
         private void changelogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowChangeLog();
+            FeatureReport.Used(FeatureReport.Feature.ViewChanges);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -934,6 +973,7 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             {
                 frmS.ShowDialog();
                 HandleSettingsChange();
+                FeatureReport.Used(FeatureReport.Feature.ChangeSettings);
             }
         }
 

@@ -54,6 +54,24 @@ namespace SatisfactorySaveEditor
         { get; set; }
 
         /// <summary>
+        /// Uses a random Id for <see cref="ReportId"/> each time the application is launched
+        /// </summary>
+        public bool UseRandomId
+        { get; set; }
+
+        /// <summary>
+        /// Disables usage reporting completely
+        /// </summary>
+        public bool DisableUsageReport
+        { get; set; }
+
+        /// <summary>
+        /// Id used for usage report
+        /// </summary>
+        public Guid ReportId
+        { get; set; }
+
+        /// <summary>
         /// Last time an update check was performed
         /// </summary>
         public DateTime LastUpdateCheck
@@ -70,6 +88,7 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public Settings()
         {
+            ReportId = Guid.NewGuid();
             LastVersionLogShown = "0.0.0.0";
             LastUpdateCheck = DateTime.MinValue;
             //Default message status
@@ -78,6 +97,9 @@ namespace SatisfactorySaveEditor
             AutoUpdate = true;
             //Changelog settings
             ShowChangelog = true;
+            //Report settings
+            UseRandomId = false;
+            DisableUsageReport = false;
         }
 
         /// <summary>

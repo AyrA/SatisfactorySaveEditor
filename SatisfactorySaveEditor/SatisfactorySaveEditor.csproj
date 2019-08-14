@@ -64,6 +64,7 @@
     <Compile Include="ErrorHandler\frmErrorHandler.designer.cs">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
+    <Compile Include="FeatureReport.cs" />
     <Compile Include="UI\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>

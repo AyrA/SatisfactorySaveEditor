@@ -97,6 +97,7 @@ namespace SatisfactorySaveEditor
                 {
                     Ser.Serialize(SW, Items.ToArray());
                     Clipboard.SetText(SW.ToString());
+                    FeatureReport.Used(FeatureReport.Feature.XmlExport);
                     MessageBox.Show(
                         $"{Items.Count()} entr{(Items.Count() == 1 ? "y" : "ies")} Exported to clipboard",
                         "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -163,7 +164,7 @@ namespace SatisfactorySaveEditor
                         }
                     }
                     F.Entries.AddRange(Entries);
-
+                    FeatureReport.Used(FeatureReport.Feature.XmlImport);
                     Log.Write("{0}: Import complete", GetType().Name);
                     if (ReplaceCount >= 0)
                     {

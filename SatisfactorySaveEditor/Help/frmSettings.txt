@@ -35,3 +35,50 @@ After a successful download, you get the red "Update Available" main menu item.
 You can click this item to install the update immediately, or you can ignore it,
 in which case the update is installed during the next start.
 Installation takes about half a second as of now.
+
+Usage Statistics
+================
+
+This application collects and submits very limited usage statistics.
+The statistics are reported once you close the application or if it gets terminated due to an error.
+
+What is included:
+-----------------
+
+- Current version number
+- Randomly generated Id
+- List of features you used
+
+What is NEVER included:
+-----------------------
+
+- Anything related to your satisfactory installation
+- Your save games
+- Username
+- IP address*
+- Operating system information (Type, environment, language, etc)
+- Information about other installed software
+
+*) Your IP address will appear in the regular server logs of cable.ayra.ch as does every IP of every visitor.
+This is normal and practiced by almost all web servers world wide.
+The address WILL NOT be collected from the logs and tied to the Id.
+
+What we do:
+-----------
+
+- Analyze your statistics to focus development on the most used features.
+- Build and display anonymous statistics for the public to see.
+
+What we NEVER do:
+-----------------
+
+- Share your statistics with 3rd parties.
+- Sell your statistics.
+
+Your Usage Statistics Options
+=============================
+
+You can decide to change the Id each time you launch the application.
+This will add a layer of anonymity but it prevents you from viewing your own statistics.
+
+You can also completely disable usage statistics reporting.

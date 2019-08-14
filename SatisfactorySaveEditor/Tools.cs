@@ -422,6 +422,7 @@ namespace SatisfactorySaveEditor
             {
                 F.HelpText = string.Format(HelpText, $"SatisfactorySaveEditor.Help.{FormName}.txt");
             }
+            FeatureReport.Used(FeatureReport.Feature.HelpRequest);
         }
 
         /// <summary>

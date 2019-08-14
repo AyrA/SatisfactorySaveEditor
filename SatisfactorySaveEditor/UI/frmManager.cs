@@ -255,6 +255,7 @@ namespace SatisfactorySaveEditor
                                 Perc = FS.Position / Perc * 100;
                             }
                         }
+                        FeatureReport.Used(FeatureReport.Feature.DoBackup);
                         MessageBox.Show($"Backup complete. Reduced to {Math.Round(Perc)}% of original size", "Backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
@@ -368,6 +369,7 @@ namespace SatisfactorySaveEditor
                                         }
                                     }
                                     initFiles();
+                                    FeatureReport.Used(FeatureReport.Feature.RestoreBackup);
                                 }
                                 catch (Exception ex)
                                 {
