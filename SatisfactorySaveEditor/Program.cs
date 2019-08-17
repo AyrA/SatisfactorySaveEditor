@@ -1,6 +1,7 @@
 ﻿//Use console only mode
 //#define NOFORM
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -50,19 +51,39 @@ namespace SatisfactorySaveEditor
             /// Argument problem
             /// </summary>
             public const int ARG = 1;
+            /// <summary>
+            /// Command to open the User Interface
+            /// </summary>
+            public const int UI = 2;
+            /// <summary>
+            /// Help Request
+            /// </summary>
+            public const int HELP = 3;
+            /// <summary>
+            /// A File I/O error occured (bad disk, not found, in use, etc)
+            /// </summary>
+            public const int IO = 4;
+        }
+
+        private enum Modes
+        {
+            Verify,
+            List,
+            Pack,
+            RenameSession
         }
 
         [STAThread]
         static int Main(string[] args)
         {
-            ErrorHandler ReleaseModeErrorHandler;
+            args = @"/verify|C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\Foundation.sav".Split('|');
             Log.Write("Application version {0} start", Tools.CurrentVersion);
+            FeatureReport.Id = Guid.Empty;
             //Set "NOFORM" to better experiment
 #if !NOFORM
-            if (!DEBUG)
-            {
-                ReleaseModeErrorHandler = new ErrorHandler();
-                ReleaseModeErrorHandler.ErrorReport += delegate (Exception ex, ErrorHandlerEventArgs e)
+#if !DEBUG
+            var ReleaseModeErrorHandler = new ErrorHandler();
+            ReleaseModeErrorHandler.ErrorReport += delegate (Exception ex, ErrorHandlerEventArgs e)
                 {
                     Log.Write("Sending error report");
                     var Msg = ErrorHandler.generateReport(ex);
@@ -78,10 +99,10 @@ namespace SatisfactorySaveEditor
                             CurrentFile = Compression.CompressData(MS.ToArray());
                         }
                     }
-                    //Send report
-                    e.Handled = ReleaseModeErrorHandler.UploadReport(Msg, CurrentFile == null ? new byte[0] : CurrentFile);
+                //Send report
+                e.Handled = ReleaseModeErrorHandler.UploadReport(Msg, CurrentFile == null ? new byte[0] : CurrentFile);
                 };
-            }
+#endif
             //Perform update automatically if it's pending
             if (!DEBUG && args.Length == 0 && File.Exists(UpdateHandler.DefaultUpdateExecutable))
             {
@@ -98,12 +119,20 @@ namespace SatisfactorySaveEditor
 #if DEBUG
                 FeatureReport.Used(FeatureReport.Feature.DebugMode);
 #endif
-                //Remove console handle to not block any scripts.
-                Tools.FreeConsole();
-                QuickPlay.CheckQuickPlay();
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new frmMain(args.FirstOrDefault()));
+                int Status = HandleArguments(args);
+                if (Status == RET.UI)
+                {
+                    //Remove console handle to not block any scripts.
+                    Tools.FreeConsole();
+                    QuickPlay.CheckQuickPlay();
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new frmMain(args.FirstOrDefault()));
+                }
+                else if (DEBUG)
+                {
+                    return Exit(RET.SUCCESS);
+                }
                 //Send Report
                 FeatureReport.Report();
             }
@@ -118,9 +147,217 @@ namespace SatisfactorySaveEditor
             Console.Error.WriteLine("Arguments: {0}", string.Join("\r\n", args));
 
             Test();
-            Console.Error.WriteLine("#END");
             return Exit(RET.SUCCESS);
 #endif
+        }
+
+        private static int HandleArguments(string[] args)
+        {
+            var Ops = new List<Modes>();
+            string Filename = null;
+            string SessionName = null;
+            if (args.Contains("/?"))
+            {
+                Help();
+                return RET.HELP;
+            }
+            for (var i = 0; i < args.Length; i++)
+            {
+                var arg = args[i];
+                Log.Write("{0}: processing argument: {1}", nameof(HandleArguments), arg);
+                switch (arg.ToLower())
+                {
+                    case "/verify":
+                        Ops.Add(Modes.Verify);
+                        break;
+                    case "/list":
+                        Ops.Add(Modes.List);
+                        break;
+                    case "/pack":
+                        Ops.Add(Modes.Pack);
+                        break;
+                    case "/rename":
+                        Ops.Add(Modes.RenameSession);
+                        if (i < args.Length - 1)
+                        {
+                            SessionName = args[++i];
+                        }
+                        else
+                        {
+                            Log.Write("{0}: /rename requires a new session name", nameof(HandleArguments));
+                            Console.WriteLine("/rename requires a new session name");
+                            return RET.ARG;
+                        }
+                        break;
+                    default:
+                        if (string.IsNullOrEmpty(Filename))
+                        {
+                            Filename = arg;
+                        }
+                        else
+                        {
+                            Log.Write("{0}: unknown argument: {1}", nameof(HandleArguments), arg);
+                            Console.WriteLine("Unknown argument: {0}", arg);
+                            return RET.ARG;
+                        }
+                        break;
+                }
+            }
+
+            if (Ops.Count == 0 && args.Length < 2)
+            {
+                return RET.UI;
+            }
+
+            Tools.AllocConsole();
+
+            if (string.IsNullOrEmpty(Filename))
+            {
+                Log.Write("{0}: No file name argument supplied", nameof(HandleArguments));
+                Console.WriteLine("No file name argument supplied");
+                return RET.ARG;
+            }
+
+            Ops = Ops.Distinct().ToList();
+
+            var Changes = false;
+            var IsGz = false;
+            SaveFile SF = null;
+            FileStream FS = null;
+            try
+            {
+                FS = File.Open(Filename, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to open input file");
+                Log.Write("{0}: Unable to open input file", nameof(HandleArguments));
+                Log.Write(ex);
+                return RET.IO;
+            }
+            using (FS)
+            {
+                IsGz = Tools.IsGzFile(FS);
+                try
+                {
+                    SF = SaveFile.Open(FS);
+                    if (SF == null)
+                    {
+                        throw new InvalidDataException("The file is not a valid satisfactory save game");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Invalid game file");
+                    Log.Write("{0}: Invalid game file", nameof(HandleArguments));
+                    Log.Write(ex);
+                    return RET.IO;
+                }
+
+
+                if (Ops.Contains(Modes.Verify))
+                {
+                    Log.Write("{0}: Verifying file", nameof(HandleArguments));
+                    //Verify does nothing on its own
+                    Check(SF.PlayTime.Ticks >= 0, "Positive play time");
+                    Check(Tools.IsMatch(SF.SessionName, @"^[\w\.\- ]{1,31}$"), "Non-Problematic Session Name");
+                    Check(SF.LevelType == SaveFile.DEFAULT_LEVEL_TYPE, $"Level type is '{SaveFile.DEFAULT_LEVEL_TYPE}'");
+                    Check(SF.SaveDate.ToUniversalTime() < DateTime.UtcNow, "Date in past");
+                    foreach (var key in "sessionName Visibility startloc".Split(' '))
+                    {
+                        Check(SF.Properties.ContainsKey(key), $"Header contains field '{key}'");
+                    }
+                    //Don't double error with the previous one
+                    if (SF.Properties.ContainsKey("sessionName"))
+                    {
+                        Check(SF.Properties["sessionName"] == SF.SessionName, "Both session names match");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[SKIP]: Both session names match");
+                    }
+                }
+
+                if (Ops.Contains(Modes.List))
+                {
+                    Log.Write("{0}: Printing item list", nameof(HandleArguments));
+                    foreach (var e in SF.Entries.GroupBy(m => m.ObjectData.Name).OrderBy(m => m.Key))
+                    {
+                        Console.WriteLine("{1}\t{0}", e.Key, e.Count());
+                    }
+                }
+
+                if (Ops.Contains(Modes.RenameSession))
+                {
+                    Log.Write("{0}: Renaming session to {1}", nameof(HandleArguments), SessionName);
+                    SF.SetSessionName(SessionName);
+                    Changes = true;
+                }
+
+                if (Ops.Contains(Modes.Pack))
+                {
+                    string NewFile;
+                    FileStream OUT;
+                    FS.Seek(0, SeekOrigin.Begin);
+                    if (IsGz)
+                    {
+                        if (Filename.ToLower().EndsWith(".sav.gz"))
+                        {
+                            NewFile = Path.ChangeExtension(Filename, null);
+                        }
+                        else
+                        {
+                            NewFile = Path.ChangeExtension(Filename, ".sav");
+                        }
+                    }
+                    else
+                    {
+                        NewFile = Filename + ".gz";
+                    }
+                    try
+                    {
+                        OUT = File.Create(NewFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Can't create output file");
+                        Log.Write("{0}: Can't create {1}", nameof(HandleArguments), NewFile);
+                        Log.Write(ex);
+                        return RET.IO;
+                    }
+                    Log.Write("{0}: {1} file", nameof(HandleArguments), IsGz ? "Compressing" : "Decompressing");
+                    using (OUT)
+                    {
+                        if (IsGz)
+                        {
+                            Compression.DecompressStream(FS, OUT);
+                        }
+                        else
+                        {
+                            Compression.CompressStream(FS, OUT);
+                        }
+                    }
+                    Log.Write("{0}: {1} file OK", nameof(HandleArguments), IsGz ? "Compressing" : "Decompressing");
+                }
+                if (Changes)
+                {
+                    Log.Write("{0}: Writing back changes", nameof(HandleArguments));
+                    FS.Seek(0, SeekOrigin.Begin);
+                    SF.Export(FS);
+                    FS.Flush();
+                    FS.SetLength(FS.Position);
+                }
+            }
+
+            return RET.SUCCESS;
+        }
+
+        private static bool Check(bool Pass, string Message)
+        {
+            Console.ForegroundColor = Pass ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine("[{1}]: {0}", Message, Pass ? "PASS" : "FAIL");
+            Console.ResetColor();
+            return Pass;
         }
 
         private static void Test()
@@ -214,7 +451,14 @@ namespace SatisfactorySaveEditor
 
         private static void Help()
         {
-            Console.Error.WriteLine("SatisfactorySaveEditor.exe [SaveFile]");
+            Console.Error.WriteLine(@"SatisfactorySaveEditor.exe [/verify] [/list] [/pack] [/rename <new-name>] [SaveFile]
+Satisfactory Save File Editor
+
+/verify    - Reads the entire file and verifies basic constraints
+/list      - Lists all entries and counts them
+/pack      - Compresses file if uncompressed, or uncompresses if compressed.
+/rename    - Renames the session
+SaveFile   - File to open. Required argument if switches are used");
         }
     }
 }
