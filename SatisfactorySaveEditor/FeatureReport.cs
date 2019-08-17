@@ -65,6 +65,7 @@ namespace SatisfactorySaveEditor
             //Don't bother reporting if it doesn't works
             if (Id == Guid.Empty)
             {
+                Log.Write("{0}: Reporting Failed. ID not set", nameof(FeatureReport));
                 return;
             }
             //Prevent multiple reports from stacking up
