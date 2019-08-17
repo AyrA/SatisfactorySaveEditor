@@ -10,6 +10,8 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public class SaveFile : ICloneable
     {
+        public const string DEFAULT_LEVEL_TYPE = "Persistent_Level";
+
         /// <summary>
         /// File format version
         /// </summary>
@@ -122,6 +124,16 @@ namespace SatisfactorySaveEditor
             {
                 StringList.Add(new PropertyString(BR));
             }
+        }
+
+        public void SetSessionName(string NewName)
+        {
+            if(string.IsNullOrWhiteSpace(NewName))
+            {
+                throw new ArgumentException("NewName must not be empty", "NewName");
+            }
+            SessionName = NewName;
+            Properties["sessionName"] = NewName;
         }
 
         /// <summary>

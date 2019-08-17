@@ -656,7 +656,7 @@ Once done, you will be able to link two containers together so they share their 
                     if (FH.ShowDialog() == DialogResult.OK)
                     {
                         NameChanged |= (F.SessionName != FH.SessionName);
-                        F.SessionName = FH.SessionName;
+                        F.SetSessionName(FH.SessionName);
                         F.PlayTime = TimeSpan.Parse(FH.PlayTime);
                         HasChange = true;
                         SetTitle();
