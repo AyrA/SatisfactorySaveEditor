@@ -512,5 +512,15 @@ namespace SatisfactorySaveEditor
         {
             return Application.OpenForms.OfType<T>().FirstOrDefault();
         }
+
+        public static bool IsMatch(string Str, string Expression)
+        {
+            return Regex.IsMatch(Str, Expression);
+        }
+
+        public static Match[] Matches(string Str,string Expression)
+        {
+            return Regex.Matches(Str, Expression).OfType<Match>().ToArray();
+        }
     }
 }
