@@ -71,13 +71,14 @@ namespace SatisfactorySaveEditor
             List,
             Pack,
             RenameSession,
-            Render
+            Render,
+            Info
         }
 
         [STAThread]
         static int Main(string[] args)
         {
-            args = @"/render|C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\Experimental.sav".Split('|');
+            args = @"/info|C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\Experimental.sav".Split('|');
             Log.Write("Application version {0} start", Tools.CurrentVersion);
             FeatureReport.Id = Guid.Empty;
             //Set "NOFORM" to better experiment
@@ -179,6 +180,9 @@ namespace SatisfactorySaveEditor
                         break;
                     case "/render":
                         Ops.Add(Modes.Render);
+                        break;
+                    case "/info":
+                        Ops.Add(Modes.Info);
                         break;
                     case "/rename":
                         Ops.Add(Modes.RenameSession);
@@ -303,6 +307,24 @@ namespace SatisfactorySaveEditor
                         Console.WriteLine("Saving image...");
                         IMG.Save(ImgFile);
                     }
+                }
+
+                if (Ops.Contains(Modes.Info))
+                {
+                    Log.Write("{0}: Showing game info", nameof(HandleArguments));
+                    Console.WriteLine("Save File Size:\t{0}", FS.Position);
+                    Console.WriteLine("Build Version:\t{0}", SF.BuildVersion);
+                    Console.WriteLine("Save Version:\t{0}", SF.SaveVersion);
+                    Console.WriteLine("Header Version:\t{0}", SF.SaveHeaderVersion);
+                    Console.WriteLine("Session Name:\t{0}", SF.SessionName);
+                    Console.WriteLine("Save Date:\t{0}", SF.SaveDate);
+                    Console.WriteLine("Play Time:\t{0}", SF.PlayTime);
+                    foreach (var KV in SF.Properties)
+                    {
+                        Console.WriteLine("{0}:\t{1}", KV.Key, KV.Value);
+                    }
+                    Console.WriteLine("Object Count:\t{0}", SF.Entries.Count);
+                    Console.WriteLine("String List:\t{0}", SF.StringList.Count);
                 }
 
                 if (Ops.Contains(Modes.RenameSession))
@@ -477,6 +499,7 @@ Satisfactory Save File Editor
 /pack      - Compresses file if uncompressed, or uncompresses if compressed.
 /rename    - Renames the session
 /render    - Renders a PNG image of the map into the same directory (replaces .sav with .png)
+Info       - Print some basic information
 SaveFile   - File to open. Required argument if switches are used");
         }
     }
