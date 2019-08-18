@@ -70,13 +70,14 @@ namespace SatisfactorySaveEditor
             Verify,
             List,
             Pack,
-            RenameSession
+            RenameSession,
+            Render
         }
 
         [STAThread]
         static int Main(string[] args)
         {
-            args = @"/verify|C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\Foundation.sav".Split('|');
+            args = @"/render|C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\Experimental.sav".Split('|');
             Log.Write("Application version {0} start", Tools.CurrentVersion);
             FeatureReport.Id = Guid.Empty;
             //Set "NOFORM" to better experiment
@@ -175,6 +176,9 @@ namespace SatisfactorySaveEditor
                         break;
                     case "/pack":
                         Ops.Add(Modes.Pack);
+                        break;
+                    case "/render":
+                        Ops.Add(Modes.Render);
                         break;
                     case "/rename":
                         Ops.Add(Modes.RenameSession);
@@ -284,6 +288,20 @@ namespace SatisfactorySaveEditor
                     foreach (var e in SF.Entries.GroupBy(m => m.ObjectData.Name).OrderBy(m => m.Key))
                     {
                         Console.WriteLine("{1}\t{0}", e.Key, e.Count());
+                    }
+                }
+
+                if (Ops.Contains(Modes.Render))
+                {
+                    var ImgFile = Path.ChangeExtension(Filename, ".png");
+                    Log.Write("{0}: Rendering map as original size to {1}", nameof(HandleArguments), ImgFile);
+                    Console.WriteLine("Initializing image...");
+                    MapRender.Init(-1, -1);
+                    Console.WriteLine("Rendering file...");
+                    using (var IMG = MapRender.RenderFile(SF, 8.192))
+                    {
+                        Console.WriteLine("Saving image...");
+                        IMG.Save(ImgFile);
                     }
                 }
 
@@ -451,13 +469,14 @@ namespace SatisfactorySaveEditor
 
         private static void Help()
         {
-            Console.Error.WriteLine(@"SatisfactorySaveEditor.exe [/verify] [/list] [/pack] [/rename <new-name>] [SaveFile]
+            Console.Error.WriteLine(@"SatisfactorySaveEditor.exe [/verify] [/list] [/pack] [/render] [/rename <new-name>] [SaveFile]
 Satisfactory Save File Editor
 
 /verify    - Reads the entire file and verifies basic constraints
 /list      - Lists all entries and counts them
 /pack      - Compresses file if uncompressed, or uncompresses if compressed.
 /rename    - Renames the session
+/render    - Renders a PNG image of the map into the same directory (replaces .sav with .png)
 SaveFile   - File to open. Required argument if switches are used");
         }
     }
