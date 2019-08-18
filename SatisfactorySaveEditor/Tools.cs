@@ -18,6 +18,38 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public static class Tools
     {
+        /// <summary>
+        /// Dimensions to map game vectors to relative coordinates (0.0 - 1.0)
+        /// </summary>
+        public struct VectorDimensions
+        {
+            //NOTE: ONLY GUESSES, FEEL FREE TO IMPROVE
+
+            /// <summary>
+            /// Coordinate that is at the left border of the map image
+            /// </summary>
+            public const int MIN_X = -325000;
+            /// <summary>
+            /// Coordinate that is at the right border of the map image
+            /// </summary>
+            public const int MAX_X = 428000;
+            /// <summary>
+            /// Coordinate that is at the top border of the map image
+            /// </summary>
+            public const int MIN_Y = -370000;
+            /// <summary>
+            /// Coordinate that is at the bottom border of the map image
+            /// </summary>
+            public const int MAX_Y = 375000;
+            /// <summary>
+            /// Total width of the map
+            /// </summary>
+            public const int SIZE_X = MAX_X - MIN_X;
+            /// <summary>
+            /// Total height of the map
+            /// </summary>
+            public const int SIZE_Y = MAX_Y - MIN_Y;
+        }
 
         /// <summary>
         /// Gets the current version without depending on the System.Windows.Forms namespace
@@ -100,15 +132,8 @@ namespace SatisfactorySaveEditor
         /// <returns>Image coordinates (relative, 0-1)</returns>
         public static PointF TranslateFromMap(Vector3 V)
         {
-            //NOTE: ONLY A GUESS, FEEL FREE TO IMPROVE
-            const int MIN_X = -330000;
-            const int MAX_X = 428000;
-            const int MIN_Y = -370000;
-            const int MAX_Y = 370000;
-            const int SIZE_X = MAX_X - MIN_X;
-            const int SIZE_Y = MAX_Y - MIN_Y;
             //Map dimensions
-            Rectangle R = new Rectangle(MIN_X, MIN_Y, SIZE_X, SIZE_Y);
+            Rectangle R = new Rectangle(VectorDimensions.MIN_X, VectorDimensions.MIN_Y, VectorDimensions.SIZE_X, VectorDimensions.SIZE_Y);
             var X = Math.Min(1f, Math.Max(0f, (V.X - R.X) / R.Width));
             var Y = Math.Min(1f, Math.Max(0f, (V.Y - R.Y) / R.Height));
             return new PointF(X, Y);
@@ -121,17 +146,10 @@ namespace SatisfactorySaveEditor
         /// <returns>Game coordinate</returns>
         public static Vector3 TranslateToMap(PointF Source)
         {
-            //NOTE: ONLY A GUESS, FEEL FREE TO IMPROVE
-            const int MIN_X = -330000;
-            const int MAX_X = 428000;
-            const int MIN_Y = -370000;
-            const int MAX_Y = 370000;
-            const int SIZE_X = MAX_X - MIN_X;
-            const int SIZE_Y = MAX_Y - MIN_Y;
             //Map dimensions
-            var OffsetX = Source.X * (SIZE_X);
-            var OffsetY = Source.Y * (SIZE_Y);
-            return new Vector3(OffsetX + MIN_X, OffsetY + MIN_Y, 0);
+            var OffsetX = Source.X * (VectorDimensions.SIZE_X);
+            var OffsetY = Source.Y * (VectorDimensions.SIZE_Y);
+            return new Vector3(OffsetX + VectorDimensions.MIN_X, OffsetY + VectorDimensions.MIN_Y, 0);
         }
 
         /// <summary>
@@ -518,7 +536,7 @@ namespace SatisfactorySaveEditor
             return Regex.IsMatch(Str, Expression);
         }
 
-        public static Match[] Matches(string Str,string Expression)
+        public static Match[] Matches(string Str, string Expression)
         {
             return Regex.Matches(Str, Expression).OfType<Match>().ToArray();
         }
