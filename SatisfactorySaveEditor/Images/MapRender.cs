@@ -20,7 +20,7 @@ namespace SatisfactorySaveEditor
         /// Size (in pixels) of the object
         /// </summary>
         /// <remarks>This is used as width and height of the square that is plotted</remarks>
-        public int ObjectSize;
+        public double ObjectSize;
         /// <summary>
         /// Relative (0-1) location on the map
         /// </summary>
@@ -29,19 +29,19 @@ namespace SatisfactorySaveEditor
         /// <summary>
         /// Creates a DrawObject from template data
         /// </summary>
-        /// <param name="E">Game object</param>
-        /// <param name="C">Color</param>
-        /// <param name="S">Object size</param>
-        public DrawObject(SaveFileEntry E, Color C = default(Color), int S = 0)
+        /// <param name="Entry">Game object</param>
+        /// <param name="ItemColor">Color</param>
+        /// <param name="ItemSize">Object size</param>
+        public DrawObject(SaveFileEntry Entry, Color ItemColor = default(Color), double ItemSize = 0)
         {
-            if (E.EntryType != OBJECT_TYPE.OBJECT)
+            if (Entry.EntryType != OBJECT_TYPE.OBJECT)
             {
                 throw new ArgumentException("Only game objects are supported as draw object");
             }
-            var OD = (GameObject)E.ObjectData;
+            var OD = (GameObject)Entry.ObjectData;
             ObjectPosition = Tools.TranslateFromMap(OD.ObjectPosition);
-            ObjectColor = C;
-            ObjectSize = S;
+            ObjectColor = ItemColor;
+            ObjectSize = ItemSize;
         }
 
         /// <summary>
@@ -50,13 +50,13 @@ namespace SatisfactorySaveEditor
         /// <param name="ScaleW">Image width</param>
         /// <param name="ScaleH">Image height</param>
         /// <returns>Absolute image coordinates</returns>
-        public Rectangle GetRectangle(int ScaleW, int ScaleH)
+        public RectangleF GetRectangle(int ScaleW, int ScaleH)
         {
-            return new Rectangle(
+            return new RectangleF(
                 (int)(ObjectPosition.X * ScaleW),
                 (int)(ObjectPosition.Y * ScaleH),
-                ObjectSize,
-                ObjectSize);
+                (float)ObjectSize,
+                (float)ObjectSize);
         }
     }
 
@@ -67,6 +67,8 @@ namespace SatisfactorySaveEditor
     {
         public const int DEFAULT_WIDTH = 1000;
         public const int DEFAULT_HEIGHT = 1000;
+        public const int ORIGINAL_WIDTH = -1;
+        public const int ORIGINAL_HEIGHT = -1;
 
         /// <summary>
         /// Unaltered base image
@@ -127,7 +129,22 @@ namespace SatisfactorySaveEditor
                 {
                     ScaledImage.Dispose();
                 }
-                ScaledImage = Tools.ResizeImage(BaseImage, MaxWidth, MaxHeight);
+                if (MaxWidth == ORIGINAL_WIDTH && MaxHeight == ORIGINAL_HEIGHT)
+                {
+                    ScaledImage = (Image)BaseImage.Clone();
+                }
+                else
+                {
+                    if (MaxWidth == ORIGINAL_WIDTH)
+                    {
+                        MaxWidth = BaseImage.Width;
+                    }
+                    if (MaxHeight == ORIGINAL_HEIGHT)
+                    {
+                        MaxHeight = BaseImage.Height;
+                    }
+                    ScaledImage = Tools.ResizeImage(BaseImage, MaxWidth, MaxHeight);
+                }
             }
         }
 
@@ -184,10 +201,10 @@ namespace SatisfactorySaveEditor
         /// </summary>
         /// <param name="F">Save File</param>
         /// <returns>Map</returns>
-        public static Image RenderFile(SaveFile F)
+        public static Image RenderFile(SaveFile F, double factor = 1.0)
         {
             Init();
-            return RenderEntries(F.Entries);
+            return RenderEntries(F.Entries, factor);
         }
 
         /// <summary>
@@ -195,14 +212,14 @@ namespace SatisfactorySaveEditor
         /// </summary>
         /// <param name="Entries">Save File Entries</param>
         /// <returns>Map</returns>
-        public static Image RenderEntries(IEnumerable<SaveFileEntry> Entries)
+        public static Image RenderEntries(IEnumerable<SaveFileEntry> Entries, double factor = 1.0)
         {
             Init();
             var Objects = new List<DrawObject>();
 
             foreach (var P in Entries.Where(m => m.EntryType == OBJECT_TYPE.OBJECT))
             {
-                var O = new DrawObject(P, Color.Green, 2);
+                var O = new DrawObject(P, Color.Green, 2 * factor);
                 //Change color according to object type
                 if (P.ObjectData.Name.Contains("Build"))
                 {
@@ -225,7 +242,7 @@ namespace SatisfactorySaveEditor
             //Enumerate players seperately because we want them bigger
             foreach (var P in Entries.Where(m => m.ObjectData.Name == "/Game/FactoryGame/Character/Player/Char_Player.Char_Player_C"))
             {
-                Objects.Add(new DrawObject(P, Color.Red, 10));
+                Objects.Add(new DrawObject(P, Color.Red, 10 * factor));
             }
 
             Log.Write("Map: Rendering {0} entries as {1} objects", Entries.Count(), Objects.Count);
