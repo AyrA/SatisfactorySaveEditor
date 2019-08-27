@@ -41,7 +41,11 @@ namespace SatisfactorySaveEditor
             /// <summary>
             /// Application was terminated due to an unhandled exception
             /// </summary>
-            TerminateByError
+            TerminateByError,
+            /// <summary>
+            /// The image renderer crashed
+            /// </summary>
+            RendererCrash
         }
 
         public static Guid Id

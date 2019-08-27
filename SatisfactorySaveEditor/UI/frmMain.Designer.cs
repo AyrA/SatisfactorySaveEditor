@@ -78,17 +78,18 @@
             this.clearStringListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractAudioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateAvailableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
             this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetRendererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -219,7 +220,7 @@
             this.removeAnimalPartsToolStripMenuItem,
             this.removeAnimalsToolStripMenuItem});
             this.mapFeaturesToolStripMenuItem.Name = "mapFeaturesToolStripMenuItem";
-            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mapFeaturesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.mapFeaturesToolStripMenuItem.Text = "&Map Features";
             this.mapFeaturesToolStripMenuItem.ToolTipText = "Map/Environment specifics";
             // 
@@ -332,7 +333,7 @@
             this.resetToolStripMenuItem,
             this.restorePickupsToolStripMenuItem});
             this.dropPodsToolStripMenuItem.Name = "dropPodsToolStripMenuItem";
-            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dropPodsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.dropPodsToolStripMenuItem.Text = "&Drop Pods";
             this.dropPodsToolStripMenuItem.ToolTipText = "Actions for Drop Pods";
             // 
@@ -357,7 +358,7 @@
             this.funToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resizeDoggosToolStripMenuItem});
             this.funToolStripMenuItem.Name = "funToolStripMenuItem";
-            this.funToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.funToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.funToolStripMenuItem.Text = "&Fun";
             this.funToolStripMenuItem.ToolTipText = "Funny changes that don\'t have a benefit to them";
             // 
@@ -419,7 +420,7 @@
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.modifyToolStripMenuItem.Text = "&Modify";
             this.modifyToolStripMenuItem.ToolTipText = "Modifies an inventory";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
@@ -427,7 +428,7 @@
             // linkTogetherToolStripMenuItem
             // 
             this.linkTogetherToolStripMenuItem.Name = "linkTogetherToolStripMenuItem";
-            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.linkTogetherToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.linkTogetherToolStripMenuItem.Text = "&Link together";
             this.linkTogetherToolStripMenuItem.ToolTipText = "Links two inventories together";
             this.linkTogetherToolStripMenuItem.Click += new System.EventHandler(this.linkTogetherToolStripMenuItem_Click);
@@ -517,7 +518,8 @@
             // 
             this.moreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.extractAudioToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.resetRendererToolStripMenuItem});
             this.moreToolStripMenuItem.Name = "moreToolStripMenuItem";
             this.moreToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.moreToolStripMenuItem.Text = "&More";
@@ -531,6 +533,14 @@
             this.extractAudioToolStripMenuItem.Text = "&Extract Audio";
             this.extractAudioToolStripMenuItem.ToolTipText = "Extract all WAV audio containers from the game";
             this.extractAudioToolStripMenuItem.Click += new System.EventHandler(this.extractAudioToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Text = "&Settings";
+            this.settingsToolStripMenuItem.ToolTipText = "Change application settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -569,6 +579,22 @@
             this.changelogToolStripMenuItem.ToolTipText = "Shows the changes in each version";
             this.changelogToolStripMenuItem.Click += new System.EventHandler(this.changelogToolStripMenuItem_Click);
             // 
+            // websiteToolStripMenuItem
+            // 
+            this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.websiteToolStripMenuItem.Text = "&Website";
+            this.websiteToolStripMenuItem.ToolTipText = "Opens the satisfactory editor Website";
+            this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check for &Updates";
+            this.checkForUpdatesToolStripMenuItem.ToolTipText = "Manually checks for updates in the background";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
             // updateAvailableToolStripMenuItem
             // 
             this.updateAvailableToolStripMenuItem.ForeColor = System.Drawing.Color.Red;
@@ -591,29 +617,13 @@
             this.SFD.Filter = "Save Files|*.sav";
             this.SFD.Title = "Save Changes";
             // 
-            // settingsToolStripMenuItem
+            // resetRendererToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.settingsToolStripMenuItem.Text = "&Settings";
-            this.settingsToolStripMenuItem.ToolTipText = "Change application settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // websiteToolStripMenuItem
-            // 
-            this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.websiteToolStripMenuItem.Text = "&Website";
-            this.websiteToolStripMenuItem.ToolTipText = "Opens the satisfactory editor Website";
-            this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
-            // 
-            // checkForUpdatesToolStripMenuItem
-            // 
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.checkForUpdatesToolStripMenuItem.Text = "Check for &Updates";
-            this.checkForUpdatesToolStripMenuItem.ToolTipText = "Manually checks for updates in the background";
-            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            this.resetRendererToolStripMenuItem.Name = "resetRendererToolStripMenuItem";
+            this.resetRendererToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetRendererToolStripMenuItem.Text = "&Reset Renderer";
+            this.resetRendererToolStripMenuItem.Visible = false;
+            this.resetRendererToolStripMenuItem.Click += new System.EventHandler(this.resetRendererToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -698,5 +708,6 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem websiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetRendererToolStripMenuItem;
     }
 }

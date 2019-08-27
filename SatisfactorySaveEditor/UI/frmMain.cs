@@ -15,6 +15,10 @@ namespace SatisfactorySaveEditor
     public partial class frmMain : Form
     {
         /// <summary>
+        /// Disables image rendering entirely
+        /// </summary>
+        private bool RenderImage = true;
+        /// <summary>
         /// File name of the currently edited file
         /// </summary>
         private string FileName = null;
@@ -125,19 +129,30 @@ namespace SatisfactorySaveEditor
             //Don't block the application startup with the image rendering stuff
             Thread T = new Thread(delegate ()
             {
-                Log.Write("{0}: Rendering map", GetType().Name);
-                MapRender.Init();
+                Log.Write("{0}: Rendering initial map", GetType().Name);
+                try
+                {
+                    MapRender.Init();
+                }
+                catch (Exception ex)
+                {
+                    Log.Write("{0}: Rendering initial map failed", GetType().Name);
+                    Log.Write(ex);
+                    BackgroundImage = new Bitmap(1, 1);
+                    DisableImageRendering();
+                    return;
+                }
                 var img = MapRender.GetMap();
                 Invoke((MethodInvoker)delegate
                 {
                     BackgroundImage = img;
-                    //Open initial file is supplied
+                    //Open initial file if supplied
                     if (!string.IsNullOrEmpty(InitialFile))
                     {
                         try
                         {
-                            OpenFile(InitialFile);
                             FeatureReport.Used(FeatureReport.Feature.OpenByCommandLine);
+                            OpenFile(InitialFile);
                         }
                         catch (Exception ex)
                         {
@@ -382,36 +397,86 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
         /// </summary>
         private void RedrawMap()
         {
+            if (!RenderImage)
+            {
+                Log.Write("{0}: Map Rendering is disabled in RedrawMap()", GetType().Name);
+                return;
+            }
             Log.Write("{0}: Rendering Map", GetType().Name);
             BackgroundImage.Dispose();
             if (F != null)
             {
-                using (var BMP = MapRender.RenderFile(F))
+                try
                 {
-                    //Add file info string
-                    using (var G = Graphics.FromImage(BMP))
+                    using (var BMP = MapRender.RenderFile(F))
                     {
-                        var Info = string.Format("{0}: {1} {2}",
-                            Path.GetFileName(FileName),
-                            DateTime.Now.ToShortDateString(),
-                            DateTime.Now.ToShortTimeString());
-                        using (var F = new Font("Arial", 16))
+                        //Add file info string
+                        using (var G = Graphics.FromImage(BMP))
                         {
-                            var Pos = G.MeasureString(Info, F);
-                            G.DrawString(
-                                Info, F,
-                                Brushes.Red,
-                                (int)(BMP.Width - Pos.Width),
-                                (int)(BMP.Height - Pos.Height));
+                            var Info = string.Format("{0}: {1} {2}",
+                                Path.GetFileName(FileName),
+                                DateTime.Now.ToShortDateString(),
+                                DateTime.Now.ToShortTimeString());
+                            using (var F = new Font("Arial", 16))
+                            {
+                                var Pos = G.MeasureString(Info, F);
+                                G.DrawString(
+                                    Info, F,
+                                    Brushes.Red,
+                                    (int)(BMP.Width - Pos.Width),
+                                    (int)(BMP.Height - Pos.Height));
+                            }
                         }
+                        Log.Write("{0}: Setting map image", GetType().Name);
+                        BackgroundImage = new Bitmap(BMP);
+                        Log.Write("{0}: Saving map image", GetType().Name);
+                        BMP.Save(Path.ChangeExtension(FileName, "png"));
                     }
-                    BackgroundImage = new Bitmap(BMP);
-                    BMP.Save(Path.ChangeExtension(FileName, "png"));
+                }
+                catch (Exception ex)
+                {
+                    Log.Write("{0}: Error when rendering bitmap", GetType().Name);
+                    Log.Write(ex);
+                    DisableImageRendering();
                 }
             }
             else
             {
-                BackgroundImage = MapRender.GetMap();
+                Log.Write("{0}: No file loaded. Drawing empty map", GetType().Name);
+                try
+                {
+                    BackgroundImage = MapRender.GetMap();
+                }
+                catch (Exception ex)
+                {
+                    Log.Write("{0}: Error when rendering bitmap", GetType().Name);
+                    Log.Write(ex);
+                    DisableImageRendering();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Disables image rendering and dependents of rendered images
+        /// </summary>
+        private void DisableImageRendering()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)DisableImageRendering);
+            }
+            else
+            {
+                if (RenderImage)
+                {
+                    FeatureReport.Used(FeatureReport.Feature.RendererCrash);
+                    RenderImage = false;
+                    resetRendererToolStripMenuItem.Visible = true;
+                    rangeDeleterToolStripMenuItem.Visible = false;
+                    Tools.E(@"Map image rendering and the region based deleter have been temporarily disabled due to an error.
+This is usually the result of memory constraints.
+Images are generated again once you restart the application or use the 'Reset Renderer' menu option in 'Settings'.", "Map Image");
+                }
             }
         }
 
@@ -485,6 +550,9 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
             S.LastVersionLogShown = Tools.CurrentVersion.ToString();
         }
 
+        /// <summary>
+        /// Changes the UI according to new settings
+        /// </summary>
         private void HandleSettingsChange()
         {
             checkForUpdatesToolStripMenuItem.Visible = !S.AutoUpdate;
@@ -987,6 +1055,20 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
         private void websiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://cable.ayra.ch/satisfactory/editor");
+        }
+
+        private void resetRendererToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!RenderImage)
+            {
+                if (MessageBox.Show("Resetting the image renderer will also immediately try to render the image again. Continue", "Reset Image Renderer", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    resetRendererToolStripMenuItem.Visible = false;
+                    rangeDeleterToolStripMenuItem.Visible = true;
+                    RenderImage = true;
+                    RedrawMap();
+                }
+            }
         }
 
         #endregion

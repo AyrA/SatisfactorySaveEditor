@@ -78,7 +78,7 @@ namespace SatisfactorySaveEditor
         [STAThread]
         static int Main(string[] args)
         {
-            args = @"/info|C:\Users\AyrA\AppData\Local\FactoryGame\Saved\SaveGames\Experimental.sav".Split('|');
+            args = @"C:\Apache24\htdocs\satisfactory\error\2.2.0.0\1566910028\file.sav".Split('_');
             Log.Write("Application version {0} start", Tools.CurrentVersion);
             FeatureReport.Id = Guid.Empty;
             //Set "NOFORM" to better experiment
