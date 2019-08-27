@@ -19,7 +19,9 @@ namespace SatisfactorySaveEditor
             InitializeComponent();
             Tools.SetupKeyHandlers(this);
 
+            //All entries in the map
             AllEntries = Entries.ToArray();
+            //Entries that have a valid position
             MapEntries = AllEntries
                 .Where(m => m.EntryType == ObjectTypes.OBJECT_TYPE.OBJECT && !((ObjectTypes.GameObject)m.ObjectData).ObjectPosition.Equals(Blank))
                 .ToArray();
@@ -51,7 +53,6 @@ namespace SatisfactorySaveEditor
         {
             if (lvCount.SelectedItems.Count > 0)
             {
-                var Blank = new Vector3(0, 0, 0);
                 var Selected = lvCount.SelectedItems
                     .OfType<ListViewItem>()
                     .SelectMany(m => MapEntries.Where(n => n.ObjectData.Name == m.Tag.ToString()))
@@ -59,8 +60,20 @@ namespace SatisfactorySaveEditor
                     .ToArray();
                 if (Selected.Length > 0)
                 {
+                    Image I = null;
+                    try
+                    {
+                        I = MapRender.Render(Selected);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Write("{0}: Unable to render selection", GetType().Name);
+                        Log.Write(ex);
+                        Tools.E("Unable to render your selection. This is usually the result of memory constraints or a corrupted executable.", "Item rendering error");
+                        return;
+                    }
                     MapRender.MapForm.BackgroundImage.Dispose();
-                    MapRender.MapForm.BackgroundImage = MapRender.Render(Selected);
+                    MapRender.MapForm.BackgroundImage = I;
                 }
                 else
                 {

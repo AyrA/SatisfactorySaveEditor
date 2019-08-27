@@ -397,21 +397,32 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
         /// </summary>
         private void RedrawMap()
         {
+            Image I = null;
             if (!RenderImage)
             {
                 Log.Write("{0}: Map Rendering is disabled in RedrawMap()", GetType().Name);
                 return;
             }
             Log.Write("{0}: Rendering Map", GetType().Name);
-            BackgroundImage.Dispose();
             if (F != null)
             {
                 try
                 {
-                    using (var BMP = MapRender.RenderFile(F))
+                    I = MapRender.RenderFile(F);
+                }
+                catch (Exception ex)
+                {
+                    Log.Write("{0}: Error when rendering bitmap", GetType().Name);
+                    Log.Write(ex);
+                    DisableImageRendering();
+                    return;
+                }
+                try
+                {
+                    using (I)
                     {
                         //Add file info string
-                        using (var G = Graphics.FromImage(BMP))
+                        using (var G = Graphics.FromImage(I))
                         {
                             var Info = string.Format("{0}: {1} {2}",
                                 Path.GetFileName(FileName),
@@ -419,18 +430,20 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
                                 DateTime.Now.ToShortTimeString());
                             using (var F = new Font("Arial", 16))
                             {
+                                //Align to the bottom right corner of the image
                                 var Pos = G.MeasureString(Info, F);
                                 G.DrawString(
                                     Info, F,
                                     Brushes.Red,
-                                    (int)(BMP.Width - Pos.Width),
-                                    (int)(BMP.Height - Pos.Height));
+                                    (int)(I.Width - Pos.Width),
+                                    (int)(I.Height - Pos.Height));
                             }
                         }
-                        Log.Write("{0}: Setting map image", GetType().Name);
-                        BackgroundImage = new Bitmap(BMP);
-                        Log.Write("{0}: Saving map image", GetType().Name);
-                        BMP.Save(Path.ChangeExtension(FileName, "png"));
+                        Log.Write("{0}: Setting map image in form", GetType().Name);
+                        BackgroundImage.Dispose();
+                        BackgroundImage = new Bitmap(I);
+                        Log.Write("{0}: Saving map image to file", GetType().Name);
+                        I.Save(Path.ChangeExtension(FileName, "png"));
                     }
                 }
                 catch (Exception ex)
@@ -445,6 +458,7 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
                 Log.Write("{0}: No file loaded. Drawing empty map", GetType().Name);
                 try
                 {
+                    BackgroundImage.Dispose();
                     BackgroundImage = MapRender.GetMap();
                 }
                 catch (Exception ex)
@@ -472,8 +486,7 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
                     FeatureReport.Used(FeatureReport.Feature.RendererCrash);
                     RenderImage = false;
                     resetRendererToolStripMenuItem.Visible = true;
-                    rangeDeleterToolStripMenuItem.Visible = false;
-                    Tools.E(@"Map image rendering and the region based deleter have been temporarily disabled due to an error.
+                    Tools.E(@"Map image rendering has been temporarily disabled due to an error.
 This is usually the result of memory constraints.
 Images are generated again once you restart the application or use the 'Reset Renderer' menu option in 'Settings'.", "Map Image");
                 }
@@ -1064,7 +1077,6 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
                 if (MessageBox.Show("Resetting the image renderer will also immediately try to render the image again. Continue", "Reset Image Renderer", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     resetRendererToolStripMenuItem.Visible = false;
-                    rangeDeleterToolStripMenuItem.Visible = true;
                     RenderImage = true;
                     RedrawMap();
                 }
