@@ -27,7 +27,7 @@ namespace SatisfactorySaveEditor
             HasChange = false;
             Points = new List<PointF>();
             InitializeComponent();
-            pbMap.Image = MapRender.RenderFile(F);
+            RedrawMap(F.Entries);
             Tools.SetupKeyHandlers(this);
         }
 
@@ -137,7 +137,20 @@ namespace SatisfactorySaveEditor
         private void RedrawMap(IEnumerable<SaveFileEntry> Entries)
         {
             Log.Write("{0}: Redrawing the map. Points: {1}", GetType().Name, Points.Count);
-            var I = MapRender.RenderEntries(Entries);
+            Image I = null;
+            try
+            {
+                I = MapRender.RenderEntries(Entries);
+            }
+            catch(Exception ex)
+            {
+                Log.Write("{0}: Unable to render image in RedrawMap()", GetType().Name);
+                Log.Write(ex);
+                Tools.E(@"Unable to render the map image. This is usually the result of memory constraints or a corrupted executable.
+It is highly recommended that you verify the application integrity (check if it has a valid signature in the file properties).
+You can try to continue using this application but you might see reduced functionality whenever map drawing is involved.", "Item rendering error");
+                return;
+            }
             using (var G = Graphics.FromImage(I))
             {
                 //Render points

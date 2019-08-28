@@ -69,7 +69,9 @@ namespace SatisfactorySaveEditor
                     {
                         Log.Write("{0}: Unable to render selection", GetType().Name);
                         Log.Write(ex);
-                        Tools.E("Unable to render your selection. This is usually the result of memory constraints or a corrupted executable.", "Item rendering error");
+                        Tools.E(@"Unable to render your selection. This is usually the result of memory constraints or a corrupted executable.
+It is highly recommended that you verify the application integrity (check if it has a valid signature in the file properties).
+You can try to continue using this application but you might see reduced functionality whenever map drawing is involved.", "Item rendering error");
                         return;
                     }
                     MapRender.MapForm.BackgroundImage.Dispose();

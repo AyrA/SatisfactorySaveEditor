@@ -419,38 +419,55 @@ If something breaks, please open an issue on GitHub so we can fix it.", "Limited
                 }
                 try
                 {
-                    using (I)
+                    //Add file info string
+                    using (var G = Graphics.FromImage(I))
                     {
-                        //Add file info string
-                        using (var G = Graphics.FromImage(I))
+                        var Info = string.Format("{0}: {1} {2}",
+                            Path.GetFileName(FileName),
+                            DateTime.Now.ToShortDateString(),
+                            DateTime.Now.ToShortTimeString());
+                        using (var F = new Font("Arial", 16))
                         {
-                            var Info = string.Format("{0}: {1} {2}",
-                                Path.GetFileName(FileName),
-                                DateTime.Now.ToShortDateString(),
-                                DateTime.Now.ToShortTimeString());
-                            using (var F = new Font("Arial", 16))
-                            {
-                                //Align to the bottom right corner of the image
-                                var Pos = G.MeasureString(Info, F);
-                                G.DrawString(
-                                    Info, F,
-                                    Brushes.Red,
-                                    (int)(I.Width - Pos.Width),
-                                    (int)(I.Height - Pos.Height));
-                            }
+                            //Align to the bottom right corner of the image
+                            var Pos = G.MeasureString(Info, F);
+                            G.DrawString(
+                                Info, F,
+                                Brushes.Red,
+                                (int)(I.Width - Pos.Width),
+                                (int)(I.Height - Pos.Height));
                         }
-                        Log.Write("{0}: Setting map image in form", GetType().Name);
-                        BackgroundImage.Dispose();
-                        BackgroundImage = new Bitmap(I);
-                        Log.Write("{0}: Saving map image to file", GetType().Name);
-                        I.Save(Path.ChangeExtension(FileName, "png"));
                     }
+                    Log.Write("{0}: Setting map image in form", GetType().Name);
+                    BackgroundImage.Dispose();
+                    BackgroundImage = I;
                 }
                 catch (Exception ex)
                 {
                     Log.Write("{0}: Error when rendering bitmap", GetType().Name);
                     Log.Write(ex);
+                    try
+                    {
+                        I.Dispose();
+                    }
+                    finally
+                    {
+                        I = null;
+                    }
                     DisableImageRendering();
+                }
+                if (I != null)
+                {
+                    //Save image in its own "try" block because if only this fails it's not a rendering error.
+                    try
+                    {
+                        Log.Write("{0}: Saving map image to file", GetType().Name);
+                        I.Save(Path.ChangeExtension(FileName, "png"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Write("{0}: Unable to save map image to file", GetType().Name);
+                        Log.Write(ex);
+                    }
                 }
             }
             else
