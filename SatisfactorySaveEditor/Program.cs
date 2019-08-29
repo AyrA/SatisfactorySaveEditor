@@ -490,7 +490,7 @@ namespace SatisfactorySaveEditor
 
         private static void Help()
         {
-            Console.Error.WriteLine(@"SatisfactorySaveEditor.exe [/verify] [/list] [/pack] [/render] [/rename <new-name>] [SaveFile]
+            Console.Error.WriteLine(@"SatisfactorySaveEditor.exe [/verify] [/list] [/pack] [/render] [/info] [/rename <new-name>] [SaveFile]
 Satisfactory Save File Editor
 
 /verify    - Reads the entire file and verifies basic constraints
@@ -498,7 +498,7 @@ Satisfactory Save File Editor
 /pack      - Compresses file if uncompressed, or uncompresses if compressed.
 /rename    - Renames the session
 /render    - Renders a PNG image of the map into the same directory (replaces .sav with .png)
-Info       - Print some basic information
+/info      - Print some basic information
 SaveFile   - File to open. Required argument if switches are used");
         }
     }
