@@ -1,0 +1,13 @@
+﻿Version 2.3
+
+This is the latest version
+
+Visible changes:
+
+- Command line mode (see help of main window)
+- The session name change works properly now
+
+Invisible changes:
+
+- More robust handling of rendering errors
+- Logger logs crashes of the rendering engine now
