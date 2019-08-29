@@ -6,6 +6,7 @@ Visible changes:
 
 - Command line mode (see help of main window)
 - The session name change works properly now
+- Map coordinates have been refined to render positions more accurate 
 
 Invisible changes:
 
