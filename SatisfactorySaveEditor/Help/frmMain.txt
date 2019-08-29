@@ -44,3 +44,23 @@ Update Available Menu
 
 This red menu item is only shown when an update has been downloaded sucessfully and is ready for installation.
 Clicking this is optional. If you don't, the update is installed during the next launch.
+
+Command Line
+============
+
+Basic operations are available as command line mode now.
+This mode is invoked when at least one "switch" is provided.
+If only a file name is provided, it will open that file in the normal user interface mode.
+Be aware that this application is not a true command line application.
+It will spawn its own command line window and always waits for a user key press at the end.
+You can combine multiple arguments.
+
+Arguments: [/verify] [/list] [/pack] [/render] [/info] [/rename <new-name>] [SaveFile]
+
+/verify    - Reads the entire file and verifies basic constraints
+/list      - Lists all entries and counts them
+/pack      - Compresses file if uncompressed, or uncompresses if compressed.
+/rename    - Renames the session
+/render    - Renders a PNG image of the map into the same directory (replaces .sav with .png)
+/info      - Print some basic information
+SaveFile   - File to open. Required argument if switches are used
