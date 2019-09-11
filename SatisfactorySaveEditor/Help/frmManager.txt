@@ -1,28 +1,63 @@
 ﻿Satisfactory Save Editor manager
 
-Here you can manage all your save games.
+Here you can manage all your save games, locally and in the cloud.
 
-You can backup, restore, rename, delete and open them.
-
-Most options are available via the context menu.
-Keyboard: [ENTER] will open a file and [DEL] will delete a file.
+Most options are available via the context menu on the local and the cloud side.
+Keyboard (local side): [ENTER] will open a file and [DEL] will delete a file.
+Keyboard (cloud side): [ENTER] will preview a file and [DEL] will delete a file.
 For import/restore, press the button at the bottom.
+
+Context menu descriptions (local side):
 
 Open:
 This opens a save file in the current save file editor instance.
 You will lose any unsaved progress in a currently opened file.
 
-Delete:
-This deletes a save file after confirmation is given.
+Render:
+This shows a preview image of the map
+
+Upload:
+This uploads the file to the cloud.
 
 Rename:
 This renames a save file and/or session name.
 
-Backups:
+Backup:
+Creates a compressed backup in a location you can chose from
+
+Duplicate:
+Creates an exact copy of the selected file with a new name.
+
+Delete:
+This deletes a save file after confirmation is given.
+Will not delete copies in the cloud.
+
+Context menu descriptions (remote side):
+
+Download:
+Downloads the map to your local map collection
+
+Preview:
+This shows a preview image of the map
+
+Copy Hidden Id:
+Copies the hidden id, which can be used to install maps that are not public.
+
+Import Id:
+This imports a map by id.
+You can use the real or hidden id for this.
+
+Edit:
+Edits properties of this map (name, description, etc)
+
+Delete:
+Deletes the map from the cloud. Will not delete local copies.
+
+Format for backups:
 Backup files are gzip compressed to save on space.
 On average, the result will be less than 10% of the original save file size
 
-Import/Restore:
+Importing and restoring maps:
 The import function will autodetect if save files are compressed or not.
 
 Invalid files:

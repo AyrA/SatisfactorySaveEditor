@@ -10,14 +10,89 @@ namespace SatisfactorySaveEditor
 {
     public partial class frmManager : Form
     {
-        public frmManager()
+        private class MapView
         {
+            public SMRAPI.Responses.InfoResponse.map Map { get; private set; }
+
+            public MapView(SMRAPI.Responses.InfoResponse.map M)
+            {
+                Map = M;
+            }
+
+            public override string ToString()
+            {
+                return Map.name;
+            }
+        }
+
+        private Settings CurrentSettings;
+
+        public frmManager(Settings S)
+        {
+            CurrentSettings = S;
             InitializeComponent();
-            initFiles();
+            InitFiles();
+            InitCloud();
             Tools.SetupKeyHandlers(this);
         }
 
-        private void initFiles()
+        private void InitCloud()
+        {
+            lbCloud.Items.Clear();
+            if (SMRAPI.API.ApiKey != Guid.Empty)
+            {
+                lbCloud.Items.Add("Loading...");
+                Thread T = new Thread(delegate ()
+                {
+                    try
+                    {
+                        var Res = SMRAPI.API.Info();
+                        if (!Res.success)
+                        {
+                            throw new Exception(Res.msg);
+                        }
+                        var M = Res.data.maps;
+                        if (M != null && M.Length > 0)
+                        {
+                            Invoke((MethodInvoker)delegate ()
+                            {
+                                lbCloud.Items.Clear();
+                                foreach (var Map in M)
+                                {
+                                    lbCloud.Items.Add(new MapView(Map));
+                                }
+                            });
+                        }
+                        else
+                        {
+                            Invoke((MethodInvoker)delegate ()
+                            {
+                                lbCloud.Items.Clear();
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            lbCloud.Items.Clear();
+                            lbCloud.Items.Add("API problem. Press [F5] to try again");
+                            lbCloud.Items.Add("Double click to change your API key");
+                            lbCloud.Items.Add("Error: " + ex.Message);
+                        });
+                    }
+                });
+                T.IsBackground = true;
+                T.Start();
+            }
+            else
+            {
+                lbCloud.Items.Add("API not enabled");
+                lbCloud.Items.Add("Double click to enable");
+            }
+        }
+
+        private void InitFiles()
         {
             tvFiles.Nodes.Clear();
             var Sessions = new Dictionary<string, TreeNode>();
@@ -179,6 +254,8 @@ namespace SatisfactorySaveEditor
             Tools.E("This save file seems to be invalid and can't be read.", "Invalid save file");
         }
 
+        #region Form Events
+
         private void tvFiles_DoubleClick(object sender, EventArgs e)
         {
             OpenSelected();
@@ -284,7 +361,7 @@ namespace SatisfactorySaveEditor
                     renameToolStripMenuItem.Enabled = Opt;
                     backupToolStripMenuItem.Enabled = Opt;
 
-                    CMS.Show(tvFiles, e.Location);
+                    CMSLocal.Show(tvFiles, e.Location);
                     tvFiles.SelectedNode = e.Node;
                 }
             }
@@ -368,7 +445,7 @@ namespace SatisfactorySaveEditor
                                             GZS.CopyTo(OUT);
                                         }
                                     }
-                                    initFiles();
+                                    InitFiles();
                                     FeatureReport.Used(FeatureReport.Feature.RestoreBackup);
                                 }
                                 catch (Exception ex)
@@ -384,7 +461,7 @@ namespace SatisfactorySaveEditor
                                 using (var OUT = File.Create(NewName))
                                 {
                                     FS.CopyTo(OUT);
-                                    initFiles();
+                                    InitFiles();
                                 }
                             }
                         }
@@ -404,7 +481,7 @@ namespace SatisfactorySaveEditor
                                     {
                                         F.Export(OUT);
                                     }
-                                    initFiles();
+                                    InitFiles();
                                 }
                                 else
                                 {
@@ -476,7 +553,7 @@ namespace SatisfactorySaveEditor
                                             Log.Write(new Exception("Unable to delete the old copy", ex));
                                             Tools.E($"File renamed, but we are unable to delete the old copy. Please do so manually.\r\n{ex.Message}", "Unable to rename");
                                         }
-                                        initFiles();
+                                        InitFiles();
                                     }
                                 }
                             }
@@ -505,7 +582,7 @@ namespace SatisfactorySaveEditor
                     Tools.E($"Unable to duplicate file.\r\n{ex.Message}", "Duplication error");
                     return;
                 }
-                initFiles();
+                InitFiles();
             }
         }
 
@@ -513,5 +590,37 @@ namespace SatisfactorySaveEditor
         {
             Tools.ShowHelp(GetType().Name);
         }
+
+        private void frmManager_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                InitCloud();
+            }
+        }
+
+        private void lbCloud_DoubleClick(object sender, EventArgs e)
+        {
+            var Item = lbCloud.SelectedItem;
+            if (Item != null)
+            {
+                if (Item.GetType() == typeof(MapView))
+                {
+                    //Handle Map double click
+                }
+                else
+                {
+                    using (var ApiForm = new frmApiRegister(CurrentSettings))
+                    {
+                        if (ApiForm.ShowDialog() == DialogResult.OK)
+                        {
+                            InitCloud();
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }

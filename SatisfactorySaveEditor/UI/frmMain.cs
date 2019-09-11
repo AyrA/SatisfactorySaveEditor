@@ -39,14 +39,14 @@ namespace SatisfactorySaveEditor
         /// </summary>
         private Settings S = null;
         /// <summary>
-        /// Full file path of settings file
-        /// </summary>
-        private string SettingsFile = null;
-        /// <summary>
         /// Original editor title text
         /// </summary>
         private string OriginalTitle = null;
 
+        /// <summary>
+        /// Full file path of settings file
+        /// </summary>
+        public string SettingsFile { get; private set; }
         /// <summary>
         /// Gets whether a file is open
         /// </summary>
@@ -586,6 +586,7 @@ Images are generated again once you restart the application or use the 'Reset Re
         private void HandleSettingsChange()
         {
             checkForUpdatesToolStripMenuItem.Visible = !S.AutoUpdate;
+            SMRAPI.API.ApiKey = S.ApiKey;
         }
 
         #region Menu Actions
@@ -875,7 +876,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
 
         private void saveFileManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var manager = new frmManager())
+            using (var manager = new frmManager(S))
             {
                 FeatureReport.Used(FeatureReport.Feature.Manager);
                 manager.ShowDialog();

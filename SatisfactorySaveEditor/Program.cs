@@ -152,6 +152,22 @@ namespace SatisfactorySaveEditor
 #endif
         }
 
+        private static void TestHTTP()
+        {
+            using (var L = new SMRAPI.HTTP(Tools.GetRandom(5000, 50000)))
+            {
+                L.StaticResources.Add("/favicon.ico", new SMRAPI.ResponseData(Tools.GetResource("SatisfactorySaveEditor.Images.Icons.edit.ico")));
+                L.ApiKeyEvent += delegate (object sender, Guid key)
+                {
+                    Tools.E(key.ToString(), "HTTP event");
+                    L.Stop();
+                };
+                L.Start();
+                L.OpenBrowser();
+                L.WaitForExit();
+            }
+        }
+
         private static int HandleArguments(string[] args)
         {
             var Ops = new List<Modes>();

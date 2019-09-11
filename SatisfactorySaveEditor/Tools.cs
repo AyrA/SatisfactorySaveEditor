@@ -19,6 +19,11 @@ namespace SatisfactorySaveEditor
     public static class Tools
     {
         /// <summary>
+        /// Global random number generator
+        /// </summary>
+        private static Random R = new Random();
+
+        /// <summary>
         /// Dimensions to map game vectors to relative coordinates (0.0 - 1.0)
         /// </summary>
         public struct VectorDimensions
@@ -150,6 +155,19 @@ namespace SatisfactorySaveEditor
             var OffsetX = Source.X * (VectorDimensions.SIZE_X);
             var OffsetY = Source.Y * (VectorDimensions.SIZE_Y);
             return new Vector3(OffsetX + VectorDimensions.MIN_X, OffsetY + VectorDimensions.MIN_Y, 0);
+        }
+
+        /// <summary>
+        /// Generates a random number inside of a range
+        /// </summary>
+        /// <param name="Low">Low end (inclusive)</param>
+        /// <param name="High">Upper end (exclusive)</param>
+        /// <returns>
+        /// Number that satisfies <paramref name="Low"/>&lt;=X&lt;<paramref name="High"/>
+        /// </returns>
+        public static int GetRandom(int Low, int High)
+        {
+            return R.Next(Low, High);
         }
 
         /// <summary>
@@ -477,6 +495,7 @@ namespace SatisfactorySaveEditor
                     {
                         e.Handled = true;
                         e.SuppressKeyPress = true;
+                        ((Form)sender).DialogResult = DialogResult.Cancel;
                         ((Form)sender).Close();
                     }
                 };

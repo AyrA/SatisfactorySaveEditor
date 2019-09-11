@@ -72,6 +72,13 @@ namespace SatisfactorySaveEditor
         { get; set; }
 
         /// <summary>
+        /// Key for the SMR API
+        /// </summary>
+        /// <remarks>See https://cable.ayra.ch/satiafactory/maps/help</remarks>
+        public Guid ApiKey
+        { get; set; }
+
+        /// <summary>
         /// Last time an update check was performed
         /// </summary>
         public DateTime LastUpdateCheck
