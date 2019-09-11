@@ -20,6 +20,7 @@ namespace SatisfactorySaveEditor
         /// </summary>
         private void SetUiValues()
         {
+            cbAutostartManager.Checked = CurrentSettings.AutostartManager;
             cbAutoUpdate.Checked = CurrentSettings.AutoUpdate;
             cbShowChangeLog.Checked = CurrentSettings.ShowChangelog;
             cbRandom.Checked = CurrentSettings.UseRandomId;
@@ -31,6 +32,8 @@ namespace SatisfactorySaveEditor
         {
             Tools.ShowHelp(GetType().Name);
         }
+
+        #region Settings
 
         private void btnMessageHide_Click(object sender, EventArgs e)
         {
@@ -55,6 +58,11 @@ namespace SatisfactorySaveEditor
         private void cbStopReporting_CheckedChanged(object sender, EventArgs e)
         {
             cbRandom.Enabled = !cbStopReporting.Checked;
+        }
+
+        private void cbAutostartManager_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentSettings.AutostartManager = cbAutostartManager.Checked;
         }
 
         private void lblId_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -88,6 +96,8 @@ Really change your Id?", "New Id", MessageBoxButtons.YesNo, MessageBoxIcon.Excla
                 Tools.E("Usage reporting is currently disabled", "Usage Report");
             }
         }
+
+        #endregion
 
         private void btnClose_Click(object sender, EventArgs e)
         {
