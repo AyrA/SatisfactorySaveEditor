@@ -65,6 +65,10 @@
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
     <Compile Include="FeatureReport.cs" />
+    <Compile Include="SMR\API.cs" />
+    <Compile Include="SMR\HTTP.cs" />
+    <Compile Include="SMR\Responses.cs" />
+    <Compile Include="SMR\Tools.cs" />
     <Compile Include="UI\frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
