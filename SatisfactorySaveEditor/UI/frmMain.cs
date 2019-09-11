@@ -42,6 +42,10 @@ namespace SatisfactorySaveEditor
         /// Original editor title text
         /// </summary>
         private string OriginalTitle = null;
+        /// <summary>
+        /// Respect the <see cref="Settings.AutostartManager"/> setting
+        /// </summary>
+        private bool RespectManagerSetting;
 
         /// <summary>
         /// Full file path of settings file
@@ -75,6 +79,7 @@ namespace SatisfactorySaveEditor
         /// <param name="InitialFile">Optional file to open after startup</param>
         public frmMain(string InitialFile = null)
         {
+            RespectManagerSetting = string.IsNullOrEmpty(InitialFile);
             SettingsFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings.xml");
             if (File.Exists(SettingsFile))
             {
@@ -581,6 +586,18 @@ Images are generated again once you restart the application or use the 'Reset Re
         }
 
         /// <summary>
+        /// Shows the save file manager form
+        /// </summary>
+        private void ShowManagerForm()
+        {
+            using (var manager = new frmManager(S))
+            {
+                FeatureReport.Used(FeatureReport.Feature.Manager);
+                manager.ShowDialog();
+            }
+        }
+
+        /// <summary>
         /// Changes the UI according to new settings
         /// </summary>
         private void HandleSettingsChange()
@@ -876,11 +893,7 @@ Container duplicates for example will share the inventory.", "Duplicator", Messa
 
         private void saveFileManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var manager = new frmManager(S))
-            {
-                FeatureReport.Used(FeatureReport.Feature.Manager);
-                manager.ShowDialog();
-            }
+            ShowManagerForm();
         }
 
         private void deleterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1158,6 +1171,11 @@ Remember, you can press [F1] on any window to get detailed help.", "Range Delete
             {
                 S.ShowWelcomeMessage = false;
                 Tools.ShowHelp("Welcome");
+            }
+            //Don't show manager if a file argument was passed in.
+            if(RespectManagerSetting && S.AutostartManager)
+            {
+                ShowManagerForm();
             }
         }
 

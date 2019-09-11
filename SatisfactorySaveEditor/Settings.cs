@@ -11,6 +11,11 @@ namespace SatisfactorySaveEditor
     public class Settings
     {
         /// <summary>
+        /// Automatically starts the manager on startup
+        /// </summary>
+        public bool AutostartManager
+        { get; set; }
+        /// <summary>
         /// Show the resize hint
         /// </summary>
         public bool ShowResizeHint
@@ -95,7 +100,6 @@ namespace SatisfactorySaveEditor
         /// </summary>
         public Settings()
         {
-            ReportId = Guid.NewGuid();
             LastVersionLogShown = "0.0.0.0";
             LastUpdateCheck = DateTime.MinValue;
             //Default message status
@@ -105,8 +109,11 @@ namespace SatisfactorySaveEditor
             //Changelog settings
             ShowChangelog = true;
             //Report settings
+            ReportId = Guid.NewGuid();
             UseRandomId = false;
             DisableUsageReport = false;
+            //UI Settings
+            AutostartManager = true;
         }
 
         /// <summary>
