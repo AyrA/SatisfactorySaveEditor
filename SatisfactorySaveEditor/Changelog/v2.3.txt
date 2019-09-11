@@ -1,6 +1,6 @@
 ﻿Version 2.3
 
-This is the latest version
+Released: 2019-08-29 21:40:21 UTC
 
 Visible changes:
 
