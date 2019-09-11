@@ -65,6 +65,12 @@
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
     <Compile Include="FeatureReport.cs" />
+    <Compile Include="UI\frmApiRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmApiRegister.Designer.cs">
+      <DependentUpon>frmApiRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="SMR\API.cs" />
     <Compile Include="SMR\HTTP.cs" />
     <Compile Include="SMR\Responses.cs" />
@@ -180,6 +186,9 @@
     <EmbeddedResource Include="ErrorHandler\frmErrorHandler.resx">
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmApiRegister.resx">
+      <DependentUpon>frmApiRegister.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -258,14 +267,14 @@
     <EmbeddedResource Include="Changelog\v2.1.txt" />
     <EmbeddedResource Include="Changelog\v2.2.txt" />
     <EmbeddedResource Include="Changelog\v2.3.txt" />
-    <Content Include="Images\Icons\audio.ico" />
-    <Content Include="Images\Icons\copy.ico" />
-    <Content Include="Images\Icons\delete.ico" />
-    <Content Include="Images\Icons\edit.ico" />
-    <Content Include="Images\Icons\help.ico" />
-    <Content Include="Images\Icons\rename.ico" />
-    <Content Include="Images\Icons\search.ico" />
-    <Content Include="Images\Icons\settings.ico" />
+    <EmbeddedResource Include="Images\Icons\audio.ico" />
+    <EmbeddedResource Include="Images\Icons\copy.ico" />
+    <EmbeddedResource Include="Images\Icons\delete.ico" />
+    <EmbeddedResource Include="Images\Icons\edit.ico" />
+    <EmbeddedResource Include="Images\Icons\help.ico" />
+    <EmbeddedResource Include="Images\Icons\rename.ico" />
+    <EmbeddedResource Include="Images\Icons\search.ico" />
+    <EmbeddedResource Include="Images\Icons\settings.ico" />
     <EmbeddedResource Include="Help\frmElementList.txt" />
     <EmbeddedResource Include="Help\frmRegionDeleter.txt" />
     <EmbeddedResource Include="Help\frmHeaderEditor.txt" />
@@ -274,6 +283,12 @@
     <EmbeddedResource Include="Help\frmDeleter.txt" />
     <EmbeddedResource Include="Help\frmRename.txt" />
     <EmbeddedResource Include="Help\frmManager.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\frmApiRegister.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Icons\network.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 
 namespace SMRAPI
@@ -24,7 +26,7 @@ namespace SMRAPI
         /// </summary>
         private const string HTML_FRAME = @"<!DOCTYPE html><html>
 <head>
-    <title>SMR API Demo</title>
+    <title>Satisfactory Save Editor</title>
     <style>
         body{
             font-family:sans-serif;
@@ -58,6 +60,7 @@ namespace SMRAPI
         /// Authentication URL
         /// </summary>
         public string AuthUrl { get; set; }
+        public Dictionary<string, ResponseData> StaticResources { get; set; }
 
         private string ExeName;
         /// <summary>
@@ -86,7 +89,8 @@ namespace SMRAPI
             //Default authentication URL from API
             AuthUrl = API.API_AUTH
                 .Replace(API.API_AUTH_URL_PLACEHOLDER, Uri.EscapeDataString(L.Prefixes.First() + "?key={APIKEY}"))
-                .Replace(API.API_AUTH_NAME_PLACEHOLDER,Uri.EscapeDataString("SMR Reference Client"));
+                .Replace(API.API_AUTH_NAME_PLACEHOLDER, Uri.EscapeDataString("Satisfactory Save Editor"));
+            StaticResources = new Dictionary<string, ResponseData>();
         }
 
         /// <summary>
@@ -178,7 +182,8 @@ namespace SMRAPI
             return HTML_FRAME
                 .Replace("{EXENAME}", Path.GetFileName(ExeName))
                 .Replace("{EXEPATH}", "\"" + ExeName + "\"")
-                .Replace("{CONTENT}", Content);
+                .Replace("{CONTENT}", Content)
+                .Replace("{AUTHURL}", AuthUrl);
         }
 
         /// <summary>
@@ -237,27 +242,29 @@ namespace SMRAPI
                         if (ApiKey != Guid.Empty)
                         {
                             SW.WriteLine(MkHtml(@"
-<h1>SMR API Demo</h1>
+<h1>Satisfactory Save Editor</h1>
 <p>
     <span class='success'>API authorized</span>.<br />
-    Please close this window and check the demo client for instructions.
+    The API is available in the save editor now.
+    You can close this window.
 </p>"));
                         }
                         else
                         {
                             SW.WriteLine(MkHtml(@"
-<h1>SMR API Demo</h1>
+<h1>Satisfactory Save Editor</h1>
 <p>
     <span class='failure'>API authorization denied</span>.<br />
-    Please close this window and check the demo client for instructions.
+    If you accidentally misclicked, <a href='{AUTHURL}'>you can try again</a>,
+    otherwise, please close the window.
 </p>"));
                         }
                     }
                     else
                     {
                         //No key received. Offer the user to try again
-                        var link = $"<a href=\"{AuthUrl}\">Click here to try again</a>.";
-                        SW.WriteLine(MkHtml($"<h1>SMR API Demo</h1><p>Error decoding the key.<br /><b>{link}</b></p>"));
+                        var link = "<a href=\"{AUTHURL}\">Click here to try again</a>.";
+                        SW.WriteLine(MkHtml($"<h1>Satisfactory Save Editor</h1><p>Error decoding the key.<br /><b>{link}</b></p>"));
                     }
                     SW.Flush();
                     data = ((MemoryStream)SW.BaseStream).ToArray();
@@ -265,17 +272,43 @@ namespace SMRAPI
             }
             else
             {
-                //All requests that don't go to root are answered with a 404
-                Req.Response.StatusCode = 404;
+                ResponseData D = null;
+                if (StaticResources.TryGetValue(FullUrl.AbsolutePath, out D))
+                {
+                    data = null;
+                    Req.Response.ContentType = D.ContentType;
+                    if (D.Length >= 0)
+                    {
+                        Req.Response.ContentLength64 = D.Length;
+                    }
+                    D.CopyTo(Req.Response.OutputStream);
+                }
+                else
+                {
+                    //All requests that still have no response are answered with a 404
+                    Req.Response.StatusCode = 404;
+                    data = Encoding.UTF8.GetBytes(MkHtml(@"<h1>Satisfactory Save Editor - Not found</h1>
+<p>
+    <span class='failure'>The requested page could not be found</span>.<br />
+    <a href='{AUTHURL}'>click here to try to authorize again</a>.
+</p>"));
+                }
             }
-            //Setting the content length is optional but avoids chunked encoding
-            Req.Response.ContentLength64 = data.Length;
-            //Send data
-            Req.Response.Close(data, true);
+            if (data != null)
+            {
+                //Setting the content length is optional but avoids chunked encoding
+                Req.Response.ContentLength64 = data.Length;
+                //Send data
+                Req.Response.Close(data, true);
+            }
+            else
+            {
+                Req.Response.Close();
+            }
             //Make sure to only trigger the event after the response was closed.
             //If the event stops the HTTP listener you end up in a race condition otherwise
             //that might drop the answer.
-            if(TriggerEvent)
+            if (TriggerEvent)
             {
                 //Don't block this thread with the event.
                 var T = new Thread(delegate ()
@@ -284,6 +317,65 @@ namespace SMRAPI
                 });
                 T.IsBackground = true;
                 T.Start();
+            }
+        }
+    }
+
+    public class ResponseData
+    {
+        public const string DEFAULT_TYPE = "application/octet-stream";
+
+        private Stream Res;
+
+        public string ContentType { get; private set; }
+
+        public long Length
+        {
+            get
+            {
+                try
+                {
+                    return Res.Length;
+                }
+                catch
+                {
+                    return -1;
+                }
+            }
+        }
+
+        public ResponseData(byte[] Content, string ContentType = DEFAULT_TYPE) : this(new MemoryStream(Content, false), ContentType)
+        {
+        }
+
+        public ResponseData(Stream Content, string ContentType = DEFAULT_TYPE)
+        {
+            if (Content == null)
+            {
+                throw new ArgumentNullException(nameof(Content));
+            }
+            if (ContentType == null)
+            {
+                throw new ArgumentNullException(nameof(ContentType));
+            }
+            if (!Content.CanSeek)
+            {
+                throw new ArgumentException("Stream must be seekable", nameof(Content));
+            }
+            if (!Content.CanRead)
+            {
+                throw new ArgumentException("Stream must be readable", nameof(Content));
+            }
+            Res = Content;
+            this.ContentType = ContentType;
+        }
+
+        public void CopyTo(Stream Output)
+        {
+            lock (Res)
+            {
+                Res.Position = 0;
+                Res.CopyTo(Output);
             }
         }
     }

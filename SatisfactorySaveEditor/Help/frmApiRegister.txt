@@ -1,0 +1,7 @@
+﻿Satisfactory Save Editor API Registration Form
+
+Here you can register your API key to manage your save files in the cloud.
+
+You can either enter the key manually or click the button to get the key from the API automatically.
+
+Clearing the key from the text box will disable the API again.
