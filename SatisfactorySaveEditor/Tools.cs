@@ -417,15 +417,43 @@ namespace SatisfactorySaveEditor
         /// </summary>
         /// <param name="Text">Text</param>
         /// <param name="Title">Box Title</param>
-        /// <remarks>Box has OK button and Error icon</remarks>
-        public static void E(string Text, string Title)
+        /// <remarks>Box has OK button and Error icon. Will invoke on main form if not in UI thread</remarks>
+        public static void E(string Text, string Title, Form Source = null)
         {
-            Log.Write("Show UI Error: {0}: {1}", Title, Text);
-            System.Windows.Forms.MessageBox.Show(
-                Text,
-                Title,
-                System.Windows.Forms.MessageBoxButtons.OK,
-                System.Windows.Forms.MessageBoxIcon.Error);
+            if (Source != null && Source.InvokeRequired)
+            {
+                Source.Invoke((MethodInvoker)delegate
+                {
+                    E(Text, Title, Source);
+                });
+            }
+            else
+            {
+                Log.Write("Show UI Error: {0}: {1}", Title, Text);
+                MessageBox.Show(Text, Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Shows a generic Info message box
+        /// </summary>
+        /// <param name="Text">Text</param>
+        /// <param name="Title">Box Title</param>
+        /// <remarks>Box has OK button and Info icon. Will invoke on main form if not in UI thread</remarks>
+        public static void I(string Text, string Title, Form Source = null)
+        {
+            if (Source != null && Source.InvokeRequired)
+            {
+                Source.Invoke((MethodInvoker)delegate
+                {
+                    I(Text, Title, Source);
+                });
+            }
+            else
+            {
+                Log.Write("Show UI Info: {0}: {1}", Title, Text);
+                MessageBox.Show(Text, Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>

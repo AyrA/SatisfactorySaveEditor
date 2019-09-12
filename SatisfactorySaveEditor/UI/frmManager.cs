@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Drawing;
 
 namespace SatisfactorySaveEditor
 {
@@ -254,6 +255,144 @@ namespace SatisfactorySaveEditor
             Tools.E("This save file seems to be invalid and can't be read.", "Invalid save file");
         }
 
+        private void PreviewFile(SaveFile F)
+        {
+            using (var BMP = MapRender.RenderFile(F))
+            {
+                PreviewImage(BMP, F.SessionName);
+            }
+        }
+
+        private void PreviewImage(Image I, string Name)
+        {
+            using (var frm = new Form())
+            {
+                frm.Text = "Preview of " + Name;
+                frm.ShowIcon = frm.ShowInTaskbar = false;
+                frm.WindowState = FormWindowState.Maximized;
+                frm.BackgroundImageLayout = ImageLayout.Zoom;
+                frm.BackgroundImage = I;
+                Tools.SetupKeyHandlers(frm);
+                frm.ShowDialog();
+            }
+        }
+
+        private void RenderCloudEntry(MapView MapEntry)
+        {
+            var T = new Thread(delegate ()
+            {
+                byte[] ImageData;
+                try
+                {
+                    ImageData = SMRAPI.API.Preview(MapEntry.Map.hidden_id);
+                    if (ImageData == null || ImageData.Length == 0)
+                    {
+                        throw new InvalidDataException("API returned an empty image");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Tools.E("Error getting preview image.\r\n" + ex.Message, "Cloud Save Preview", this);
+                    return;
+                }
+                Invoke((MethodInvoker)delegate
+                {
+                    using (var MS = new MemoryStream(ImageData, false))
+                    {
+                        try
+                        {
+                            using (var IMG = Image.FromStream(MS))
+                            {
+                                PreviewImage(IMG, MapEntry.Map.name);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Tools.E("Error getting preview image.\r\n" + ex.Message, "Cloud Save Preview", this);
+                            return;
+                        }
+                    }
+                });
+            });
+            T.IsBackground = true;
+            T.Start();
+        }
+
+        private void DeleteCloudItem(MapView Item)
+        {
+            if (MessageBox.Show($"Delete the file {Item.Map.name} from your cloud account?", "Cloud Save File", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                var T = new Thread(delegate ()
+                {
+                    SMRAPI.Responses.DelResponse DelData;
+                    try
+                    {
+                        DelData = SMRAPI.API.DelMap(Item.Map.hidden_id);
+                        if (DelData == null)
+                        {
+                            throw new InvalidDataException("API returned an invalid response");
+                        }
+                        if (!DelData.success)
+                        {
+                            throw new Exception(DelData.msg);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Tools.E("Error getting preview image.\r\n" + ex.Message, "Cloud Save Preview", this);
+                        return;
+                    }
+                    Invoke((MethodInvoker)delegate
+                    {
+                        InitCloud();
+                        Tools.I("File Deleted", "Cloud Save File");
+                    });
+                });
+                T.IsBackground = true;
+                T.Start();
+            }
+        }
+
+        private void DownloadCloudItem(MapView Item)
+        {
+            string FileName = Item.Map.name;
+            //Make name unique
+            int i = 1;
+            while (File.Exists(Path.Combine(Program.SaveDirectory, FileName)))
+            {
+                FileName = FileName.Substring(0, FileName.Length - 4) + $"_{i++}.sav";
+            }
+            var T = new Thread(delegate ()
+            {
+                try
+                {
+                    using (var FS = File.Create(Path.Combine(Program.SaveDirectory, FileName)))
+                    {
+                        if (!SMRAPI.API.Download(Item.Map.hidden_id, FS))
+                        {
+                            throw new Exception("Unable to download file");
+                        }
+                        Tools.I($"Download completed. Map saved as {Path.GetFileName(FileName)}", "Cloud Save Download", this);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Tools.E("Error getting preview image.\r\n" + ex.Message, "Cloud Save Download", this);
+                    try
+                    {
+                        File.Delete(FileName);
+                    }
+                    catch
+                    {
+                        Tools.E($"Unable to delete partial file {FileName}. Please do manually", "Cloud Save Download", this);
+                    }
+                }
+                Invoke((MethodInvoker)InitFiles);
+            });
+            T.IsBackground = true;
+            T.Start();
+        }
+
         #region Form Events
 
         private void tvFiles_DoubleClick(object sender, EventArgs e)
@@ -287,19 +426,7 @@ namespace SatisfactorySaveEditor
                             InvalidMessage();
                             return;
                         }
-                        using (var BMP = MapRender.RenderFile(F))
-                        {
-                            using (var frm = new Form())
-                            {
-                                frm.Text = "Preview of " + Node.Text;
-                                frm.ShowIcon = frm.ShowInTaskbar = false;
-                                frm.WindowState = FormWindowState.Maximized;
-                                frm.BackgroundImageLayout = ImageLayout.Zoom;
-                                frm.BackgroundImage = BMP;
-                                Tools.SetupKeyHandlers(frm);
-                                frm.ShowDialog();
-                            }
-                        }
+                        PreviewFile(F);
                     }
                 }
                 else
@@ -606,7 +733,8 @@ namespace SatisfactorySaveEditor
             {
                 if (Item.GetType() == typeof(MapView))
                 {
-                    //Handle Map double click
+                    var MapEntry = ((MapView)Item);
+                    RenderCloudEntry(MapEntry);
                 }
                 else
                 {
@@ -618,6 +746,59 @@ namespace SatisfactorySaveEditor
                         }
                     }
                 }
+            }
+        }
+
+        private void lbCloud_MouseClick(object sender, MouseEventArgs e)
+        {
+            var Index = lbCloud.IndexFromPoint(e.Location);
+            if (Index >= 0 && e.Button == MouseButtons.Right)
+            {
+                lbCloud.SelectedIndex = Index;
+                CMSRemote.Show(lbCloud, e.Location);
+            }
+        }
+
+        private void lbCloud_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (lbCloud.SelectedIndex < 0 || !(lbCloud.SelectedItem is MapView))
+            {
+                return;
+            }
+            var Item = (MapView)lbCloud.SelectedItem;
+
+            switch (e.KeyCode)
+            {
+                case Keys.C:
+                    if (e.Modifiers == Keys.Control)
+                    {
+                        Clipboard.Clear();
+                        Clipboard.SetText(Item.Map.hidden_id.ToString());
+                    }
+                    break;
+                case Keys.Delete:
+                    DeleteCloudItem(Item);
+                    //DeleteSelected();
+                    break;
+                case Keys.Enter:
+                    RenderCloudEntry(Item);
+                    break;
+            }
+        }
+
+        private void previewRemoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lbCloud.SelectedItem is MapView)
+            {
+                RenderCloudEntry((MapView)lbCloud.SelectedItem);
+            }
+        }
+
+        private void downloadRemoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lbCloud.SelectedItem is MapView)
+            {
+                DownloadCloudItem((MapView)lbCloud.SelectedItem);
             }
         }
 
