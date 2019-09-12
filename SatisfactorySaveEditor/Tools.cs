@@ -429,7 +429,14 @@ namespace SatisfactorySaveEditor
             }
             else
             {
-                Log.Write("Show UI Error: {0}: {1}", Title, Text);
+                if (Source == null)
+                {
+                    Log.Write("Show UI Error: {0}: {1}", Title, Text);
+                }
+                else
+                {
+                    Log.Write("{0}: Show UI Error: {1}: {2}", Source.GetType().Name, Title, Text);
+                }
                 MessageBox.Show(Text, Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

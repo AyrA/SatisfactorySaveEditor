@@ -153,11 +153,11 @@ namespace SatisfactorySaveEditor
                         else
                         {
                             Sessions[""] = InvalidNode = new TreeNode("INVALID");
-                            InvalidNode.ForeColor = System.Drawing.Color.Red;
-                            InvalidNode.BackColor = System.Drawing.Color.Yellow;
+                            InvalidNode.ForeColor = Color.Red;
+                            InvalidNode.BackColor = Color.Yellow;
                         }
                         var Invalid = InvalidNode.Nodes.Add(Path.GetFileNameWithoutExtension(FileName));
-                        Invalid.ForeColor = System.Drawing.Color.Red;
+                        Invalid.ForeColor = Color.Red;
                         Invalid.Tag = "INVALID";
                     }
                 }

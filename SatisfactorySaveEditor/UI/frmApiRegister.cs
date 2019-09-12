@@ -25,7 +25,9 @@ namespace SatisfactorySaveEditor
         {
             if (Server == null)
             {
-                Server = new SMRAPI.HTTP(Tools.GetRandom(5000, 50000));
+                int Port = Tools.GetRandom(5000, 50000);
+                Server = new SMRAPI.HTTP(Port);
+                Log.Write("{0}: Starting HTTP server on port {1}", GetType().Name, Port);
                 Server.Start();
                 Server.ApiKeyEvent += delegate (object source, Guid Key)
                 {
@@ -88,6 +90,7 @@ namespace SatisfactorySaveEditor
         {
             if (Server != null)
             {
+                Log.Write("{0}: Stopping HTTP server", GetType().Name);
                 Server.Dispose();
                 Server = null;
             }

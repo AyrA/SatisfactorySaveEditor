@@ -34,6 +34,8 @@ namespace SatisfactorySaveEditor
             DisableReport,
             HelpRequest,
             ViewChanges,
+            ApiAction,
+            ApiRegisterAuto,
             /// <summary>
             /// Application is running in debug mode
             /// </summary>
@@ -45,7 +47,7 @@ namespace SatisfactorySaveEditor
             /// <summary>
             /// The image renderer crashed
             /// </summary>
-            RendererCrash
+            RendererCrash,
         }
 
         public static Guid Id

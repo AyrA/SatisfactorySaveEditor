@@ -229,6 +229,8 @@ namespace SMRAPI
             Guid ApiKey = Guid.Empty;
             bool TriggerEvent = false;
 
+            SatisfactorySaveEditor.Log.Write("{0}: Got Request for {1}", GetType().Name, FullUrl.AbsolutePath);
+
             //Check if request for server root
             if (FullUrl.AbsolutePath == "/")
             {
@@ -239,6 +241,7 @@ namespace SMRAPI
                     if (Guid.TryParse(Req.Request.QueryString["key"], out ApiKey))
                     {
                         TriggerEvent = true;
+                        SatisfactorySaveEditor.Log.Write("{0}: Got API key", GetType().Name);
                         if (ApiKey != Guid.Empty)
                         {
                             SW.WriteLine(MkHtml(@"
@@ -310,6 +313,7 @@ namespace SMRAPI
             //that might drop the answer.
             if (TriggerEvent)
             {
+                SatisfactorySaveEditor.FeatureReport.Used(SatisfactorySaveEditor.FeatureReport.Feature.ApiRegisterAuto);
                 //Don't block this thread with the event.
                 var T = new Thread(delegate ()
                 {

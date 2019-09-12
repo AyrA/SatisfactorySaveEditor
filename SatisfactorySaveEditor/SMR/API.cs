@@ -71,6 +71,10 @@ namespace SMRAPI
         /// <returns>API Response handler</returns>
         private static WebRequest Req(string method, Dictionary<string, object> values = null)
         {
+            if (ApiKey != API_ANONYMOUS_KEY)
+            {
+                SatisfactorySaveEditor.FeatureReport.Used(SatisfactorySaveEditor.FeatureReport.Feature.ApiAction);
+            }
             var Request = WebRequest.CreateHttp(API_API + "/" + method);
             Request.Method = "POST";
             Request.ContentType = "application/x-www-form-urlencoded";
