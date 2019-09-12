@@ -49,7 +49,6 @@
             this.downloadRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previewRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyHiddenIdRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importIdRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CMSLocal.SuspendLayout();
@@ -92,7 +91,7 @@
             this.duplicateToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.CMSLocal.Name = "CMS";
-            this.CMSLocal.Size = new System.Drawing.Size(126, 158);
+            this.CMSLocal.Size = new System.Drawing.Size(153, 180);
             // 
             // openToolStripMenuItem
             // 
@@ -113,9 +112,10 @@
             // uploadToolStripMenuItem
             // 
             this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
-            this.uploadToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.uploadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.uploadToolStripMenuItem.Text = "&Upload";
             this.uploadToolStripMenuItem.ToolTipText = "Uploads the selected file to the cloud";
+            this.uploadToolStripMenuItem.Click += new System.EventHandler(this.uploadToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
@@ -210,11 +210,10 @@
             this.downloadRemoteToolStripMenuItem,
             this.previewRemoteToolStripMenuItem,
             this.copyHiddenIdRemoteToolStripMenuItem,
-            this.importIdRemoteToolStripMenuItem,
             this.editRemoteToolStripMenuItem,
             this.deleteRemoteToolStripMenuItem});
             this.CMSRemote.Name = "CMSRemote";
-            this.CMSRemote.Size = new System.Drawing.Size(188, 158);
+            this.CMSRemote.Size = new System.Drawing.Size(188, 114);
             // 
             // downloadRemoteToolStripMenuItem
             // 
@@ -227,7 +226,7 @@
             // previewRemoteToolStripMenuItem
             // 
             this.previewRemoteToolStripMenuItem.Name = "previewRemoteToolStripMenuItem";
-            this.previewRemoteToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.previewRemoteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.previewRemoteToolStripMenuItem.Text = "&Preview";
             this.previewRemoteToolStripMenuItem.ToolTipText = "Shows a preview of the selected file";
             this.previewRemoteToolStripMenuItem.Click += new System.EventHandler(this.previewRemoteToolStripMenuItem_Click);
@@ -239,27 +238,23 @@
             this.copyHiddenIdRemoteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyHiddenIdRemoteToolStripMenuItem.Text = "&Copy Hidden Id";
             this.copyHiddenIdRemoteToolStripMenuItem.ToolTipText = "Copies the hidden id of the selected file";
-            // 
-            // importIdRemoteToolStripMenuItem
-            // 
-            this.importIdRemoteToolStripMenuItem.Name = "importIdRemoteToolStripMenuItem";
-            this.importIdRemoteToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.importIdRemoteToolStripMenuItem.Text = "&Import Id";
-            this.importIdRemoteToolStripMenuItem.ToolTipText = "Imports a map by the real or hidden id";
+            this.copyHiddenIdRemoteToolStripMenuItem.Click += new System.EventHandler(this.copyHiddenIdRemoteToolStripMenuItem_Click);
             // 
             // editRemoteToolStripMenuItem
             // 
             this.editRemoteToolStripMenuItem.Name = "editRemoteToolStripMenuItem";
-            this.editRemoteToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.editRemoteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.editRemoteToolStripMenuItem.Text = "&Edit...";
             this.editRemoteToolStripMenuItem.ToolTipText = "Edits properties of the selected file";
+            this.editRemoteToolStripMenuItem.Click += new System.EventHandler(this.editRemoteToolStripMenuItem_Click);
             // 
             // deleteRemoteToolStripMenuItem
             // 
             this.deleteRemoteToolStripMenuItem.Name = "deleteRemoteToolStripMenuItem";
-            this.deleteRemoteToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.deleteRemoteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.deleteRemoteToolStripMenuItem.Text = "De&lete";
             this.deleteRemoteToolStripMenuItem.ToolTipText = "Deletes the selected file";
+            this.deleteRemoteToolStripMenuItem.Click += new System.EventHandler(this.deleteRemoteToolStripMenuItem_Click);
             // 
             // frmManager
             // 
@@ -307,6 +302,5 @@
         private System.Windows.Forms.ToolStripMenuItem editRemoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteRemoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importIdRemoteToolStripMenuItem;
     }
 }

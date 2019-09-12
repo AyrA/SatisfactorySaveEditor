@@ -91,6 +91,7 @@ namespace SatisfactorySaveEditor
                 lbCloud.Items.Add("API not enabled");
                 lbCloud.Items.Add("Double click to enable");
             }
+            lbCloud.Enabled = true;
         }
 
         private void InitFiles()
@@ -339,7 +340,7 @@ namespace SatisfactorySaveEditor
                     }
                     catch (Exception ex)
                     {
-                        Tools.E("Error getting preview image.\r\n" + ex.Message, "Cloud Save Preview", this);
+                        Tools.E("Error deleting the map.\r\n" + ex.Message, "Cloud Save Removal", this);
                         return;
                     }
                     Invoke((MethodInvoker)delegate
@@ -487,6 +488,7 @@ namespace SatisfactorySaveEditor
                     openToolStripMenuItem.Enabled = Opt;
                     renameToolStripMenuItem.Enabled = Opt;
                     backupToolStripMenuItem.Enabled = Opt;
+                    uploadToolStripMenuItem.Enabled = Opt;
 
                     CMSLocal.Show(tvFiles, e.Location);
                     tvFiles.SelectedNode = e.Node;
@@ -778,7 +780,6 @@ namespace SatisfactorySaveEditor
                     break;
                 case Keys.Delete:
                     DeleteCloudItem(Item);
-                    //DeleteSelected();
                     break;
                 case Keys.Enter:
                     RenderCloudEntry(Item);
@@ -799,6 +800,79 @@ namespace SatisfactorySaveEditor
             if (lbCloud.SelectedItem is MapView)
             {
                 DownloadCloudItem((MapView)lbCloud.SelectedItem);
+            }
+        }
+
+        private void editRemoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lbCloud.SelectedItem is MapView)
+            {
+                using (var editForm = new frmCloudEdit(((MapView)lbCloud.SelectedItem).Map))
+                {
+                    if (editForm.ShowDialog() == DialogResult.OK)
+                    {
+                        InitCloud();
+                    }
+                }
+            }
+        }
+
+        private void copyHiddenIdRemoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lbCloud.SelectedItem is MapView)
+            {
+                Clipboard.Clear();
+                Clipboard.SetText(((MapView)lbCloud.SelectedItem).Map.hidden_id.ToString());
+            }
+        }
+
+        private void deleteRemoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lbCloud.SelectedItem is MapView)
+            {
+                DeleteCloudItem((MapView)lbCloud.SelectedItem);
+            }
+        }
+
+        private void uploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var Node = GetSelectedFile();
+            if (Node != null)
+            {
+                if (SMRAPI.API.ApiKey != SMRAPI.API.API_ANONYMOUS_KEY)
+                {
+                    var FileName = GetName(Node);
+                    lbCloud.Items.Clear();
+                    lbCloud.Items.Add("Uploading and processing file");
+                    lbCloud.Items.Add("This can take a while");
+                    lbCloud.Enabled = false;
+                    Thread T = new Thread(delegate ()
+                    {
+                        try
+                        {
+                            var Result = SMRAPI.API.AddMap(FileName);
+                            if (!Result.success)
+                            {
+                                throw new Exception(Result.msg);
+                            }
+                            else
+                            {
+                                Tools.I("Map uploaded", "Map Upload Success", this);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Tools.E("Unable to upload the map at this time.\r\n" + ex.Message, "Map Upload Error", this);
+                        }
+                        Invoke((MethodInvoker)InitCloud);
+                    });
+                    T.IsBackground = true;
+                    T.Start();
+                }
+                else
+                {
+                    Tools.E("You don't have an API key registered. Check the right list for more information.", "API key not registered", this);
+                }
             }
         }
 

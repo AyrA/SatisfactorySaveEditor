@@ -1,0 +1,11 @@
+﻿Satisfactory Save Editor Cloud File Editor
+
+This window allows you to edit the properties of maps in your cloud account.
+
+Conflicting categories are automatically disabled.
+If you can't select a checkbox, it's because another category is mutually exclusive to the disabled one.
+
+Enabled category checkboxes have a tooltip on mouse hover that describes the category.
+
+You can also change the hidden id.
+Note that this change is in effect immediately, you don't need to save other changes.

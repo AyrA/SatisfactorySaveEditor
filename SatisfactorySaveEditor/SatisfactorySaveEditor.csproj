@@ -65,6 +65,12 @@
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
     <Compile Include="FeatureReport.cs" />
+    <Compile Include="UI\frmCloudEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmCloudEdit.Designer.cs">
+      <DependentUpon>frmCloudEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmApiRegister.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +195,9 @@
     <EmbeddedResource Include="UI\frmApiRegister.resx">
       <DependentUpon>frmApiRegister.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmCloudEdit.resx">
+      <DependentUpon>frmCloudEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -289,6 +298,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Icons\network.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\frmCloudEdit.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
