@@ -195,8 +195,10 @@ namespace SMRAPI
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                SatisfactorySaveEditor.Log.Write("API: Unable to download the map");
+                SatisfactorySaveEditor.Log.Write(ex);
                 return false;
             }
             return true;
@@ -209,12 +211,25 @@ namespace SMRAPI
         public static InfoResponse Info()
         {
             var R = Req("info");
-            using (var Res = R.GetResponse())
+            try
             {
-                using (var SR = new StreamReader(Res.GetResponseStream()))
+                using (var Res = R.GetResponse())
                 {
-                    return SR.ReadToEnd().FromXml<InfoResponse>();
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<InfoResponse>();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Unable to download the map");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new InfoResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
             }
         }
 
@@ -226,12 +241,25 @@ namespace SMRAPI
         public static TestResponse Test()
         {
             var R = Req("test");
-            using (var Res = R.GetResponse())
+            try
             {
-                using (var SR = new StreamReader(Res.GetResponseStream()))
+                using (var Res = R.GetResponse())
                 {
-                    return SR.ReadToEnd().FromXml<TestResponse>();
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<TestResponse>();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'test'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new TestResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
             }
         }
 
@@ -266,12 +294,25 @@ namespace SMRAPI
                 Values["public"] = Public.Value;
             }
             var R = Req("edit", Values);
-            using (var Res = R.GetResponse())
+            try
             {
-                using (var SR = new StreamReader(Res.GetResponseStream()))
+                using (var Res = R.GetResponse())
                 {
-                    return SR.ReadToEnd().FromXml<EditResponse>();
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<EditResponse>();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'edit'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new EditResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
             }
         }
 
@@ -285,12 +326,26 @@ namespace SMRAPI
             var Values = new Dictionary<string, object>();
             Values["id"] = MapId;
             var R = Req("del", Values);
-            using (var Res = R.GetResponse())
+            try
             {
-                using (var SR = new StreamReader(Res.GetResponseStream()))
+                using (var Res = R.GetResponse())
                 {
-                    return SR.ReadToEnd().FromXml<DelResponse>();
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<DelResponse>();
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'del'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new DelResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
             }
         }
 
@@ -304,13 +359,27 @@ namespace SMRAPI
             var Values = new Dictionary<string, object>();
             Values["id"] = MapId;
             var R = Req("newid", Values);
-            using (var Res = R.GetResponse())
+            try
             {
-                using (var SR = new StreamReader(Res.GetResponseStream()))
+                using (var Res = R.GetResponse())
                 {
-                    return SR.ReadToEnd().FromXml<NewIdResponse>();
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<NewIdResponse>();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'newid'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new NewIdResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
+            }
+
         }
 
         /// <summary>
@@ -346,13 +415,27 @@ namespace SMRAPI
             }
 
             var R = Req("list", Values);
-            using (var Res = R.GetResponse())
+            try
             {
-                using (var SR = new StreamReader(Res.GetResponseStream()))
+                using (var Res = R.GetResponse())
                 {
-                    return SR.ReadToEnd().FromXml<ListResponse>();
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<ListResponse>();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'list'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new ListResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
+            }
+
         }
 
         /// <summary>
@@ -362,19 +445,33 @@ namespace SMRAPI
         /// <returns>API "add" result</returns>
         public static UploadResponse AddMap(string FullFileName)
         {
-            using (var FS = File.OpenRead(FullFileName))
+            try
             {
-                //Detect if compressed already
-                byte[] GZ = new byte[2];
-                FS.Read(GZ, 0, 2);
-                FS.Position = 0;
-                var Compress = GZ[0] != 0x1F || GZ[1] != 0x8B;
-                if (Compress)
+                using (var FS = File.OpenRead(FullFileName))
                 {
-                    FullFileName = Path.ChangeExtension(FullFileName, ".gz");
+                    //Detect if compressed already
+                    byte[] GZ = new byte[2];
+                    FS.Read(GZ, 0, 2);
+                    FS.Position = 0;
+                    var Compress = GZ[0] != 0x1F || GZ[1] != 0x8B;
+                    if (Compress)
+                    {
+                        FullFileName = Path.ChangeExtension(FullFileName, ".gz");
+                    }
+                    return AddMap(FS, FullFileName, Compress);
                 }
-                return AddMap(FS, FullFileName, Compress);
             }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'add'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new UploadResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
+            }
+
         }
 
         /// <summary>
@@ -427,6 +524,16 @@ namespace SMRAPI
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'add'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new UploadResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
+            }
             finally
             {
                 if (Compress)
@@ -434,6 +541,39 @@ namespace SMRAPI
                     S.Dispose();
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets map details from the repository
+        /// </summary>
+        /// <param name="MapId">Map Id</param>
+        /// <returns>API "details" result</returns>
+        public static MapDetailsResponse Details(Guid MapId)
+        {
+            var Values = new Dictionary<string, object>();
+            Values["id"] = MapId;
+            var R = Req("details", Values);
+            try
+            {
+                using (var Res = R.GetResponse())
+                {
+                    using (var SR = new StreamReader(Res.GetResponseStream()))
+                    {
+                        return SR.ReadToEnd().FromXml<MapDetailsResponse>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SatisfactorySaveEditor.Log.Write("API: Call failed: 'details'");
+                SatisfactorySaveEditor.Log.Write(ex);
+                return new MapDetailsResponse()
+                {
+                    success = false,
+                    msg = ex.Message
+                };
+            }
+
         }
     }
 }

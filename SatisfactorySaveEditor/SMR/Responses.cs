@@ -54,6 +54,15 @@ namespace SMRAPI.Responses
     }
 
     /// <summary>
+    /// Response of the "details" command
+    /// </summary>
+    [Serializable, XmlRoot(ElementName = "api")]
+    public class MapDetailsResponse : BaseResponse
+    {
+        public InfoResponse.map data { get; set; }
+    }
+
+    /// <summary>
     /// Response of the "test" command
     /// </summary>
     [Serializable, XmlRoot(ElementName = "api")]
@@ -226,6 +235,26 @@ namespace SMRAPI.Responses
                 public int[] category { get; set; }
             }
 
+
+            /// <summary>
+            /// Contains info about the map owner
+            /// </summary>
+            [Serializable]
+            public class MapOwnerInfo
+            {
+                /// <summary>
+                /// User id
+                /// </summary>
+                [XmlAttribute("id")]
+                public int id { get; set; }
+                /// <summary>
+                /// User name
+                /// </summary>
+                [XmlText]
+                public string name { get; set; }
+            }
+
+
             /// <summary>
             /// Map id
             /// </summary>
@@ -272,7 +301,10 @@ namespace SMRAPI.Responses
             /// Map file sizes
             /// </summary>
             public Size size { get; set; }
-
+            /// <summary>
+            /// Map user
+            /// </summary>
+            public MapOwnerInfo user { get; set; }
             /// <summary>
             /// Gets or sets the publication date
             /// </summary>
