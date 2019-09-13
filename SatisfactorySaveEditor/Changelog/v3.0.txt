@@ -1,0 +1,12 @@
+﻿Version 3.0
+
+Latest Release
+
+Visible changes:
+
+- Full SMR API integration into the file manager
+- Redesign of the settings window
+
+Invisible changes:
+
+- Usage reporter has been adapter to support the new SMR API
