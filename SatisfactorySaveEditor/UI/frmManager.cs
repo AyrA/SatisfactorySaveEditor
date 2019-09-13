@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace SatisfactorySaveEditor
 {
@@ -873,6 +874,68 @@ namespace SatisfactorySaveEditor
                 {
                     Tools.E("You don't have an API key registered. Check the right list for more information.", "API key not registered", this);
                 }
+            }
+        }
+
+        private void btnImportId_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Clipboard.ContainsText())
+                {
+                    var Id = Clipboard.GetText();
+
+                    //{12345678-1234-1234-1234-123456789012}
+                    var M = Regex.Match(Id, @"[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}", RegexOptions.IgnoreCase);
+                    if (M.Success)
+                    {
+                        var MapId = Guid.Parse(M.Value);
+                        var Res = SMRAPI.API.Details(MapId);
+                        if (!Res.success)
+                        {
+                            throw new Exception(Res.msg);
+                        }
+                        if (MessageBox.Show($"Do you want to import '{Res.data.name}' from user '{Res.data.user.name}'?", "Map Import", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        {
+                            bool Result;
+                            string NewName = Tools.GetNewName(Path.Combine(Program.SaveDirectory, Res.data.name));
+                            using (var FS = File.Create(NewName))
+                            {
+                                Result = SMRAPI.API.Download(MapId, FS);
+                            }
+                            if (!Result)
+                            {
+                                try
+                                {
+                                    File.Delete(NewName);
+                                }
+                                catch
+                                {
+                                    //Don't care. It will show up under invalids and can be removed later.
+                                }
+                                throw new Exception("Problem downloading the map. Please try again later");
+                            }
+                            else
+                            {
+                                Tools.I($"Import of {Path.GetFileName(NewName)} successful", "Map Import", this);
+                                InitFiles();
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("Your clipboard doesn't contains a map id.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("No Map Id found in your clipboard");
+                }
+            }
+            catch (Exception ex)
+            {
+                Tools.E("Error importing map.\r\n" + ex.Message, "Map Import", this);
             }
         }
 

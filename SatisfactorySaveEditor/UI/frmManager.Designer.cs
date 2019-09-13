@@ -51,12 +51,18 @@
             this.copyHiddenIdRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRemoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitButtons = new System.Windows.Forms.SplitContainer();
+            this.btnImportId = new System.Windows.Forms.Button();
             this.CMSLocal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
             this.splitter.SuspendLayout();
             this.CMSRemote.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitButtons)).BeginInit();
+            this.splitButtons.Panel1.SuspendLayout();
+            this.splitButtons.Panel2.SuspendLayout();
+            this.splitButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvFiles
@@ -64,7 +70,7 @@
             this.tvFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvFiles.Location = new System.Drawing.Point(0, 0);
             this.tvFiles.Name = "tvFiles";
-            this.tvFiles.Size = new System.Drawing.Size(392, 527);
+            this.tvFiles.Size = new System.Drawing.Size(392, 521);
             this.tvFiles.TabIndex = 0;
             this.tvFiles.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvFiles_NodeMouseClick);
             this.tvFiles.DoubleClick += new System.EventHandler(this.tvFiles_DoubleClick);
@@ -91,7 +97,7 @@
             this.duplicateToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.CMSLocal.Name = "CMS";
-            this.CMSLocal.Size = new System.Drawing.Size(153, 180);
+            this.CMSLocal.Size = new System.Drawing.Size(126, 158);
             // 
             // openToolStripMenuItem
             // 
@@ -112,7 +118,7 @@
             // uploadToolStripMenuItem
             // 
             this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
-            this.uploadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uploadToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.uploadToolStripMenuItem.Text = "&Upload";
             this.uploadToolStripMenuItem.ToolTipText = "Uploads the selected file to the cloud";
             this.uploadToolStripMenuItem.Click += new System.EventHandler(this.uploadToolStripMenuItem_Click);
@@ -151,13 +157,12 @@
             // 
             // btnImport
             // 
-            this.btnImport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnImport.Location = new System.Drawing.Point(0, 550);
+            this.btnImport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnImport.Location = new System.Drawing.Point(0, 0);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(792, 23);
+            this.btnImport.Size = new System.Drawing.Size(392, 29);
             this.btnImport.TabIndex = 3;
             this.btnImport.Text = "&Import file or restore from backup";
-            this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // OFD
@@ -187,7 +192,7 @@
             // 
             this.splitter.Panel2.Controls.Add(this.lbCloud);
             this.splitter.Panel2MinSize = 100;
-            this.splitter.Size = new System.Drawing.Size(792, 527);
+            this.splitter.Size = new System.Drawing.Size(792, 521);
             this.splitter.SplitterDistance = 392;
             this.splitter.SplitterWidth = 8;
             this.splitter.TabIndex = 4;
@@ -198,7 +203,7 @@
             this.lbCloud.FormattingEnabled = true;
             this.lbCloud.Location = new System.Drawing.Point(0, 0);
             this.lbCloud.Name = "lbCloud";
-            this.lbCloud.Size = new System.Drawing.Size(392, 527);
+            this.lbCloud.Size = new System.Drawing.Size(392, 521);
             this.lbCloud.TabIndex = 5;
             this.lbCloud.DoubleClick += new System.EventHandler(this.lbCloud_DoubleClick);
             this.lbCloud.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbCloud_KeyDown);
@@ -256,6 +261,36 @@
             this.deleteRemoteToolStripMenuItem.ToolTipText = "Deletes the selected file";
             this.deleteRemoteToolStripMenuItem.Click += new System.EventHandler(this.deleteRemoteToolStripMenuItem_Click);
             // 
+            // splitButtons
+            // 
+            this.splitButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitButtons.IsSplitterFixed = true;
+            this.splitButtons.Location = new System.Drawing.Point(0, 544);
+            this.splitButtons.Name = "splitButtons";
+            // 
+            // splitButtons.Panel1
+            // 
+            this.splitButtons.Panel1.Controls.Add(this.btnImportId);
+            // 
+            // splitButtons.Panel2
+            // 
+            this.splitButtons.Panel2.Controls.Add(this.btnImport);
+            this.splitButtons.Size = new System.Drawing.Size(792, 29);
+            this.splitButtons.SplitterDistance = 392;
+            this.splitButtons.SplitterWidth = 8;
+            this.splitButtons.TabIndex = 1;
+            // 
+            // btnImportId
+            // 
+            this.btnImportId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnImportId.Location = new System.Drawing.Point(0, 0);
+            this.btnImportId.Name = "btnImportId";
+            this.btnImportId.Size = new System.Drawing.Size(392, 29);
+            this.btnImportId.TabIndex = 0;
+            this.btnImportId.Text = "Import &Cloud Id";
+            this.btnImportId.UseVisualStyleBackColor = true;
+            this.btnImportId.Click += new System.EventHandler(this.btnImportId_Click);
+            // 
             // frmManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,7 +298,7 @@
             this.ClientSize = new System.Drawing.Size(792, 573);
             this.Controls.Add(this.splitter);
             this.Controls.Add(this.lblInfo);
-            this.Controls.Add(this.btnImport);
+            this.Controls.Add(this.splitButtons);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmManager";
             this.Text = "Save File Manager";
@@ -275,6 +310,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).EndInit();
             this.splitter.ResumeLayout(false);
             this.CMSRemote.ResumeLayout(false);
+            this.splitButtons.Panel1.ResumeLayout(false);
+            this.splitButtons.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitButtons)).EndInit();
+            this.splitButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -302,5 +341,7 @@
         private System.Windows.Forms.ToolStripMenuItem editRemoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteRemoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitButtons;
+        private System.Windows.Forms.Button btnImportId;
     }
 }
