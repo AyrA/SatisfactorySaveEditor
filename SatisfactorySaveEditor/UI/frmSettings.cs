@@ -97,6 +97,33 @@ Really change your Id?", "New Id", MessageBoxButtons.YesNo, MessageBoxIcon.Excla
             }
         }
 
+        private void btnClearKey_Click(object sender, EventArgs e)
+        {
+            if (CurrentSettings.ApiKey != SMRAPI.API.API_ANONYMOUS_KEY)
+            {
+                if (MessageBox.Show("Really clear the API key? This will disable the API but will not delete any maps stored on it.", "Clear API key", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                {
+                    CurrentSettings.ApiKey = SMRAPI.API.ApiKey = SMRAPI.API.API_ANONYMOUS_KEY;
+                }
+            }
+            else
+            {
+                Tools.I("There is no key set at the moment.", "API Key", this);
+            }
+        }
+
+        private void lnkOpenRepository_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(SMRAPI.API.API_BASE);
+            }
+            catch (Exception ex)
+            {
+                Tools.E($"Unable to launch your browser. You can go manually to {SMRAPI.API.API_BASE}.\r\nDetails: " + ex.Message, "SMR API", this);
+            }
+        }
+
         #endregion
 
         private void btnClose_Click(object sender, EventArgs e)
