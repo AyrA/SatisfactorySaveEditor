@@ -12,6 +12,25 @@ namespace SatisfactorySaveEditor
 {
     public partial class frmManager : Form
     {
+        private class LocalFileView
+        {
+            public string FullFile;
+            public string ShortName;
+            public bool IsValid;
+
+            public LocalFileView(string FileName, bool ValidFile)
+            {
+                FullFile = Path.GetFullPath(FileName);
+                ShortName = Path.GetFileNameWithoutExtension(FileName);
+                IsValid = ValidFile;
+            }
+
+            public override string ToString()
+            {
+                return ShortName;
+            }
+        }
+
         private class MapView
         {
             public SMRAPI.Responses.InfoResponse.map Map { get; private set; }
@@ -101,7 +120,7 @@ namespace SatisfactorySaveEditor
             var Sessions = new Dictionary<string, TreeNode>();
             Thread T = new Thread(delegate ()
             {
-                foreach (var FileName in Directory.GetFiles(Program.SaveDirectory, "*.sav"))
+                foreach (var FileName in Directory.GetFiles(Program.SaveDirectory, "*.sav", SearchOption.AllDirectories))
                 {
                     if (Disposing || IsDisposed)
                     {
@@ -139,7 +158,8 @@ namespace SatisfactorySaveEditor
                         }
                         Invoke((MethodInvoker)delegate ()
                         {
-                            Node.Nodes.Add(Path.GetFileNameWithoutExtension(FileName));
+                            var AddedNode = Node.Nodes.Add(Path.GetFileNameWithoutExtension(FileName));
+                            AddedNode.Tag = new LocalFileView(FileName, true);
                             Node.ExpandAll();
                         });
                     }
@@ -159,7 +179,7 @@ namespace SatisfactorySaveEditor
                         }
                         var Invalid = InvalidNode.Nodes.Add(Path.GetFileNameWithoutExtension(FileName));
                         Invalid.ForeColor = Color.Red;
-                        Invalid.Tag = "INVALID";
+                        Invalid.Tag = new LocalFileView(FileName, false);
                     }
                 }
                 //Add invalid nodes on the bottom
@@ -181,7 +201,7 @@ namespace SatisfactorySaveEditor
 
         private bool IsValidNode(TreeNode N)
         {
-            return N.Tag == null || N.Tag.ToString() != "INVALID";
+            return N.Tag == null || ((LocalFileView)N.Tag).IsValid;
         }
 
         private TreeNode GetSelectedFile()
@@ -200,7 +220,7 @@ namespace SatisfactorySaveEditor
 
         private string GetName(TreeNode N)
         {
-            return Path.Combine(Program.SaveDirectory, N.Text) + ".sav";
+            return ((LocalFileView)N.Tag).FullFile;
         }
 
         private void OpenSelected()
@@ -444,6 +464,8 @@ namespace SatisfactorySaveEditor
             if (Node != null)
             {
                 SFD.FileName = Node.Text + ".sav.gz";
+                SFD.InitialDirectory = Path.GetDirectoryName(((LocalFileView)Node.Tag).FullFile);
+
                 if (SFD.ShowDialog() == DialogResult.OK)
                 {
                     try
@@ -651,7 +673,7 @@ namespace SatisfactorySaveEditor
                     {
                         if (Ren.ShowDialog() == DialogResult.OK)
                         {
-                            var NewName = Path.Combine(Program.SaveDirectory, Ren.RenameFileName + ".sav");
+                            var NewName = Path.Combine(Path.GetDirectoryName(GetName(Node)), Ren.RenameFileName + ".sav");
                             //Show rename dialog if the file itself is renamed and the destination exists already
                             if (
                                 Node.Text == Ren.RenameFileName ||

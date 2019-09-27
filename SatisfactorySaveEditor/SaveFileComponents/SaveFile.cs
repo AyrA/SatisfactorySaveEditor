@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SatisfactorySaveEditor
 {
@@ -10,6 +11,13 @@ namespace SatisfactorySaveEditor
     /// </summary>
     public class SaveFile : ICloneable
     {
+        /// <summary>
+        /// Version where they introduced the cloud save
+        /// </summary>
+        public const int ZLIB_MIN_VERSION = 21;
+        /// <summary>
+        /// Default Level type string
+        /// </summary>
         public const string DEFAULT_LEVEL_TYPE = "Persistent_Level";
 
         /// <summary>
@@ -73,62 +81,75 @@ namespace SatisfactorySaveEditor
         /// Reads a new SaveFile
         /// </summary>
         /// <param name="BR">Open Reader</param>
-        private SaveFile(BinaryReader BR)
+        private SaveFile(Stream Input)
         {
-            Properties = new Dictionary<string, string>();
-            Entries = new List<SaveFileEntry>();
-            StringList = new List<PropertyString>();
-
-
-            SaveHeaderVersion = BR.ReadInt32();
-            SaveVersion = BR.ReadInt32();
-            BuildVersion = BR.ReadInt32();
-
-            LevelType = BR.ReadIntString();
-            var Props = BR.ReadIntString().Trim('?', '\0').Split('?');
-            foreach (var P in Props)
+            using (var BR = new BinaryReader(Input, Encoding.Default, true))
             {
-                var I = P.IndexOf('=');
-                if (I >= 0)
+                Properties = new Dictionary<string, string>();
+                Entries = new List<SaveFileEntry>();
+                StringList = new List<PropertyString>();
+
+
+                SaveHeaderVersion = BR.ReadInt32();
+                SaveVersion = BR.ReadInt32();
+                BuildVersion = BR.ReadInt32();
+
+                LevelType = BR.ReadIntString();
+                var Props = BR.ReadIntString().Trim('?', '\0').Split('?');
+                foreach (var P in Props)
                 {
-                    Properties[P.Substring(0, I)] = P.Substring(I + 1);
+                    var I = P.IndexOf('=');
+                    if (I >= 0)
+                    {
+                        Properties[P.Substring(0, I)] = P.Substring(I + 1);
+                    }
+                    else
+                    {
+                        Properties[P] = null;
+                    }
                 }
-                else
+                //Session name is in the properties too for some reason but appears again
+                SessionName = BR.ReadIntString();
+                PlayTime = TimeSpan.FromSeconds(BR.ReadInt32());
+                SaveDate = new DateTime(BR.ReadInt64());
+                SessionVisibility = BR.ReadByte();
+
+                if (SaveVersion >= ZLIB_MIN_VERSION)
                 {
-                    Properties[P] = null;
+                    var Decompressed = DecompressData(Input);
+                    Input = new MemoryStream(Decompressed, false);
+                    //Skip the length prefix. It's not needed
+                    Input.Seek(4, SeekOrigin.Begin);
                 }
-            }
-            //Session name is in the properties too for some reason but appears again
-            SessionName = BR.ReadIntString();
-            PlayTime = TimeSpan.FromSeconds(BR.ReadInt32());
-            SaveDate = new DateTime(BR.ReadInt64());
-            //SaveDate = FromUnixTime(BR.ReadInt32());
-            SessionVisibility = BR.ReadByte();
 
-            //Read all entries
-            int HeaderCount = BR.ReadInt32();
-            for (var i = 0; i < HeaderCount; i++)
-            {
-                Entries.Add(new SaveFileEntry(BR));
-            }
-            //Read entry properties.
-            //For some reason this has its own counter, even though it should be in sync with the object count
-            int PropertyCount = BR.ReadInt32();
-            for (var i = 0; i < PropertyCount; i++)
-            {
-                Entries[i].Properties = BR.ReadBytes(BR.ReadInt32());
-            }
+                using (var DataReader = new BinaryReader(Input, Encoding.Default, true))
+                {
+                    //Read all entries
+                    int HeaderCount = DataReader.ReadInt32();
+                    for (var i = 0; i < HeaderCount; i++)
+                    {
+                        Entries.Add(new SaveFileEntry(DataReader));
+                    }
+                    //Read entry properties.
+                    //For some reason this has its own counter, even though it should be in sync with the object count
+                    int PropertyCount = DataReader.ReadInt32();
+                    for (var i = 0; i < PropertyCount; i++)
+                    {
+                        Entries[i].Properties = DataReader.ReadBytes(DataReader.ReadInt32());
+                    }
 
-            int StringCount = BR.ReadInt32();
-            for (var i = 0; i < StringCount; i++)
-            {
-                StringList.Add(new PropertyString(BR));
+                    int StringCount = DataReader.ReadInt32();
+                    for (var i = 0; i < StringCount; i++)
+                    {
+                        StringList.Add(new PropertyString(DataReader));
+                    }
+                }
             }
         }
 
         public void SetSessionName(string NewName)
         {
-            if(string.IsNullOrWhiteSpace(NewName))
+            if (string.IsNullOrWhiteSpace(NewName))
             {
                 throw new ArgumentException("NewName must not be empty", "NewName");
             }
@@ -142,7 +163,7 @@ namespace SatisfactorySaveEditor
         /// <param name="S">Open Stream</param>
         public void Export(Stream S)
         {
-            using (var BW = new BinaryWriter(S, System.Text.Encoding.ASCII, true))
+            using (var BW = new BinaryWriter(S, Encoding.Default, true))
             {
                 BW.Write(SaveHeaderVersion);
                 BW.Write(SaveVersion);
@@ -154,24 +175,51 @@ namespace SatisfactorySaveEditor
                 BW.Write(SaveDate.Ticks);
                 BW.Write(SessionVisibility);
 
-                BW.Write(Entries.Count);
-                foreach (var E in Entries)
+                //Old format
+                if (SaveVersion < ZLIB_MIN_VERSION)
                 {
-                    E.Export(BW);
+                    ExportEntries(BW);
                 }
+                else
+                {
+                    using (var MS = new MemoryStream())
+                    {
+                        using (var ZipBW = new BinaryWriter(MS))
+                        {
+                            //Write size placeholder
+                            ZipBW.Write(0);
+                            ExportEntries(ZipBW);
+                            ZipBW.Flush();
+                            MS.Position = 0;
+                            ZipBW.Write((int)MS.Length - 4);
+                            ZipBW.Flush();
+                            MS.Position = 0;
+                            BW.Write(CompressData(MS));
+                        }
+                    }
+                }
+            }
+        }
 
-                BW.Write(Entries.Count);
-                foreach (var E in Entries)
-                {
-                    BW.Write(E.Properties.Length);
-                    BW.Write(E.Properties);
-                }
+        private void ExportEntries(BinaryWriter BW)
+        {
+            BW.Write(Entries.Count);
+            foreach (var E in Entries)
+            {
+                E.Export(BW);
+            }
 
-                BW.Write(StringList.Count);
-                foreach (var E in StringList)
-                {
-                    E.Export(BW);
-                }
+            BW.Write(Entries.Count);
+            foreach (var E in Entries)
+            {
+                BW.Write(E.Properties.Length);
+                BW.Write(E.Properties);
+            }
+
+            BW.Write(StringList.Count);
+            foreach (var E in StringList)
+            {
+                E.Export(BW);
             }
         }
 
@@ -186,10 +234,7 @@ namespace SatisfactorySaveEditor
             var Pos = S.CanSeek ? S.Position : -1L;
             try
             {
-                using (var BR = new BinaryReader(S, System.Text.Encoding.Default, true))
-                {
-                    return new SaveFile(BR);
-                }
+                return new SaveFile(S);
             }
             catch (Exception OuterEx)
             {
@@ -198,21 +243,63 @@ namespace SatisfactorySaveEditor
                     S.Position = Pos;
                     using (var GZS = new System.IO.Compression.GZipStream(S, System.IO.Compression.CompressionMode.Decompress, true))
                     {
-                        using (var BR = new BinaryReader(GZS, System.Text.Encoding.Default))
+                        try
                         {
-                            try
-                            {
-                                return new SaveFile(BR);
-                            }
-                            catch (Exception InnerEx)
-                            {
-                                throw new AggregateException("Unable to load save file as either compressed or uncompressed format. It's probably invalid or a recent game update broke the format.", OuterEx, InnerEx);
-                            }
+                            return new SaveFile(GZS);
+                        }
+                        catch (Exception InnerEx)
+                        {
+                            throw new AggregateException("Unable to load save file as either compressed or uncompressed format. It's probably invalid or a recent game update broke the format.", OuterEx, InnerEx);
                         }
                     }
                 }
             }
             return null;
+        }
+
+        private static byte[] CompressData(Stream Input)
+        {
+            byte[] Buffer = new byte[CompressedHeader.DEFAULT_CHUNK_SIZE];
+            using (var MS = new MemoryStream())
+            {
+                using (var BW = new BinaryWriter(MS))
+                {
+                    int total = 0;
+                    do
+                    {
+                        total = Input.Read(Buffer, 0, Buffer.Length);
+                        if (total > 0)
+                        {
+                            var Header = new CompressedHeader();
+                            Header.DecompressedLength = (ulong)total;
+                            var Compressed = Ionic.Zlib.ZlibStream.CompressBuffer(Buffer);
+                            Header.CompressedLength = (ulong)Compressed.Length;
+                            Header.WriteHeader(BW);
+                            BW.Write(Compressed);
+                        }
+                    } while (total > 0);
+                    BW.Flush();
+                    return MS.ToArray();
+                }
+            }
+        }
+
+        private static byte[] DecompressData(Stream Input)
+        {
+            using (var MS = new MemoryStream())
+            {
+                CompressedHeader Header;
+                do
+                {
+                    Header = new CompressedHeader(Input);
+                    byte[] Data = new byte[Header.CompressedLength];
+                    Input.Read(Data, 0, Data.Length);
+                    Data = Ionic.Zlib.ZlibStream.UncompressBuffer(Data);
+                    MS.Write(Data, 0, Data.Length);
+                }
+                while (Header.DecompressedLength == Header.MaxChunkSize);
+                return MS.ToArray();
+            }
         }
 
         /// <summary>

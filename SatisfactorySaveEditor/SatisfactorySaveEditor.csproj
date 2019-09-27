@@ -42,6 +42,10 @@
     <ApplicationIcon>Images\Icons\edit.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.13.4.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.13.4\lib\net40\DotNetZip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -65,6 +69,7 @@
       <DependentUpon>frmErrorHandler.cs</DependentUpon>
     </Compile>
     <Compile Include="FeatureReport.cs" />
+    <Compile Include="SaveFileComponents\CompressedHeader.cs" />
     <Compile Include="UI\frmCloudEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +192,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="SaveFileComponents\Vector3.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorHandler\frmErrorHandler.resx">
