@@ -1,0 +1,7 @@
+﻿Version 3.1
+
+Latest Release
+
+Invisible changes:
+
+- Support for new save file type

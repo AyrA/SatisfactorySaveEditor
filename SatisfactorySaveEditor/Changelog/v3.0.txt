@@ -1,6 +1,6 @@
 ﻿Version 3.0
 
-Latest Release
+Released: 2019-09-13 20:47:15 UTC
 
 Visible changes:
 
