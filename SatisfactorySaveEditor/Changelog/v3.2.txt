@@ -1,0 +1,7 @@
+﻿Version 3.2
+
+Latest Release
+
+Invisible changes:
+
+- Temporarily downgrade save file until I figure out why it won't load anymore.
