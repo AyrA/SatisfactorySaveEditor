@@ -38,6 +38,23 @@ namespace SatisfactorySaveEditor
             }
         }
 
+        public static string HashedSaveDirectory
+        {
+            get
+            {
+                var BaseDir = SaveDirectory;
+                foreach(var D in Directory.GetDirectories(BaseDir))
+                {
+                    if (System.Text.RegularExpressions.Regex.IsMatch(D.ToLower(), @"\\[\da-f]{32}$"))
+                    {
+                        return D;
+                    }
+                }
+                //No hashed directory yet
+                return null;
+            }
+        }
+
         /// <summary>
         /// Possible return values
         /// </summary>
@@ -424,10 +441,21 @@ namespace SatisfactorySaveEditor
             var ZeroPos = new Vector3();
 
             //Note to testers: Do not close the stream early. This protects you from overwriting the save file.
-            using (var FS = File.OpenRead(Path.Combine(SaveDirectory, "Reset.sav")))
+            using (var FS = File.OpenRead(Path.Combine(HashedSaveDirectory, "U3.sav")))
             {
                 var F = SaveFile.Open(FS);
 
+                foreach(var E in F.Entries.Select(m => m.ObjectData.Name).Distinct().OrderBy(m => m))
+                {
+                    //Console.WriteLine(E);
+                }
+                foreach(var S in F.StringList.OrderBy(m => m.Name))
+                {
+                    Console.WriteLine(S.Value);
+                }
+                return;
+
+                /*Object scrambler test
                 var R = new Random();
                 foreach (var E in F.Entries)
                 {
@@ -445,9 +473,10 @@ namespace SatisfactorySaveEditor
                         }
                     }
                 }
+                //*/
 
                 //Show all entries
-                Console.Error.WriteLine(string.Join("\r\n", F.Entries.OrderBy(m => m.Properties.Length).Select(m => m.ObjectData.Name).Distinct()));
+                //Console.Error.WriteLine(string.Join("\r\n", F.Entries.OrderBy(m => m.Properties.Length).Select(m => m.ObjectData.Name).Distinct()));
 
                 /* Test code to "align" things
                 var o = (ObjectTypes.GameObject)e.ObjectData;
@@ -488,7 +517,7 @@ namespace SatisfactorySaveEditor
                 }
                 Console.Error.WriteLine("Placed {0} foundations", ctr);
                 //*/
-                using (var FSOut = File.Create(Path.Combine(SaveDirectory, "Test-Edited.sav")))
+                using (var FSOut = File.Create(Path.Combine(HashedSaveDirectory, "Test-Edited.sav")))
                 {
                     F.Export(FSOut);
                 }
