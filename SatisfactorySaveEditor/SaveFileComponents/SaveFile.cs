@@ -165,6 +165,8 @@ namespace SatisfactorySaveEditor
         {
             using (var BW = new BinaryWriter(S, Encoding.Default, true))
             {
+                //TODO: Figure out why my zlib is so much better than that of UE4 to the point where it can't be used.
+                SaveVersion = ZLIB_MIN_VERSION - 1;
                 BW.Write(SaveHeaderVersion);
                 BW.Write(SaveVersion);
                 BW.Write(BuildVersion);
